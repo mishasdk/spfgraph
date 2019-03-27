@@ -9,24 +9,21 @@ namespace ProviderLib {
 
         public StackedGraph() { }
         public StackedGraph(List<int>[] list) : base(list) { }
-        public StackedGraph(Graph graph) : base() { }
+        public StackedGraph(Graph graph) : base(graph) {
+            throw new NotImplementedException();
+        }
 
         List<int> firstLayer = new List<int>();
 
         public void InitFirstLayer() {
-            var first = from listForVerd in adjacencyList
-                        from verd in listForVerd
-                        where IsRoot(verd)
-                        select verd;
-            firstLayer = first.ToList();
+            int[] counter = new int[adjacencyList.Length];
+            for (int i = 0; i < adjacencyList.Length; i++) {
+                for (int j = 0; j < adjacencyList[i].Length; j++) {
+                    counter[adjacencyList[i][j]]++;
+                }
+            }
         }
 
-        bool IsRoot(int verd) {
-            foreach (var line in adjacencyList)
-                foreach (var v in line)
-                    if (v == verd)
-                        return false;
-            return true;
-        }
+        
     }
 }
