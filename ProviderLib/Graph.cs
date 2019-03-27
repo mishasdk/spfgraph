@@ -19,12 +19,13 @@ namespace ProviderLib {
             return newList;
         }
 
+
         public override string ToString() {
             var mes = "";
             for (int i = 0; i < adjacencyList.Length; i++) {
                 var line = adjacencyList[i];
                 mes += $"{i}: ";
-                for (int j = 0; j < line.Length; i++) {
+                for (int j = 0; j < line.Length; j++) {
                     mes += $"{line[j]} ";
                 }
                 mes += "\n";
