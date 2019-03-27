@@ -15,6 +15,7 @@ namespace ProviderLib {
                     var splitedLine = line.Split(' ');
                     for (int j = 0; j < splitedLine.Length; j++) {
                         var verd = int.Parse(splitedLine[j]);
+                        verd--;
                         adjacencyList[i].Add(verd);
                     }
                 }
