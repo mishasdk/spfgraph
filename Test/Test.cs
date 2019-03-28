@@ -9,8 +9,11 @@ namespace Test {
     class Test {
         static void Main(string[] args) {
             var g = CreateGraphFromFile();
-            ShowGraph(g);
-            TestDFS(g);
+            var sg = CreateStackedGraph(g);
+
+            ShowGraph(sg);
+            ShowFirstLayer(sg);
+            ShowLastLayer(sg);
 
             Console.ReadKey();
         }
@@ -22,13 +25,29 @@ namespace Test {
             return graph;
         }
 
-        static void ShowGraph(Graph g) {
-            Console.WriteLine(g);
+        static StackedGraph CreateStackedGraph(Graph g) {
+            return new StackedGraph(g);
         }
 
-        static void TestDFS(Graph g) {
-            bool result = Algorithms.IsGraphСyclical(g);
-            Console.WriteLine(result);
+        static void ShowGraph(Graph g) {
+            Console.WriteLine("spf graph");
+            Console.WriteLine(g);
+        }
+        
+        static void ShowFirstLayer(StackedGraph g) {
+            Console.Write("First layer: ");
+            var a = g.GetFirtsLayer();
+            foreach (var i in a )
+                Console.Write(i + " ");
+            Console.WriteLine();
+        }
+
+        static void ShowLastLayer(StackedGraph g) {
+            Console.Write("Last layer: ");
+            var a = g.GetLastLayer();
+            foreach (var i in a)
+                Console.Write(i + " ");
+            Console.WriteLine();
         }
 
     }

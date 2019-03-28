@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Data\DataProvider.cs" />
     <Compile Include="Exceptions\DataProviderException.cs" />
+    <Compile Include="Exceptions\GraphErrorException.cs" />
     <Compile Include="GraphLib\Algorithms.cs" />
     <Compile Include="GraphLib\Graph.cs" />
     <Compile Include="GraphLib\GraphFeature.cs" />

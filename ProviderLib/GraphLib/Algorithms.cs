@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProviderLib {
     public class Algorithms {
+
         public static bool IsGraphСyclical(Graph graph) {
             var g = graph.List;
             var color = new int[g.Length];
@@ -15,7 +16,6 @@ namespace ProviderLib {
                 if (color[i] == 0)
                     CheckForCycleDFS(g, color, i, ref result);
             }
-
             return result;
         }
 

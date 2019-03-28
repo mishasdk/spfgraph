@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProviderLib {
     public class StackedGraph : Graph {
 
         public StackedGraph(Graph graph) : base(graph) {
-            InitFirstLayer();
+            InitLayers();
             CheckGraphForCorrectSPF();
+        }
+
+        private void InitLayers() {
+            InitFirstLayer();
+            InitLastLayer();
         }
 
         List<List<int>> graphLayers;
         List<int> firstLayer = new List<int>();
+        List<int> lastLayer = new List<int>();
+
+        public void InitLastLayer() {
+            for (int i = 0; i < adjacencyList.Length; i++)
+                if (adjacencyList[i].Length == 0)
+                    lastLayer.Add(i);
+        }
 
         public void InitFirstLayer() {
             int[] counter = new int[adjacencyList.Length];
@@ -37,5 +50,6 @@ namespace ProviderLib {
 
         // Functions for tests.
         public List<int> GetFirtsLayer() => firstLayer;
+        public List<int> GetLastLayer() => lastLayer;
     }
 }
