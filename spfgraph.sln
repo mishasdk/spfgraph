@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spfgraph", "spfgraph\spfgra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderLib", "ProviderLib\ProviderLib.csproj", "{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "ConsoleApp\Test.csproj", "{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
