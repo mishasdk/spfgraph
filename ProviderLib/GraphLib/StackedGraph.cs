@@ -6,8 +6,10 @@ namespace ProviderLib {
 
         public StackedGraph(Graph graph) : base(graph) {
             InitFirstLayer();
+            CheckGraphForCorrectSPF();
         }
 
+        List<List<int>> graphLayers;
         List<int> firstLayer = new List<int>();
 
         public void InitFirstLayer() {
@@ -20,19 +22,17 @@ namespace ProviderLib {
                     firstLayer.Add(i);
         }
 
-        List<List<int>> graphLayers;
-
         void CheckGraphForCorrectSPF() {
-            throw new NotImplementedException();
+            bool graphCyclical = Algorithms.IsGraphСyclical(this);
+            if (graphCyclical)
+                throw new GraphErrorException("Stacked graph can't be cyclical.");
         }
 
         public void ConstructSPF() {
             // Constructing parallel stacked form.
-            graphLayers = new List<List<int>>();
-            graphLayers.Add(firstLayer);
+            graphLayers = new List<List<int>> { firstLayer };
             // TODO: Write algo.
             throw new NotImplementedException();
-
         }
 
         // Functions for tests.
