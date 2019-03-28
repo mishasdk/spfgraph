@@ -43,10 +43,11 @@
   <ItemGroup>
     <Compile Include="Data\DataProvider.cs" />
     <Compile Include="Exceptions\DataProviderException.cs" />
-    <Compile Include="Graph\Graph.cs" />
-    <Compile Include="Graph\GraphFeature.cs" />
+    <Compile Include="GraphLib\Algorithms.cs" />
+    <Compile Include="GraphLib\Graph.cs" />
+    <Compile Include="GraphLib\GraphFeature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Graph\StackedGraph.cs" />
+    <Compile Include="GraphLib\StackedGraph.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

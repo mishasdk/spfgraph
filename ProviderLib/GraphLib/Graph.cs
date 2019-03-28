@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-
 namespace ProviderLib {
     public class Graph {
 
@@ -18,6 +16,9 @@ namespace ProviderLib {
         }
 
         protected int[][] adjacencyList;
+        public int[][] List {
+            get => adjacencyList;
+        }
 
         protected static int[][] Proceed(List<int>[] list) {
             int[][] newList = new int[list.Length][];
