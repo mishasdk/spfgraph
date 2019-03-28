@@ -41,11 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider.cs" />
-    <Compile Include="DataProviderException.cs" />
-    <Compile Include="Graph.cs" />
+    <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="Exceptions\DataProviderException.cs" />
+    <Compile Include="Graph\Graph.cs" />
+    <Compile Include="Graph\GraphFeature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StackedGraph.cs" />
+    <Compile Include="Graph\StackedGraph.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

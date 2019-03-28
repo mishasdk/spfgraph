@@ -67,6 +67,12 @@ namespace ProviderLib {
 
         }
 
+        static void CheckForSharp(StreamReader reader) {
+            var line = reader.ReadLine();
+            if (line != "#")
+                throw new DataProviderException("Reading from file error.\n" + "Wrong file format, no sharp. ");
+        }
+
         static int ReadIntFromString(string str) {
             bool readResult = int.TryParse(str, out int verd);
             if (readResult == false || verd < 0)
@@ -80,12 +86,6 @@ namespace ProviderLib {
             if (readResult == false || verdsNumber < 1)
                 throw new DataProviderException("Reading from file error.\n" + "Invalid amount of verds.");
             return verdsNumber;
-        }
-
-        static void CheckForSharp(StreamReader reader) {
-            var line = reader.ReadLine();
-            if (line != "#")
-                throw new DataProviderException("Reading from file error.\n" + "Wrong file format, no sharp. ");
         }
 
     }

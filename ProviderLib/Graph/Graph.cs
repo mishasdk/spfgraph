@@ -34,7 +34,7 @@ namespace ProviderLib {
             var mes = "";
             for (int i = 0; i < adjacencyList.Length; i++) {
                 var line = adjacencyList[i];
-                mes += $"{i}: ";
+                mes += $"{i} -> ";
                 for (int j = 0; j < line.Length; j++) {
                     mes += $"{line[j]} ";
                 }

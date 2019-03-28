@@ -12,15 +12,14 @@ namespace ConsoleApp {
             var g = DataProvider.CreateAdjacencyListFromFile(path);
             var graph = new Graph(g);
             var spfGraph = new StackedGraph(graph);
-
             Console.WriteLine(spfGraph);
 
-            //spfGraph.InitFirstLayer();
-            //var fl = spfGraph.GetFirtsLayer();
+            spfGraph.InitFirstLayer();
+            var fl = spfGraph.GetFirtsLayer();
 
-            //foreach (var v in fl)
-            //    Console.Write(v + "  ");
-            //Console.WriteLine();
+            foreach (var v in fl)
+                Console.Write(v + " ");
+            Console.WriteLine();
 
             Console.ReadKey();
         }
