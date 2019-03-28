@@ -6,20 +6,20 @@ using System.Collections.Generic;
 namespace ProviderLib {
     public class Graph {
 
-        public Graph() { }
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
         public Graph(Graph gr) {
             var newList = new int[gr.adjacencyList.Length][];
             for (int i = 0; i < gr.adjacencyList.Length; i++) {
                 var line = gr.adjacencyList[i];
                 newList[i] = new int[line.Length];
-                Array.Copy(line, newList, line.Length);
+                Array.Copy(line, newList[i], line.Length);
             }
+            adjacencyList = newList;
         }
 
         protected int[][] adjacencyList;
 
-        protected int[][] Proceed(List<int>[] list) {
+        protected static int[][] Proceed(List<int>[] list) {
             int[][] newList = new int[list.Length][];
             for (int i = 0; i < newList.Length; i++) {
                 var line = list[i];
