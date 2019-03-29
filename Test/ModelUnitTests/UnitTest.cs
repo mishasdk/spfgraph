@@ -1,15 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Testing;
+using Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProviderLib;
 
 namespace Testing {
     [TestClass()]
-    public class UnitTest1 {
+    public class UnitTest {
         [TestMethod()]
         public void UnitTest1Test() {
             Assert.AreEqual(2 + 3, 5);

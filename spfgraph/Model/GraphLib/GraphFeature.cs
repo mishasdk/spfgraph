@@ -1,4 +1,4 @@
-﻿namespace ProviderLib {
+﻿namespace Model {
     public class GraphFeature {
 
         public GraphFeature() { }

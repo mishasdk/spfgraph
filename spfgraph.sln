@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spfgraph", "spfgraph\spfgraph.csproj", "{4BC94173-D11E-4DDC-875E-7683270FDFF6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderLib", "ProviderLib\ProviderLib.csproj", "{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spfgraph", "spfgraph\Spfgraph.csproj", "{4BC94173-D11E-4DDC-875E-7683270FDFF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Test\Tests.csproj", "{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{4BC94173-D11E-4DDC-875E-7683270FDFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BC94173-D11E-4DDC-875E-7683270FDFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BC94173-D11E-4DDC-875E-7683270FDFF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -57,15 +57,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="ModelUnitTests\UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProviderLib\ProviderLib.csproj">
-      <Project>{0c3c86dc-81e8-4b43-b704-6dea2c88d27f}</Project>
-      <Name>ProviderLib</Name>
+    <ProjectReference Include="..\spfgraph\Spfgraph.csproj">
+      <Project>{4bc94173-d11e-4ddc-875e-7683270fdff6}</Project>
+      <Name>Spfgraph</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

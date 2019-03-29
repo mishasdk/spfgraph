@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProviderLib {
+namespace Model {
     public class StackedGraph : Graph {
 
         public StackedGraph(Graph graph) : base(graph) {

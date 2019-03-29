@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProviderLib {
+namespace Model {
     public class Algorithms {
 
         public static bool IsGraphСyclical(Graph graph) {

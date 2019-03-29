@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System;
 
-namespace ProviderLib {
+namespace Model {
     public static class DataProvider {
 
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
