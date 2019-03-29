@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spfgraph", "spfgraph\spfgra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderLib", "ProviderLib\ProviderLib.csproj", "{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Test\Tests.csproj", "{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C3C86DC-81E8-4B43-B704-6DEA2C88D27F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29662597-ED98-4DC2-96C7-B5A7B1D30BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6D886F-ECCC-41A7-AE11-6479EA4E75EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

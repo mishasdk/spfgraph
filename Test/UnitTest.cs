@@ -1,12 +1,22 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Testing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProviderLib;
 
-namespace Test {
-    class Test {
+namespace Testing {
+    [TestClass()]
+    public class UnitTest1 {
+        [TestMethod()]
+        public void UnitTest1Test() {
+            Assert.AreEqual(2 + 3, 5);
+        }
+    }
+
+    public class UnitTest2 {
         static void Main(string[] args) {
             var g = CreateGraphFromFile();
             var sg = CreateStackedGraph(g);
@@ -33,11 +43,11 @@ namespace Test {
             Console.WriteLine("spf graph");
             Console.WriteLine(g);
         }
-        
+
         static void ShowFirstLayer(StackedGraph g) {
             Console.Write("First layer: ");
             var a = g.GetFirtsLayer();
-            foreach (var i in a )
+            foreach (var i in a)
                 Console.Write(i + " ");
             Console.WriteLine();
         }
@@ -49,6 +59,6 @@ namespace Test {
                 Console.Write(i + " ");
             Console.WriteLine();
         }
-
     }
+
 }
