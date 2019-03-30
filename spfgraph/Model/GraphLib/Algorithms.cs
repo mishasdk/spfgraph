@@ -8,7 +8,7 @@
 
             for (int i = 0; i < g.Length; i++) {
                 if (color[i] == 0) {
-                    result = CheckForCycleDFS(g, color, i);
+                    result = CheckForCyclicDFS(g, color, i);
                     if (result)
                         break;
                 }
@@ -16,13 +16,13 @@
             return result;
         }
 
-        static bool CheckForCycleDFS(int[][] g, int[] color, int v) {
+        static bool CheckForCyclicDFS(int[][] g, int[] color, int v) {
             color[v] = 1;
             var result = false;
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (color[to] == 0) {
-                    result = CheckForCycleDFS(g, color, to);    
+                    result = CheckForCyclicDFS(g, color, to);    
                     color[to] = 2;
                 } else if (color[to] == 1) {
                     result = true;

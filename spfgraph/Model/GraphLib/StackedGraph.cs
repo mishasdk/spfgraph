@@ -38,7 +38,7 @@ namespace Model.GraphLib {
         void CheckGraphForCorrectSPF() {
             bool graphCyclic = Algorithms.IsGraphСyclic(this);
             if (graphCyclic)
-                throw new GraphErrorException("Stacked graph can't be cyclical.");
+                throw new GraphErrorException("Stacked graph can't be cyclic.");
         }
 
         public void ConstructSPF() {

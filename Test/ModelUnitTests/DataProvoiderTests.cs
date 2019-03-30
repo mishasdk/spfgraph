@@ -67,13 +67,11 @@ namespace Testing.ModelUnitTests {
         }
 
         [TestMethod()]
-        public void CreateListFrom_testList_05_WrongOrder() {
+        public void CreateListFrom_testList_06_WrongOrder() {
             var str = "\\testList_06.txt";
             string path = Resource1.TestSource + str;
             Assert.ThrowsException<DataProviderException>(() => DataProvider.CreateAdjacencyListFromFile(path));
         }
-
-
 
         static bool CheckListsForIdentity(List<int>[] expected, List<int>[] output) {
             try {
