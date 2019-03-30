@@ -65,6 +65,7 @@ namespace Testing.ModelUnitTests {
             string path = Resource1.TestSource + str;
             Assert.ThrowsException<DataProviderException>(() => DataProvider.CreateAdjacencyListFromFile(path));
         }
+
         [TestMethod()]
         public void CreateListFrom_testList_05_WrongOrder() {
             var str = "\\testList_06.txt";

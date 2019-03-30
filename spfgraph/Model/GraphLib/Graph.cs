@@ -5,10 +5,11 @@ namespace Model.GraphLib {
     public class Graph {
 
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
-        public Graph(Graph gr) {
-            var newList = new int[gr.adjacencyList.Length][];
-            for (int i = 0; i < gr.adjacencyList.Length; i++) {
-                var line = gr.adjacencyList[i];
+        public Graph(Graph gr) : this (gr.adjacencyList) { }
+        public Graph(int[][] list) {
+            var newList = new int[list.Length][];
+            for (int i = 0; i < newList.Length; i++) {
+                var line = list[i];
                 newList[i] = new int[line.Length];
                 Array.Copy(line, newList[i], line.Length);
             }
