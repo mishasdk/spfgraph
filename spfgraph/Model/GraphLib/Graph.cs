@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model {
+namespace Model.GraphLib {
     public class Graph {
 
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }

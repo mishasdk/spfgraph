@@ -1,4 +1,4 @@
-﻿namespace Model {
+﻿namespace Model.GraphLib {
     public class GraphFeature {
 
         public GraphFeature() { }

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using Model.Excepitons;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace Model {
+namespace Model.Data {
     public static class DataProvider {
 
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {

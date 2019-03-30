@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Model.Excepitons;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Model {
+namespace Model.GraphLib {
     public class StackedGraph : Graph {
 
         public StackedGraph(Graph graph) : base(graph) {
@@ -36,8 +36,8 @@ namespace Model {
         }
 
         void CheckGraphForCorrectSPF() {
-            bool graphCyclical = Algorithms.IsGraphСyclical(this);
-            if (graphCyclical)
+            bool graphCyclic = Algorithms.IsGraphСyclic(this);
+            if (graphCyclic)
                 throw new GraphErrorException("Stacked graph can't be cyclical.");
         }
 

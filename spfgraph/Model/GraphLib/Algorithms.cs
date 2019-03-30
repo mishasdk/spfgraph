@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model {
+﻿namespace Model.GraphLib {
     public class Algorithms {
 
-        public static bool IsGraphСyclical(Graph graph) {
+        public static bool IsGraphСyclic(Graph graph) {
             var g = graph.List;
             var color = new int[g.Length];
             bool result = false;
 
             for (int i = 0; i < g.Length; i++) {
-                if (color[i] == 0)
-                    CheckForCycleDFS(g, color, i, ref result);
+                if (color[i] == 0) {
+                    result = CheckForCycleDFS(g, color, i);
+                    if (result)
+                        break;
+                }
             }
             return result;
         }
 
-        static void CheckForCycleDFS(int[][] g, int[] color, int v, ref bool result) {
-            if (result == true)
-                return;
+        static bool CheckForCycleDFS(int[][] g, int[] color, int v) {
             color[v] = 1;
+            var result = false;
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (color[to] == 0) {
-                    CheckForCycleDFS(g, color, to, ref result);
+                    result = CheckForCycleDFS(g, color, to);    
                     color[to] = 2;
                 } else if (color[to] == 1) {
                     result = true;
                 }
+                if (result)
+                    return true;
             }
+            return result;
         }
-
-
     }
 
 }

@@ -56,8 +56,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ModelUnitTests\DataProvoiderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ModelUnitTests\UnitTest.cs" />
+    <Compile Include="Properties\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +72,12 @@
       <Project>{4bc94173-d11e-4ddc-875e-7683270fdff6}</Project>
       <Name>Spfgraph</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
