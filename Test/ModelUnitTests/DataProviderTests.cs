@@ -8,7 +8,7 @@ using Model.Excepitons;
 
 namespace Testing.ModelUnitTests {
     [TestClass()]
-    public class DataProvoiderTests {
+    public class DataProviderTests {
 
         [TestMethod()]
         public void CreateListFrom_testList_01() {
