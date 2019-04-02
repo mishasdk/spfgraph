@@ -5,20 +5,84 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="540" Width="960">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+
+
+        <Style TargetType="MenuItem">
+            <Setter Property="FontSize" Value="16" />
+
+        </Style>
+
+        <!--303030 - color for top bar-->
+    </Window.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.35*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition />
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" Background="#555">
-            <Label Content="Hello WPF" Foreground="White" FontFamily="Arial" FontSize="32" Margin="5"></Label>
-        </Border>
+        <!--Top dock panel-->
+        <DockPanel Background="#424242" Height="30">
+            <StackPanel Height="30" Orientation="Horizontal" VerticalAlignment="Center" Background="#424242" >
+                <Menu DockPanel.Dock="Top" Background="#424242" Margin="0 0 0 0" VerticalAlignment="Center">
+                    <MenuItem Width="55">
+                        <MenuItem.Header>
+                            <TextBlock Width="25" Text="File" HorizontalAlignment="Center" Foreground="White" Margin="7 0 0 0"/>
+                        </MenuItem.Header>
 
-        <Border Grid.Column="1" Background="#eeeeee">
-            
-        </Border>
+                        <MenuItem Header="Save"/>
+                        <MenuItem Header="Open" />
+                        <MenuItem Header="New" />
+                    </MenuItem>
+                    <MenuItem Header="Properties" Background="#424242" Foreground="White">
+                        <MenuItem Header="Item 1" />
+                        <MenuItem Header="Item 2" />
+                        <MenuItem Header="Item 3" />
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </DockPanel>
 
+        <!--Main page-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Left side of main page-->
+            <Border Background="#ADD7F6" Padding="15 10 15 10">
+                <StackPanel >
+                    <TextBlock Text="Path" Margin="0 0 0 5"/>
+                    <TextBox Grid.Column="0" IsReadOnly="False" Text="" Margin="0 0 0 10"/>
+                    <Button Grid.Column="1" Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
+                    <Button Content="Build Graph" Width="120" Height="30" Margin="0 0 0 10"/>
+                </StackPanel>
+            </Border>
+
+            <!--Right side of main page-->
+            <Border Grid.Column="1" Background="White">
+
+            </Border>
+        </Grid>
+
+        <!--Bottom dock panel-->
+        <DockPanel Height="22" Grid.Row="2" Background="#0090C1" >
+            <StackPanel DockPanel.Dock="Bottom"  Background="#0090C1" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center" Background="#0090C1" Foreground="White" Text="Status" Margin="15 0 0 0"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>
