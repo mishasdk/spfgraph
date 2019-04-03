@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model.GraphLib {
+namespace Model {
     public class Graph {
 
+        #region Constructors
+
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
-        public Graph(Graph gr) : this (gr.adjacencyList) { }
+        public Graph(Graph gr) : this(gr.adjacencyList) { }
         public Graph(int[][] list) {
             var newList = new int[list.Length][];
             for (int i = 0; i < newList.Length; i++) {
@@ -16,11 +18,20 @@ namespace Model.GraphLib {
             adjacencyList = newList;
         }
 
+        #endregion
+
+        #region Properties
+
         protected int[][] adjacencyList;
-        public int[][] List {
+        public int[][] AdjacencyList {
             get => adjacencyList;
         }
 
+        #endregion
+
+        #region Methods
+
+        // Transforms List<int>[] adjacency list to int[][].
         protected static int[][] Proceed(List<int>[] list) {
             int[][] newList = new int[list.Length][];
             for (int i = 0; i < newList.Length; i++) {
@@ -44,5 +55,7 @@ namespace Model.GraphLib {
             }
             return mes;
         }
+
+        #endregion
     }
 }

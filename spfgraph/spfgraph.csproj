@@ -63,11 +63,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Data\AdjacencyReader.cs" />
+    <Compile Include="Model\Data\AdjacencyListReader.cs" />
     <Compile Include="Model\Data\DataProvider.cs" />
     <Compile Include="Model\Exceptions\DataProviderException.cs" />
     <Compile Include="Model\Exceptions\GraphErrorException.cs" />
     <Compile Include="Model\GraphLib\Algorithms.cs" />
+    <Compile Include="Model\GraphLib\GraphBuilder.cs" />
     <Compile Include="Model\GraphLib\Graph.cs" />
     <Compile Include="Model\GraphLib\GraphFeature.cs" />
     <Compile Include="Model\GraphLib\StackedGraph.cs" />

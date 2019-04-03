@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.GraphLib;
+using Model;
 using System;
 
-namespace Testing.ModelUnitTests {
+namespace Testing {
     [TestClass()]
     public class AlgorithmsTests {
         [TestMethod()]

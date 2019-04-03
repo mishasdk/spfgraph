@@ -1,8 +1,8 @@
-﻿namespace Model.GraphLib {
+﻿namespace Model {
     public class Algorithms {
 
         public static bool IsGraphСyclic(Graph graph) {
-            var g = graph.List;
+            var g = graph.AdjacencyList;
             var color = new int[g.Length];
             bool result = false;
 

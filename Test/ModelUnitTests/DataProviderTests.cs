@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.Data;
+using Model;
 using System;
 using System.Collections.Generic;
 using Testing.Properties;
-using Model.Excepitons;
 
 
-namespace Testing.ModelUnitTests {
+namespace Testing {
     [TestClass()]
     public class DataProviderTests {
 

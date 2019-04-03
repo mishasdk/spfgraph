@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model.Excepitons {
+namespace Model {
 
     public class GraphErrorException : Exception {
         public GraphErrorException() { }
