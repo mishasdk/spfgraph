@@ -5,7 +5,6 @@ using System.IO;
 
 namespace Model.Data {
     public static class DataProvider {
-
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
             using (var reader = new StreamReader(filePath)) {
