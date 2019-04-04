@@ -20,6 +20,7 @@ namespace Model {
             reader = new StreamReader(filePath);
         }
 
+        #region Methods
 
         public void Dispose() {
             reader.Close();
@@ -30,5 +31,8 @@ namespace Model {
             CurrentLineIndex++;
             return line;
         }
+
+        #endregion
+
     }
 }
