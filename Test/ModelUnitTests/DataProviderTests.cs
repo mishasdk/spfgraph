@@ -73,13 +73,11 @@ namespace Testing {
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(DataProviderException))]
         public void OneVertexCycle_testList_07() {
             var str = "\\testList_07.txt";
             string path = "../../TestSource/" + str;
-            
-            var list = DataProvider.CreateAdjacencyListFromFile(path);
-            var cyclic = Algorithms.IsGraphСyclic(new Graph(list));
-            Assert.IsTrue(cyclic);
+            DataProvider.CreateAdjacencyListFromFile(path);
         }
 
         static bool CheckListsForIdentity(List<int>[] expected, List<int>[] output) {
