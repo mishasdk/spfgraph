@@ -81,6 +81,16 @@ namespace Testing {
         }
 
 
-
+        [TestMethod()]
+        public void OneVertexCycleTest_01() {
+            int[][] list = new int[][] {
+                new int[] { 1, 2, 3 },
+                new int[] { 2, 3 },
+                new int[] { 3 },
+                new int[] { 3 }
+            };
+            var graph = new Graph(list);
+            Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
+        }
     }
 }

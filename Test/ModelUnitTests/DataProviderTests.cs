@@ -74,13 +74,11 @@ namespace Testing {
         }
 
         [TestMethod()]
-        public void OneVertexCycle_testList_07() {
-            var filePath = "\\testList_07.txt";
-            string path = testSourceFolderPath + filePath;
-            
-            var list = DataProvider.CreateAdjacencyListFromFile(path);
-            var cyclic = Algorithms.IsGraphСyclic(new Graph(list));
-            Assert.IsTrue(cyclic);
+        [ExpectedException(typeof(DataProviderException))]
+        public void WrongVertexIndex_testList_07() {
+            var filepath = "\\testList_07.txt";
+            string path = testSourceFolderPath + filepath;
+            DataProvider.CreateAdjacencyListFromFile(path);
         }
 
         static bool CheckListsForIdentity(List<int>[] expected, List<int>[] output) {
