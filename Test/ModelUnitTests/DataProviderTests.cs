@@ -74,7 +74,7 @@ namespace Testing {
 
         [TestMethod()]
         [ExpectedException(typeof(DataProviderException))]
-        public void OneVertexCycle_testList_07() {
+        public void WrongVertexIndex_testList_07() {
             var str = "\\testList_07.txt";
             string path = "../../TestSource/" + str;
             DataProvider.CreateAdjacencyListFromFile(path);
