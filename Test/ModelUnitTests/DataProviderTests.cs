@@ -23,7 +23,7 @@ namespace Testing {
             };
 
             var actual = DataProvider.CreateAdjacencyListFromFile(path);
-            var compareResult = CheckListsForIdentity(expected, actual);
+            var compareResult = TestHelper.CheckListsForIdentity(expected, actual);
 
             Assert.IsTrue(compareResult);
         }
@@ -40,7 +40,7 @@ namespace Testing {
             };
 
             var actual = DataProvider.CreateAdjacencyListFromFile(path);
-            var compareResult = CheckListsForIdentity(expected, actual);
+            var compareResult = TestHelper.CheckListsForIdentity(expected, actual);
 
             Assert.IsTrue(compareResult);
         }
@@ -81,41 +81,6 @@ namespace Testing {
             DataProvider.CreateAdjacencyListFromFile(path);
         }
 
-        static bool CheckListsForIdentity(List<int>[] expected, List<int>[] output) {
-            try {
-                if (expected.Length != output.Length)
-                    return false;
-                for (int i = 0; i < expected.Length; i++) {
-                    if (expected[i].Count != output[i].Count)
-                        return false;
-                    for (int j = 0; j < expected[i].Count; j++)
-                        if (expected[i][j] != output[i][j])
-                            return false;
-                }
-                return true;
-            } catch (Exception ex) {
-                Console.WriteLine(ex.Message);
-                return false;
-            } finally {
-                Console.WriteLine("Expected: ");
-                foreach (var i in expected) {
-                    foreach (var j in i)
-                        Console.Write(j + " ");
-                    Console.WriteLine();
-                }
-                Console.WriteLine("Output: ");
-                foreach (var i in output) {
-                    foreach (var j in i)
-                        Console.Write(j + " ");
-                    Console.WriteLine();
-                }
-            }
-        }
+        
     }
-
-    //[TestClass()]
-    //public class DataProviderTest {
-
-    //}
-
 }
