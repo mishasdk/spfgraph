@@ -9,7 +9,7 @@ namespace Model {
 
         public static StackedGraph StackedFromGraph(Graph graph) {
             if (Algorithms.IsGraphСyclic(graph))
-                throw new GraphErrorException("Graph is cyclic.");
+                throw new GraphErrorException("Build graph error." + "Stacked graph can't be cyclic.");
 
             return new StackedGraph(graph);
         }
