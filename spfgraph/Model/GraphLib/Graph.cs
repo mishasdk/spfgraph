@@ -4,6 +4,15 @@ using System.Collections.Generic;
 namespace Model {
     public class Graph {
 
+        #region Properties
+
+        protected int[][] adjacencyList;
+        public int[][] AdjacencyList {
+            get => adjacencyList;
+        }
+
+        #endregion
+
         #region Constructors
 
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
@@ -16,15 +25,6 @@ namespace Model {
                 Array.Copy(line, newList[i], line.Length);
             }
             adjacencyList = newList;
-        }
-
-        #endregion
-
-        #region Properties
-
-        protected int[][] adjacencyList;
-        public int[][] AdjacencyList {
-            get => adjacencyList;
         }
 
         #endregion

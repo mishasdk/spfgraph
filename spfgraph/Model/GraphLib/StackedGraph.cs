@@ -43,10 +43,8 @@ namespace Model {
                 if (counter[i] == 0)
                     firstLayer.Add(i);
         }
+
         void ConstructSPF() {
-            // Constructing parallel stacked form.
-            graphLayers = new List<List<int>> { firstLayer };
-            // TODO: Write algo.
             throw new NotImplementedException();
         }
 
