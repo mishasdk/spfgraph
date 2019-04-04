@@ -72,6 +72,16 @@ namespace Testing {
             Assert.ThrowsException<DataProviderException>(() => DataProvider.CreateAdjacencyListFromFile(path));
         }
 
+        [TestMethod()]
+        public void OneVertexCycle_testList_07() {
+            var str = "\\testList_07.txt";
+            string path = "../../TestSource/" + str;
+            
+            var list = DataProvider.CreateAdjacencyListFromFile(path);
+            var cyclic = Algorithms.IsGraphСyclic(new Graph(list));
+            Assert.IsTrue(cyclic);
+        }
+
         static bool CheckListsForIdentity(List<int>[] expected, List<int>[] output) {
             try {
                 if (expected.Length != output.Length)

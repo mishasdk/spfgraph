@@ -83,7 +83,7 @@ namespace Model {
         static int ReadIntFromString(string str, int CurrentLineIndex) {
             bool readResult = int.TryParse(str, out int verd);
             if (readResult == false || verd < 0)
-                throw new DataProviderException("Reading from file error.\n" + "Invalid value for verd . ");
+                throw new DataProviderException("Reading from file error.\n" + $"Invalid value for verd {CurrentLineIndex}. ");
             return verd;
         }
 
