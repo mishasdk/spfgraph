@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ModelUnitTests\AlgorithmsTests.cs" />
     <Compile Include="ModelUnitTests\DataProviderTests.cs" />
+    <Compile Include="ModelUnitTests\StackedGraphTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
       <AutoGen>True</AutoGen>

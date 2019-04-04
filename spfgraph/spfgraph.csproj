@@ -71,6 +71,7 @@
     <Compile Include="Model\GraphLib\GraphBuilder.cs" />
     <Compile Include="Model\GraphLib\Graph.cs" />
     <Compile Include="Model\GraphLib\GraphFeature.cs" />
+    <Compile Include="Model\GraphLib\Pair.cs" />
     <Compile Include="Model\GraphLib\StackedGraph.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
