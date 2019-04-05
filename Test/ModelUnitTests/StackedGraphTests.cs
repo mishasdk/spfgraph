@@ -219,6 +219,26 @@ namespace Testing {
             Assert.IsTrue(testResult);
         }
 
+        [TestMethod()]
+        public void DenseGraph_01() {
+            var size = 100;
+            int[][] list = new int[size][];
+            for (var i = 0; i < size; ++i) {
+                list[i] = new int[size - i - 1];
+                for (var j = i + 1; j < size; ++j) {
+                    list[i][j - i - 1] = j;
+                }
+            }
+            adjacencyList = list;
+
+            SetGraphLayers();
+            var actual = graphLayers;
+            var expected = TestHelper.StupidLayerConstructor(AdjacencyList);
+
+            var testResult = TestHelper.CheckListsForIdentity(expected, actual);
+            Assert.IsTrue(testResult);
+        }
+
         void ShowLayers() {
             Console.WriteLine("Graph Layers");
             for (int i = 0; i < graphLayers.Count; i++) {
