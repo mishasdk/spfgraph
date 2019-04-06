@@ -5,26 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="540" Width="960">
-
-    <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16" />
-        </Style>
-
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-
-
-
-        <Style TargetType="MenuItem">
-            <Setter Property="FontSize" Value="16" />
-
-        </Style>
-
-        <!--303030 - color for top bar-->
-    </Window.Resources>
+        Title="spfgraph" Height="540" Width="960">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -34,19 +15,18 @@
         </Grid.RowDefinitions>
 
         <!--Top dock panel-->
-        <DockPanel Background="#424242" Height="30">
-            <StackPanel Height="30" Orientation="Horizontal" VerticalAlignment="Center" Background="#424242" >
-                <Menu DockPanel.Dock="Top" Background="#424242" Margin="0 0 0 0" VerticalAlignment="Center">
-                    <MenuItem Width="55">
+        <DockPanel Style="{StaticResource ResourceKey=topBar}">
+            <StackPanel Style="{StaticResource ResourceKey=stackPanelForBar}">
+                <Menu Style="{StaticResource ResourceKey=menuForBar}">
+                    <MenuItem Width="55" Style="{StaticResource ResourceKey=menuItemForBar}">
                         <MenuItem.Header>
-                            <TextBlock Width="25" Text="File" HorizontalAlignment="Center" Foreground="White" Margin="7 0 0 0"/>
+                            <TextBlock Width="25" Text="File" HorizontalAlignment="Center"  Margin="7 0 0 0"/>
                         </MenuItem.Header>
-
                         <MenuItem Header="Save"/>
                         <MenuItem Header="Open" />
                         <MenuItem Header="New" />
                     </MenuItem>
-                    <MenuItem Header="Properties" Background="#424242" Foreground="White">
+                    <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Properties">
                         <MenuItem Header="Item 1" />
                         <MenuItem Header="Item 2" />
                         <MenuItem Header="Item 3" />
@@ -62,7 +42,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <!--Left side of main page-->
+            <!--Left side of the main page-->
             <Border Background="#ADD7F6" Padding="15 10 15 10">
                 <StackPanel >
                     <TextBlock Text="Path" Margin="0 0 0 5"/>
@@ -72,16 +52,16 @@
                 </StackPanel>
             </Border>
 
-            <!--Right side of main page-->
+            <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
 
             </Border>
         </Grid>
 
         <!--Bottom dock panel-->
-        <DockPanel Height="22" Grid.Row="2" Background="#0090C1" >
-            <StackPanel DockPanel.Dock="Bottom"  Background="#0090C1" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock VerticalAlignment="Center" Background="#0090C1" Foreground="White" Text="Status" Margin="15 0 0 0"/>
+        <DockPanel Height="22" Grid.Row="2" Background="{StaticResource cleanBlue}" >
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center" Background="{StaticResource cleanBlue}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
             </StackPanel>
         </DockPanel>
     </Grid>

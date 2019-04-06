@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-            
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml" />
+                <ResourceDictionary Source="Styles/UI_Elements.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
