@@ -8,42 +8,19 @@ namespace Model {
         #region Private Fields
 
         protected List<List<int>> graphLayers;
-        List<int> firstLayer = new List<int>();
-        List<int> lastLayer = new List<int>();
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public StackedGraph(Graph graph) : base(graph) {
-            InitLayers();
+            ConstructSPF();
         }
         protected StackedGraph() { }
 
         #endregion
 
         #region Privates Methods
-
-        void InitLayers() {
-            InitFirstLayer();
-            InitLastLayer();
-        }
-
-        void InitLastLayer() {
-            for (int i = 0; i < adjacencyList.Length; i++)
-                if (adjacencyList[i].Length == 0)
-                    lastLayer.Add(i);
-        }
-
-        void InitFirstLayer() {
-            int[] counter = new int[adjacencyList.Length];
-            for (int i = 0; i < adjacencyList.Length; i++)
-                for (int j = 0; j < adjacencyList[i].Length; j++)
-                    counter[adjacencyList[i][j]]++;
-            for (int i = 0; i < counter.Length; i++)
-                if (counter[i] == 0)
-                    firstLayer.Add(i);
-        }
 
         protected void ConstructSPF() {
             var g = Proceed(adjacencyList);
@@ -126,8 +103,5 @@ namespace Model {
 
         #endregion
 
-        // Functions for tests.
-        public List<int> GetFirtsLayer() => firstLayer;
-        public List<int> GetLastLayer() => lastLayer;
     }
 }
