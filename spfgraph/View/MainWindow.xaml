@@ -54,7 +54,10 @@
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
+                <Canvas x:Name="canvas">
+                    
 
+                </Canvas>
             </Border>
         </Grid>
 

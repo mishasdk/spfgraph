@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,6 +83,7 @@
     <Compile Include="Model\GraphLib\GraphFeature.cs" />
     <Compile Include="Model\GraphLib\Pair.cs" />
     <Compile Include="Model\GraphLib\StackedGraph.cs" />
+    <Compile Include="Model\Visualization\GraphicsExtension.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
