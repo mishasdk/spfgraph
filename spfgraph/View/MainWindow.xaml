@@ -54,17 +54,23 @@
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                <Canvas x:Name="canvas">
-                    
+                <StackPanel >
+                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoLight}"/>
+                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoRegular}"/>
+                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoBold}"/>
 
-                </Canvas>
+                </StackPanel>
+                <!--<Canvas x:Name="canvas">
+                    
+                    
+                </Canvas>-->
             </Border>
         </Grid>
 
         <!--Bottom dock panel-->
-        <DockPanel Height="22" Grid.Row="2" Background="{StaticResource cleanBlue}" >
+        <DockPanel Height="22" Grid.Row="2" Background="{StaticResource cleanBlueBrush}" >
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock VerticalAlignment="Center" Background="{StaticResource cleanBlue}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
+                <TextBlock VerticalAlignment="Center" Background="{StaticResource cleanBlueBrush}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
             </StackPanel>
         </DockPanel>
     </Grid>
