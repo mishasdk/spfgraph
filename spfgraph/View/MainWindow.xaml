@@ -10,23 +10,78 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960">
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        
+                        <!--Outer border for shadow-->
+                        <Border Padding="{Binding OuterMarginThinckness, FallbackValue=10}" x:Name="Container">
+                            
+                            <!--Main window outline--> 
+                            <Grid>
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=5}" Background="{Binding WhiteColorBrush, FallbackValue=White}">
+
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="10" Opacity="0.5" />
+                                    </Border.Effect>
+                                </Border>
+                                
+                                <!--The main window content-->
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=22}"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!--Top bar-->
+                                    <Grid Background="#666" Grid.Row="0" Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Viewbox HorizontalAlignment="Center" Grid.Column="1">
+                                            <TextBlock Text="1"/>
+                                        </Viewbox>
+
+                                    </Grid>
+                                </Grid>
+                                
+                                
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
 
     <WindowChrome.WindowChrome>
         <WindowChrome 
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            GlassFrameThickness="0"
+            CornerRadius="0"
             />
-
     </WindowChrome.WindowChrome>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="35"/>
             <RowDefinition />
             <RowDefinition Height="22"/>
         </Grid.RowDefinitions>
 
+       
+
         <!--Top dock panel-->
-        <DockPanel Style="{StaticResource ResourceKey=topBar}">
+        <DockPanel Grid.Row="1" Style="{StaticResource ResourceKey=topBar}">
             <StackPanel Style="{StaticResource ResourceKey=stackPanelForBar}">
                 <Menu Style="{StaticResource ResourceKey=menuForBar}">
                     <MenuItem Width="55" Style="{StaticResource ResourceKey=menuItemForBar}">
@@ -47,7 +102,7 @@
         </DockPanel>
 
         <!--Main page-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="230"/>
                 <ColumnDefinition />
@@ -76,7 +131,7 @@
         </Grid>
 
         <!--Bottom dock panel-->
-        <DockPanel Height="22" Grid.Row="2" Background="{StaticResource CleanBlueBrush}" >
+        <DockPanel Height="22" Grid.Row="3" Background="{StaticResource CleanBlueBrush}" >
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock VerticalAlignment="Center" Background="{StaticResource CleanBlueBrush}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
             </StackPanel>

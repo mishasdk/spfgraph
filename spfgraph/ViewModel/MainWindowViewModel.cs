@@ -12,8 +12,8 @@ namespace ViewModel {
 
         Window window;
         //int resizeBorder = 6;
-        int outerMarginSize = 5;
-        int windowRadius = 10;
+        int outerMarginSize = 10;
+        int windowRadius = 5;
 
         #endregion
 
@@ -30,6 +30,7 @@ namespace ViewModel {
             get => window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
             set {
                 outerMarginSize = value;
+                OnPropertyChanged(nameof(OuterMarginSize));
             }
         }
         public Thickness OuterMarginSizeThickness {
@@ -40,14 +41,20 @@ namespace ViewModel {
             get => window.WindowState == WindowState.Maximized ? 0 : windowRadius;
             set {
                 windowRadius = value;
+                OnPropertyChanged(nameof(WindowRadius));
             }
         }
         public CornerRadius WindowCornerRadius {
             get => new CornerRadius(WindowRadius);
         }
-    
-        #endregion
 
+        public int TitleHeight { get; set; } = 22;
+        public GridLength TitleHeightGridLength {
+            get => new GridLength(TitleHeight + ResizeBorder);
+        }
+
+
+        #endregion
 
         #region Constructor
 
