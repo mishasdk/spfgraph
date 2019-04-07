@@ -8,4 +8,20 @@
     <Color x:Key="CleanBlueColor">#0090C1</Color>
     <SolidColorBrush x:Key="CleanBlueBrush" Color="{StaticResource CleanBlueColor}"/>
     
+    <Color x:Key="WhiteColor">#FFFFFF</Color>
+    <SolidColorBrush x:Key="WhiteColorBrush" Color="{StaticResource WhiteColor}"/>
+
+    <Color x:Key="LightGrayColor">#BBBBBB</Color>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGrayColor}"/>
+
+    <Color x:Key="DarkWhiteColor">#666</Color>
+    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhiteColor}"/>
+
+    <Color x:Key="HoverLightGrayColor">#444</Color>
+    <SolidColorBrush x:Key="HoverLightColorBrush" Color="{StaticResource HoverLightGrayColor}"/>
+
+    <Color x:Key="HoverRedColor">#F85A3E</Color>
+    <SolidColorBrush x:Key="HoverRedBrush" Color="{StaticResource HoverRedColor}"/>
+
+
 </ResourceDictionary>
