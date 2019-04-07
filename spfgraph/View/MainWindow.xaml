@@ -5,7 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
+        x:Name="AppWindow"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            />
+
+    </WindowChrome.WindowChrome>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -55,9 +66,7 @@
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
                 <StackPanel >
-                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoLight}"/>
-                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoRegular}"/>
-                    <TextBlock FontSize="72" Text="Hello World!" FontFamily="{StaticResource LatoBold}"/>
+                    <TextBlock FontSize="72" Text="{Binding Test}" />
 
                 </StackPanel>
                 <!--<Canvas x:Name="canvas">
