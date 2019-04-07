@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Model;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -11,9 +12,8 @@ namespace ViewModel {
         #region Private Fields
 
         Window window;
-        //int resizeBorder = 6;
         int outerMarginSize = 5;
-        int windowRadius = 10;
+        int windowRadius = 5;
 
         #endregion
 
@@ -30,6 +30,7 @@ namespace ViewModel {
             get => window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
             set {
                 outerMarginSize = value;
+                OnPropertyChanged(nameof(OuterMarginSize));
             }
         }
         public Thickness OuterMarginSizeThickness {
@@ -40,14 +41,20 @@ namespace ViewModel {
             get => window.WindowState == WindowState.Maximized ? 0 : windowRadius;
             set {
                 windowRadius = value;
+                OnPropertyChanged(nameof(WindowRadius));
             }
         }
         public CornerRadius WindowCornerRadius {
             get => new CornerRadius(WindowRadius);
         }
-    
-        #endregion
 
+        public int TitleHeight { get; set; } = 18;
+        public GridLength TitleHeightGridLength {
+            get => new GridLength(TitleHeight + ResizeBorder);
+        }
+
+
+        #endregion
 
         #region Constructor
 
@@ -58,10 +65,11 @@ namespace ViewModel {
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(windowRadius));
+                OnPropertyChanged(nameof(WindowRadius));
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
+            //var resizer = new WindowResizer(window);
         }
 
         #endregion
