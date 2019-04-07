@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Model;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -11,8 +12,7 @@ namespace ViewModel {
         #region Private Fields
 
         Window window;
-        //int resizeBorder = 6;
-        int outerMarginSize = 10;
+        int outerMarginSize = 5;
         int windowRadius = 5;
 
         #endregion
@@ -65,10 +65,11 @@ namespace ViewModel {
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(windowRadius));
+                OnPropertyChanged(nameof(WindowRadius));
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
+            //var resizer = new WindowResizer(window);
         }
 
         #endregion

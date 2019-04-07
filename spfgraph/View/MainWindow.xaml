@@ -20,13 +20,13 @@
                     <ControlTemplate TargetType="{x:Type Window}">
 
                         <!--Outer border for shadow-->
-                        <Border Padding="{Binding OuterMarginThinckness, FallbackValue=10}" x:Name="Container">
+                        <Border Padding="{Binding OuterMarginSize, FallbackValue=5}" x:Name="Container">
 
                             <!--Main window outline-->
                             <Grid>
-                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=5}" Background="{Binding WhiteColorBrush, FallbackValue=White}">
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" >
                                     <Border.Effect>
-                                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.5" />
+                                        <DropShadowEffect BlurRadius="10" ShadowDepth="10" Opacity="0.5" />
                                     </Border.Effect>
                                 </Border>
 
@@ -74,19 +74,16 @@
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
             GlassFrameThickness="0"
-            CornerRadius="0"
             />
     </WindowChrome.WindowChrome>
 
     <Grid>
         <Grid.RowDefinitions>
-           
+
             <RowDefinition Height="35"/>
             <RowDefinition />
             <RowDefinition Height="22"/>
         </Grid.RowDefinitions>
-
-
 
         <!--Top dock panel-->
         <DockPanel Grid.Row="0" Style="{StaticResource ResourceKey=topBar}">
