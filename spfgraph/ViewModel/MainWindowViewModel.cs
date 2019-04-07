@@ -48,7 +48,7 @@ namespace ViewModel {
             get => new CornerRadius(WindowRadius);
         }
 
-        public int TitleHeight { get; set; } = 22;
+        public int TitleHeight { get; set; } = 25;
         public GridLength TitleHeightGridLength {
             get => new GridLength(TitleHeight + ResizeBorder);
         }

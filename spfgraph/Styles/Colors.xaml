@@ -11,4 +11,11 @@
     <Color x:Key="WhiteColor">#0090C1</Color>
     <SolidColorBrush x:Key="WhiteColorBrush" Color="{StaticResource WhiteColor}"/>
 
+    <Color x:Key="LightGrayColor">#bbb</Color>
+    <SolidColorBrush x:Key="LightColorBrush" Color="{StaticResource LightGrayColor}"/>
+
+    <Color x:Key="HoverLightGrayColor">#444</Color>
+    <SolidColorBrush x:Key="HoverLightColorBrush" Color="{StaticResource HoverLightGrayColor}"/>
+
+
 </ResourceDictionary>
