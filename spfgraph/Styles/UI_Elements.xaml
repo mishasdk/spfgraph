@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:View">
 
     <Style TargetType="DockPanel" x:Key="topBar">
-        <Setter Property="Background" Value="{StaticResource darkGrayColorBrush}"/>
+        <Setter Property="Background" Value="{StaticResource DarkGrayColorBrush}"/>
         <Setter Property="Height" Value="30"/>
     </Style>
 
@@ -14,12 +14,12 @@
     </Style>    
 
     <Style TargetType="Menu" x:Key="menuForBar">
-        <Setter Property="Background" Value="{StaticResource darkGrayColorBrush}"/>
+        <Setter Property="Background" Value="{StaticResource DarkGrayColorBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
     <Style TargetType="MenuItem" x:Key="menuItemForBar">
-        <Setter Property="Background" Value="{StaticResource darkGrayColorBrush}"/>
+        <Setter Property="Background" Value="{StaticResource DarkGrayColorBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="16" />
     </Style>
