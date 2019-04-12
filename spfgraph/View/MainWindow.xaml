@@ -7,17 +7,12 @@
         xmlns:grsh="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         mc:Ignorable="d"
         x:Name="AppWindow"
-        WindowStyle="None"
-        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960"
         MinWidth="400" MinHeight="250"
-        Style="{StaticResource ResourceKey=MainWindowChrome}"
-  
         >
 
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition />

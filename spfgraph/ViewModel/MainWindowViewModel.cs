@@ -13,53 +13,53 @@ namespace ViewModel {
         #region Private Fields
 
         Window window;
-        int outerMarginSize = 5;
-        int resizeBorder = 3;
         GraphVizViewModel graphViz;
         IDialogService dialogService;
         string filePath;
-        WindowResizer windowResizer;
-        WindowDockPosition windowDock = WindowDockPosition.Undocked;
-        Thickness innerContentPadding = new Thickness(4, 0, 4, 4);
+        //int outerMarginSize = 5;
+        //int resizeBorder = 3;
+        //WindowResizer windowResizer;
+        //WindowDockPosition windowDock = WindowDockPosition.Undocked;
+        //Thickness innerContentPadding = new Thickness(4, 0, 4, 4);
 
         #endregion
 
         #region Public Propeties
-        /// <summary>
-        /// Size of the the resize border
-        /// </summary>
-        public int ResizeBorder {
-            get => window.WindowState == WindowState.Maximized ? 0 : resizeBorder;
-        }
-        public Thickness ResizeBorderThickness {
-            get => new Thickness(ResizeBorder + OuterMarginSize);
-        }
+        ///// <summary>
+        ///// Size of the the resize border
+        ///// </summary>
+        //public int ResizeBorder {
+        //    get => window.WindowState == WindowState.Maximized ? 0 : resizeBorder;
+        //}
+        //public Thickness ResizeBorderThickness {
+        //    get => new Thickness(ResizeBorder + OuterMarginSize);
+        //}
 
-        public int OuterMarginSize {
-            get {
-                switch (windowDock) {
-                    case WindowDockPosition.BottomLeft:
-                    case WindowDockPosition.BottomRight:
-                    case WindowDockPosition.Right:
-                    case WindowDockPosition.Left:
-                    case WindowDockPosition.TopLeft:
-                    case WindowDockPosition.TopRight: return 0;
-                }
-                return window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
-            }
-            set {
-                outerMarginSize = value;
-                OnPropertyChanged(nameof(OuterMarginSize));
-            }
-        }
-        public Thickness OuterMarginSizeThickness {
-            get => new Thickness(OuterMarginSize);
-        }
+        //public int OuterMarginSize {
+        //    get {
+        //        switch (windowDock) {
+        //            case WindowDockPosition.BottomLeft:
+        //            case WindowDockPosition.BottomRight:
+        //            case WindowDockPosition.Right:
+        //            case WindowDockPosition.Left:
+        //            case WindowDockPosition.TopLeft:
+        //            case WindowDockPosition.TopRight: return 0;
+        //        }
+        //        return window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
+        //    }
+        //    set {
+        //        outerMarginSize = value;
+        //        OnPropertyChanged(nameof(OuterMarginSize));
+        //    }
+        //}
+        //public Thickness OuterMarginSizeThickness {
+        //    get => new Thickness(OuterMarginSize);
+        //}
 
-        public int TitleHeight { get; set; } = 18;
-        public GridLength TitleHeightGridLength {
-            get => window.WindowState == WindowState.Maximized ? new GridLength(TitleHeight) : new GridLength(TitleHeight + ResizeBorder);
-        }
+        //public int TitleHeight { get; set; } = 18;
+        //public GridLength TitleHeightGridLength {
+        //    get => window.WindowState == WindowState.Maximized ? new GridLength(TitleHeight) : new GridLength(TitleHeight + ResizeBorder);
+        //}
 
         public GraphVizViewModel GraphViz {
             get => graphViz;
@@ -86,17 +86,28 @@ namespace ViewModel {
             }
         }
 
-        public Thickness InnerContentPadding {
-            get => window.WindowState == WindowState.Maximized ? new Thickness(0) : innerContentPadding;
-        }
+        //public Thickness InnerContentPadding {
+        //    get => window.WindowState == WindowState.Maximized ? new Thickness(0) : innerContentPadding;
+        //}
 
-        bool BeingMoved { get; set; } = false;
+        //bool BeingMoved { get; set; } = false;
 
         #endregion
 
         #region Commands
 
         RelayCommand openCommand;
+        RelayCommand buildGraphCommand;
+        public RelayCommand BuildGraphCommand {
+            get => buildGraphCommand ??
+                (buildGraphCommand = new RelayCommand(() => {
+                    if (FilePath == "" || FilePath == null)
+                        return;
+                    var g = CreateGraph(FilePath);
+                    ConstructGraphToShow(g);
+                }));
+        }
+
         public RelayCommand OpenCommand {
             get => openCommand ??
                 (openCommand = new RelayCommand(() => {
@@ -110,40 +121,29 @@ namespace ViewModel {
                 }));
         }
 
-        RelayCommand buildGraphCommand;
-        public RelayCommand BuildGraphCommand {
-            get => buildGraphCommand ??
-                (buildGraphCommand = new RelayCommand(() => {
-                    if (FilePath == "" || FilePath == null)
-                        return;
-                    var g = CreateGraph(FilePath);
-                    ConstructGraphToShow(g);
-                }));
-        }
+        //RelayCommand closeWindowCommand;
+        //public RelayCommand CloseWindowCommand {
+        //    get => closeWindowCommand ??
+        //        (closeWindowCommand = new RelayCommand(() => {
+        //            window.Close();
+        //        }));
+        //}
 
-        RelayCommand closeWindowCommand;
-        public RelayCommand CloseWindowCommand {
-            get => closeWindowCommand ??
-                (closeWindowCommand = new RelayCommand(() => {
-                    window.Close();
-                }));
-        }
+        //RelayCommand expandWindowCommand;
+        //public RelayCommand ExpandWindowCommand {
+        //    get => expandWindowCommand ??
+        //        (expandWindowCommand = new RelayCommand(() => {
+        //            window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        //        }));
+        //}
 
-        RelayCommand expandWindowCommand;
-        public RelayCommand ExpandWindowCommand {
-            get => expandWindowCommand ??
-                (expandWindowCommand = new RelayCommand(() => {
-                    window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-                }));
-        }
-
-        RelayCommand hideWindowCommand;
-        public RelayCommand HideWindowCommand {
-            get => hideWindowCommand ??
-                (hideWindowCommand = new RelayCommand(() => {
-                    window.WindowState = WindowState.Minimized;
-                }));
-        }
+        //RelayCommand hideWindowCommand;
+        //public RelayCommand HideWindowCommand {
+        //    get => hideWindowCommand ??
+        //        (hideWindowCommand = new RelayCommand(() => {
+        //            window.WindowState = WindowState.Minimized;
+        //        }));
+        //}
 
         #endregion
 
@@ -153,38 +153,38 @@ namespace ViewModel {
             this.window = window;
             dialogService = new DefaultDialogService();
 
-            window.StateChanged += (sender, e) => {
-                WindowResized();
-            };
+            //window.StateChanged += (sender, e) => {
+            //    WindowResized();
+            //};
 
-            windowResizer = new WindowResizer(window);
+            //windowResizer = new WindowResizer(window);
 
-            // Listen out for dock changes
-            windowResizer.WindowDockChanged += (dock) => {
-                // Store last position
-                windowDock = dock;
+            //// Listen out for dock changes
+            //windowResizer.WindowDockChanged += (dock) => {
+            //    // Store last position
+            //    windowDock = dock;
 
-                // Fire off resize events
-                WindowResized();
-            };
+            //    // Fire off resize events
+            //    WindowResized();
+            //};
 
-            // On window being moved/dragged
-            windowResizer.WindowStartedMove += () => {
-                // Update being moved flag
-                BeingMoved = true;
-            };
+            //// On window being moved/dragged
+            //windowResizer.WindowStartedMove += () => {
+            //    // Update being moved flag
+            //    BeingMoved = true;
+            //};
 
-            // Fix dropping an undocked window at top which should be positioned at the
-            // very top of screen
-            windowResizer.WindowFinishedMove += () => {
-                // Update being moved flag
-                BeingMoved = false;
+            //// Fix dropping an undocked window at top which should be positioned at the
+            //// very top of screen
+            //windowResizer.WindowFinishedMove += () => {
+            //    // Update being moved flag
+            //    BeingMoved = false;
 
-                // Check for moved to top of window and not at an edge
-                if (windowDock == WindowDockPosition.Undocked && window.Top == windowResizer.CurrentScreenSize.Top)
-                    // If so, move it to the true top (the border size)
-                    window.Top = -OuterMarginSizeThickness.Top;
-            };
+            //    // Check for moved to top of window and not at an edge
+            //    if (windowDock == WindowDockPosition.Undocked && window.Top == windowResizer.CurrentScreenSize.Top)
+            //        // If so, move it to the true top (the border size)
+            //        window.Top = -OuterMarginSizeThickness.Top;
+            //};
 
         }
 
@@ -192,13 +192,13 @@ namespace ViewModel {
 
         #region Methods
 
-        private void WindowResized() {
-            OnPropertyChanged(nameof(OuterMarginSize));
-            OnPropertyChanged(nameof(OuterMarginSizeThickness));
-            OnPropertyChanged(nameof(InnerContentPadding));
-            OnPropertyChanged(nameof(ResizeBorderThickness));
-            OnPropertyChanged(nameof(TitleHeightGridLength));
-        }
+        //private void WindowResized() {
+        //    OnPropertyChanged(nameof(OuterMarginSize));
+        //    OnPropertyChanged(nameof(OuterMarginSizeThickness));
+        //    OnPropertyChanged(nameof(InnerContentPadding));
+        //    OnPropertyChanged(nameof(ResizeBorderThickness));
+        //    OnPropertyChanged(nameof(TitleHeightGridLength));
+        //}
 
         Graph CreateGraph() {
             var list = new List<int>[] {
