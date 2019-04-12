@@ -110,6 +110,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Converter\ViewModelToGraphToShowConverter.cs" />
+    <Compile Include="Model\Dialog\DefaultDialogService.cs" />
+    <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Window\WindowResizer.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />

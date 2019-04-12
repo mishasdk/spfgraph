@@ -16,6 +16,8 @@ namespace ViewModel {
         int outerMarginSize = 5;
         int windowRadius = 5;
         GraphVizViewModel graphViz;
+        IDialogService dialogService;
+        string filePath;
 
         #endregion
 
@@ -72,12 +74,44 @@ namespace ViewModel {
             }
         }
 
+        public string FilePath {
+            get => filePath;
+            set {
+                filePath = value;
+                OnPropertyChanged(nameof(FilePath));
+            }
+        }
 
         #endregion
 
         #region Commands
 
-        public RelayCommand CreateGraphToViz;
+        RelayCommand openCommand;
+        public RelayCommand OpenCommand {
+            get => openCommand ??
+                (openCommand = new RelayCommand(() => {
+                    try {
+                        if (dialogService.OpenFileDialog()) {
+                            FilePath = dialogService.FilePath;
+                            dialogService.ShowMessage("File opened\n" + $"Path: {FilePath}");
+                        }
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    }
+                }));
+        }
+
+        RelayCommand buildGraphCommand;
+        public RelayCommand BuildGraphCommand {
+            get => buildGraphCommand ??
+                (buildGraphCommand = new RelayCommand(() => {
+                    if (FilePath == "" || FilePath == null)
+                        return;
+                    var g = CreateGraph(FilePath);
+                    ConstructGraphToShow(g);
+                }));
+        }
+
 
         #endregion
 
@@ -85,6 +119,7 @@ namespace ViewModel {
 
         public MainWindowViewModel(Window window) {
             this.window = window;
+            dialogService = new DefaultDialogService();
 
             window.StateChanged += (sender, e) => {
                 OnPropertyChanged(nameof(ResizeBorderThickness));
@@ -95,7 +130,7 @@ namespace ViewModel {
             };
 
 
-            ConstructGraphToShow(CreateGraph());
+            //ConstructGraphToShow(CreateGraph());
 
             //var resizer = new WindowResizer(window);
         }
@@ -112,6 +147,12 @@ namespace ViewModel {
                 new List<int> { }
             };
             var graph = new Graph(list);
+            return graph;
+        }
+
+        Graph CreateGraph(string fileName) {
+            var adjacencyList = DataProvider.CreateAdjacencyListFromFile(fileName);
+            var graph = new Graph(adjacencyList);
             return graph;
         }
 
