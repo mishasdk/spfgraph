@@ -30,14 +30,14 @@
                         <MenuItem.Header>
                             <TextBlock Width="25" Text="File" HorizontalAlignment="Center"  Margin="7 0 0 0"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Save"/>
-                        <MenuItem Header="Open" />
-                        <MenuItem Header="New" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Save"/>
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Open" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="New" />
                     </MenuItem>
                     <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Properties">
-                        <MenuItem Header="Item 1" />
-                        <MenuItem Header="Item 2" />
-                        <MenuItem Header="Item 3" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 1" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 2" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 3" />
                     </MenuItem>
                 </Menu>
             </StackPanel>
