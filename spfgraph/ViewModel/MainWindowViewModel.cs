@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Model;
+using QuickGraph;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -62,6 +63,15 @@ namespace ViewModel {
             }
         }
 
+        IBidirectionalGraph<object, IEdge<object>> graphToShow;
+        public IBidirectionalGraph<object, IEdge<object>> GraphToShow {
+            get => graphToShow;
+            set {
+                graphToShow = value;
+                OnPropertyChanged(nameof(GraphToShow));
+            }
+        }
+
 
         #endregion
 
@@ -85,13 +95,12 @@ namespace ViewModel {
             };
 
 
-            GraphViz = new GraphVizViewModel(CreateGraph());
+            ConstructGraphToShow(CreateGraph());
 
             //var resizer = new WindowResizer(window);
         }
 
         #endregion
-
 
         #region Methods
         Graph CreateGraph() {
@@ -106,7 +115,27 @@ namespace ViewModel {
             return graph;
         }
 
-        #endregion
+        void ConstructGraphToShow(Graph graph) {
+            var g = new BidirectionalGraph<object, IEdge<object>>();
+            int[][] adjacencyList = graph.AdjacencyList;
 
+            var ver = new List<string>();
+            for (int i = 0; i < adjacencyList.Length; i++)
+                ver.Add(i.ToString());
+            g.AddVertexRange(ver);
+
+            var edg = new List<Edge<object>>();
+            for (int i = 0; i < adjacencyList.Length; i++)
+                for (int j = 0; j < adjacencyList[i].Length; j++) {
+                    int v = i;
+                    int to = adjacencyList[i][j];
+                    edg.Add(new Edge<object>(ver[v], ver[to]));
+                }
+            g.AddEdgeRange(edg);
+
+            GraphToShow = g;
+        }
+
+        #endregion
     }
 }

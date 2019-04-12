@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:grsh="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         mc:Ignorable="d"
         x:Name="AppWindow"
         WindowStyle="None"
@@ -61,8 +62,11 @@
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                
-                
+                <grsh:GraphLayout
+                    Graph="{Binding GraphToShow}"
+                    LayoutAlgorithmType="Tree"
+                    />
+
             </Border>
         </Grid>
 
