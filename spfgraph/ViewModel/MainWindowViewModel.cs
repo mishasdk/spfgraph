@@ -14,6 +14,7 @@ namespace ViewModel {
         Window window;
         int outerMarginSize = 5;
         int windowRadius = 5;
+        GraphVizViewModel graphViz;
 
         #endregion
 
@@ -53,6 +54,20 @@ namespace ViewModel {
             get => new GridLength(TitleHeight + ResizeBorder);
         }
 
+        public GraphVizViewModel GraphViz {
+            get => graphViz;
+            set {
+                graphViz = value;
+                OnPropertyChanged(nameof(GraphViz));
+            }
+        }
+
+
+        #endregion
+
+        #region Commands
+
+        public RelayCommand CreateGraphToViz;
 
         #endregion
 
@@ -69,7 +84,26 @@ namespace ViewModel {
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
+
+            GraphViz = new GraphVizViewModel(CreateGraph());
+
             //var resizer = new WindowResizer(window);
+        }
+
+        #endregion
+
+
+        #region Methods
+        Graph CreateGraph() {
+            var list = new List<int>[] {
+                new List<int> {1, 2},
+                new List<int> {2, 3},
+                new List<int> {1},
+                new List<int> {3},
+                new List<int> { }
+            };
+            var graph = new Graph(list);
+            return graph;
         }
 
         #endregion

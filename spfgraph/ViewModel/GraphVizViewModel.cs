@@ -2,7 +2,6 @@
 using QuickGraph;
 using System.Collections.Generic;
 
-
 namespace ViewModel {
     public class GraphVizViewModel : BaseViewModel {
 
@@ -13,7 +12,7 @@ namespace ViewModel {
 
         #endregion
 
-        #region Public members
+        #region Public Properties
 
         public IBidirectionalGraph<object, IEdge<object>> GraphToShow {
             get => graphToShow;

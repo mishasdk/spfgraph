@@ -61,13 +61,8 @@
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                <StackPanel >
-                    <TextBlock FontSize="72" Text="{Binding Test}" />
-
-                </StackPanel>
-                <!--<Canvas x:Name="canvas">
                 
-                </Canvas>-->
+                
             </Border>
         </Grid>
 
