@@ -10,12 +10,15 @@
                     <Border Padding="{Binding OuterMarginSize, FallbackValue=5}" x:Name="Container">
                         <!--Main window outline-->
                         <Grid>
-                            <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" >
+                            <Grid.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.75" />
+                            </Grid.Effect>
+
+                            <Border>
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="10" ShadowDepth="10" Opacity="0.5" />
                                 </Border.Effect>
                             </Border>
-
                             <!--The main window content-->
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -49,12 +52,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"
                 CaptionHeight="{Binding TitleHeight}" GlassFrameThickness="0"/>
             </Setter.Value>
         </Setter>
+
     </Style>
 
 </ResourceDictionary>

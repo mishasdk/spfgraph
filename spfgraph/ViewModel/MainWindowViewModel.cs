@@ -14,7 +14,6 @@ namespace ViewModel {
 
         Window window;
         int outerMarginSize = 5;
-        int windowRadius = 5;
         GraphVizViewModel graphViz;
         IDialogService dialogService;
         string filePath;
@@ -39,17 +38,6 @@ namespace ViewModel {
         }
         public Thickness OuterMarginSizeThickness {
             get => new Thickness(OuterMarginSize);
-        }
-
-        public int WindowRadius {
-            get => window.WindowState == WindowState.Maximized ? 0 : windowRadius;
-            set {
-                windowRadius = value;
-                OnPropertyChanged(nameof(WindowRadius));
-            }
-        }
-        public CornerRadius WindowCornerRadius {
-            get => new CornerRadius(WindowRadius);
         }
 
         public int TitleHeight { get; set; } = 18;
@@ -148,8 +136,6 @@ namespace ViewModel {
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
 
