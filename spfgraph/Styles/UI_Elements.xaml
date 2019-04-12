@@ -11,7 +11,7 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>    
+    </Style>
 
     <Style TargetType="Menu" x:Key="menuForBar">
         <Setter Property="Background" Value="{StaticResource DarkGrayColorBrush}"/>

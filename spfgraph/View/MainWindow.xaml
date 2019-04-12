@@ -4,82 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:grsh="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         mc:Ignorable="d"
         x:Name="AppWindow"
-        WindowStyle="None"
-        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960"
         MinWidth="400" MinHeight="250"
         >
-    
-    <Window.Resources>
-        <Style TargetType="{x:Type local:MainWindow}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Window}">
-
-                        <!--Outer border for shadow-->
-                        <Border Padding="{Binding OuterMarginSize, FallbackValue=5}" x:Name="Container">
-
-                            <!--Main window outline-->
-                            <Grid>
-                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" >
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="10" ShadowDepth="10" Opacity="0.5" />
-                                    </Border.Effect>
-                                </Border>
-
-                                <!--The main window content-->
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=18}"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!--Top bar-->
-                                    <Grid Background="{StaticResource DarkWhiteBrush}" Grid.Row="0" Panel.ZIndex="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <!--System Window Buttons-->
-                                        <StackPanel Grid.Column="2" Orientation="Horizontal" >
-                                            <Button Style="{StaticResource WindowControlButton}" Content="__" />
-                                            <Button Style="{StaticResource WindowControlButton}" Content="[  ]" />
-                                            <Button Style="{StaticResource WindowControlCloseButton}" Content="X" />
-                                        </StackPanel>
-                                       
-                                    </Grid>
-
-                                    <!--Main content-->
-                                    <Border Grid.Row="2" Padding="0">
-                                        <ContentPresenter Content="{TemplateBinding Content}"/>
-                                    </Border>
-                                </Grid>
-
-                            </Grid>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
-    <WindowChrome.WindowChrome>
-        <WindowChrome 
-            ResizeBorderThickness="{Binding ResizeBorderThickness}"
-            CaptionHeight="{Binding TitleHeight}"
-            GlassFrameThickness="0"
-            />
-    </WindowChrome.WindowChrome>
 
     <Grid>
         <Grid.RowDefinitions>
-
             <RowDefinition Height="35"/>
             <RowDefinition />
             <RowDefinition Height="22"/>
@@ -93,14 +27,14 @@
                         <MenuItem.Header>
                             <TextBlock Width="25" Text="File" HorizontalAlignment="Center"  Margin="7 0 0 0"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Save"/>
-                        <MenuItem Header="Open" />
-                        <MenuItem Header="New" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Save"/>
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Open" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="New" />
                     </MenuItem>
                     <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Properties">
-                        <MenuItem Header="Item 1" />
-                        <MenuItem Header="Item 2" />
-                        <MenuItem Header="Item 3" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 1" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 2" />
+                        <MenuItem Style="{StaticResource ResourceKey=menuItemForBar}" Header="Item 3" />
                     </MenuItem>
                 </Menu>
             </StackPanel>
@@ -117,21 +51,19 @@
             <Border Background="#ADD7F6" Padding="15 10 15 10">
                 <StackPanel >
                     <TextBlock Text="Path" Margin="0 0 0 5"/>
-                    <TextBox Grid.Column="0" IsReadOnly="False" Text="" Margin="0 0 0 10"/>
-                    <Button Grid.Column="1" Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
-                    <Button Content="Build Graph" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10"/>
+                    <Button Grid.Column="1" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
+                    <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                 </StackPanel>
             </Border>
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                <StackPanel >
-                    <TextBlock FontSize="72" Text="{Binding Test}" />
+                <grsh:GraphLayout
+                    Graph="{Binding GraphToShow}"
+                    LayoutAlgorithmType="Tree"
+                    />
 
-                </StackPanel>
-                <!--<Canvas x:Name="canvas">
-                
-                </Canvas>-->
             </Border>
         </Grid>
 

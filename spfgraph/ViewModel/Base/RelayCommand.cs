@@ -7,14 +7,19 @@ using System.Windows.Input;
 
 namespace ViewModel {
     public class RelayCommand : ICommand {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged = (sender, e) => { };
+        Action action;
 
         public bool CanExecute(object parameter) {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void Execute(object parameter) {
-            throw new NotImplementedException();
+            action();
+        }
+
+        public RelayCommand(Action method) {
+            action = method;
         }
     }
 }
