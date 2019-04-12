@@ -3,22 +3,29 @@
                     xmlns:local="clr-namespace:View">
 
     <Style TargetType="Window" x:Key="MainWindowChrome">
+
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    ResizeBorderThickness="{Binding ResizeBorderThickness}"
+                    CaptionHeight="{Binding TitleHeight}"
+                    GlassFrameThickness="0, 0 ,0 , 1" />
+            </Setter.Value>
+        </Setter>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <!--Outer border for shadow-->
-                    <Border Padding="{Binding OuterMarginSize, FallbackValue=5}" x:Name="Container">
+                    <Border Padding="{Binding OuterMarginSize, FallbackValue=0}"   x:Name="Container">
+                        <!--<Border Padding="0"   x:Name="Container">-->
                         <!--Main window outline-->
-                        <Grid>
-                            <Grid.Effect>
+                        <Grid Background="White">
+                            <!--<Grid.Effect>
                                 <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.75" />
-                            </Grid.Effect>
+                            </Grid.Effect>-->
 
-                            <Border>
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="10" Opacity="0.5" />
-                                </Border.Effect>
-                            </Border>
+
                             <!--The main window content-->
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -43,7 +50,7 @@
                                 </Grid>
 
                                 <!--Main content-->
-                                <Border Grid.Row="2" Padding="0">
+                                <Border Grid.Row="2" Padding="{Binding InnerContentPadding}" Background="{StaticResource DarkGrayColorBrush}">
                                     <ContentPresenter Content="{TemplateBinding Content}"/>
                                 </Border>
                             </Grid>
@@ -53,12 +60,6 @@
             </Setter.Value>
         </Setter>
 
-        <Setter Property="WindowChrome.WindowChrome">
-            <Setter.Value>
-                <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"
-                CaptionHeight="{Binding TitleHeight}" GlassFrameThickness="0"/>
-            </Setter.Value>
-        </Setter>
 
     </Style>
 

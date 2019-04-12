@@ -14,9 +14,13 @@ namespace ViewModel {
 
         Window window;
         int outerMarginSize = 5;
+        int resizeBorder = 3;
         GraphVizViewModel graphViz;
         IDialogService dialogService;
         string filePath;
+        WindowResizer windowResizer;
+        WindowDockPosition windowDock = WindowDockPosition.Undocked;
+        Thickness innerContentPadding = new Thickness(4, 0, 4, 4);
 
         #endregion
 
@@ -24,13 +28,25 @@ namespace ViewModel {
         /// <summary>
         /// Size of the the resize border
         /// </summary>
-        public int ResizeBorder { get; set; } = 3;
+        public int ResizeBorder {
+            get => window.WindowState == WindowState.Maximized ? 0 : resizeBorder;
+        }
         public Thickness ResizeBorderThickness {
             get => new Thickness(ResizeBorder + OuterMarginSize);
         }
 
         public int OuterMarginSize {
-            get => window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
+            get {
+                switch (windowDock) {
+                    case WindowDockPosition.BottomLeft:
+                    case WindowDockPosition.BottomRight:
+                    case WindowDockPosition.Right:
+                    case WindowDockPosition.Left:
+                    case WindowDockPosition.TopLeft:
+                    case WindowDockPosition.TopRight: return 0;
+                }
+                return window.WindowState == WindowState.Maximized ? 0 : outerMarginSize;
+            }
             set {
                 outerMarginSize = value;
                 OnPropertyChanged(nameof(OuterMarginSize));
@@ -42,7 +58,7 @@ namespace ViewModel {
 
         public int TitleHeight { get; set; } = 18;
         public GridLength TitleHeightGridLength {
-            get => new GridLength(TitleHeight + ResizeBorder);
+            get => window.WindowState == WindowState.Maximized ? new GridLength(TitleHeight) : new GridLength(TitleHeight + ResizeBorder);
         }
 
         public GraphVizViewModel GraphViz {
@@ -70,6 +86,12 @@ namespace ViewModel {
             }
         }
 
+        public Thickness InnerContentPadding {
+            get => window.WindowState == WindowState.Maximized ? new Thickness(0) : innerContentPadding;
+        }
+
+        bool BeingMoved { get; set; } = false;
+
         #endregion
 
         #region Commands
@@ -81,7 +103,6 @@ namespace ViewModel {
                     try {
                         if (dialogService.OpenFileDialog()) {
                             FilePath = dialogService.FilePath;
-                            dialogService.ShowMessage("File opened\n" + $"Path: {FilePath}");
                         }
                     } catch (Exception ex) {
                         dialogService.ShowMessage(ex.Message);
@@ -133,20 +154,52 @@ namespace ViewModel {
             dialogService = new DefaultDialogService();
 
             window.StateChanged += (sender, e) => {
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OuterMarginSize));
-                OnPropertyChanged(nameof(OuterMarginSizeThickness));
+                WindowResized();
             };
 
+            windowResizer = new WindowResizer(window);
 
-            //ConstructGraphToShow(CreateGraph());
+            // Listen out for dock changes
+            windowResizer.WindowDockChanged += (dock) => {
+                // Store last position
+                windowDock = dock;
 
-            var resizer = new WindowResizer(window);
+                // Fire off resize events
+                WindowResized();
+            };
+
+            // On window being moved/dragged
+            windowResizer.WindowStartedMove += () => {
+                // Update being moved flag
+                BeingMoved = true;
+            };
+
+            // Fix dropping an undocked window at top which should be positioned at the
+            // very top of screen
+            windowResizer.WindowFinishedMove += () => {
+                // Update being moved flag
+                BeingMoved = false;
+
+                // Check for moved to top of window and not at an edge
+                if (windowDock == WindowDockPosition.Undocked && window.Top == windowResizer.CurrentScreenSize.Top)
+                    // If so, move it to the true top (the border size)
+                    window.Top = -OuterMarginSizeThickness.Top;
+            };
+
         }
 
         #endregion
 
         #region Methods
+
+        private void WindowResized() {
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(InnerContentPadding));
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(TitleHeightGridLength));
+        }
+
         Graph CreateGraph() {
             var list = new List<int>[] {
                 new List<int> {1, 2},
@@ -189,3 +242,4 @@ namespace ViewModel {
         #endregion
     }
 }
+

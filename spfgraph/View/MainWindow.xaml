@@ -13,9 +13,11 @@
         Title="spfgraph" Height="540" Width="960"
         MinWidth="400" MinHeight="250"
         Style="{StaticResource ResourceKey=MainWindowChrome}"
+  
         >
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition />
