@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
-using System;
 
 namespace Testing {
     [TestClass()]

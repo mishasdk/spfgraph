@@ -24,7 +24,7 @@ namespace Model {
 
         #region Methods
 
-        // Transforms List<int>[] adjacency list to int[][].
+        // Transforms List<int>[] adjacency list to int[][]
         protected static int[][] Proceed(List<int>[] list) {
             int[][] newList = new int[list.Length][];
             for (int i = 0; i < newList.Length; i++) {
