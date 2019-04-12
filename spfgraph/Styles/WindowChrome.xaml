@@ -33,9 +33,9 @@
 
                                     <!--System Window Buttons-->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" >
-                                        <Button Style="{StaticResource WindowControlButton}" Content="__" />
-                                        <Button Style="{StaticResource WindowControlButton}" Content="[  ]" />
-                                        <Button Style="{StaticResource WindowControlCloseButton}" Content="X" />
+                                        <Button Style="{StaticResource WindowControlButton}" Content="__" Command="{Binding HideWindowCommand}"/>
+                                        <Button Style="{StaticResource WindowControlButton}" Content="[  ]" Command="{Binding ExpandWindowCommand}"/>
+                                        <Button Style="{StaticResource WindowControlCloseButton}" Content="X" Command="{Binding CloseWindowCommand}" />
                                     </StackPanel>
                                 </Grid>
 

@@ -112,6 +112,29 @@ namespace ViewModel {
                 }));
         }
 
+        RelayCommand closeWindowCommand;
+        public RelayCommand CloseWindowCommand {
+            get => closeWindowCommand ??
+                (closeWindowCommand = new RelayCommand(() => {
+                    window.Close();
+                }));
+        }
+
+        RelayCommand expandWindowCommand;
+        public RelayCommand ExpandWindowCommand {
+            get => expandWindowCommand ??
+                (expandWindowCommand = new RelayCommand(() => {
+                    window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+                }));
+        }
+
+        RelayCommand hideWindowCommand;
+        public RelayCommand HideWindowCommand {
+            get => hideWindowCommand ??
+                (hideWindowCommand = new RelayCommand(() => {
+                    window.WindowState = WindowState.Minimized;
+                }));
+        }
 
         #endregion
 
@@ -132,7 +155,7 @@ namespace ViewModel {
 
             //ConstructGraphToShow(CreateGraph());
 
-            //var resizer = new WindowResizer(window);
+            var resizer = new WindowResizer(window);
         }
 
         #endregion
