@@ -12,6 +12,9 @@
         Title="spfgraph" Height="540" Width="960"
         MinWidth="400" MinHeight="250"
         >
+    <Window.Resources>
+        <local:GraphToVisibilityConverter x:Key="ZoomVisibilityConverter" />
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -55,15 +58,17 @@
                     <TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10"/>
                     <Button Grid.Column="1" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
                     <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Button Content="Delete Graph" Command="{Binding ClearAllCurrentDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                 </StackPanel>
             </Border>
-
+    
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                <zoom:ZoomControl MinZoom="1" MaxZoom="3">
+                <zoom:ZoomControl MinZoom="1" MaxZoom="3" Visibility="{Binding GraphToShow, ValidatesOnExceptions=True, Converter={StaticResource ZoomVisibilityConverter}}">
                     <grsh:GraphLayout
                     Graph="{Binding GraphToShow}"
-                    LayoutAlgorithmType="Tree"
+                    LayoutMode="Simple"
+                    LayoutAlgorithmType="EfficientSugiyama"
                     />
                 </zoom:ZoomControl>
             </Border>

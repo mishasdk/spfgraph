@@ -14,16 +14,18 @@ namespace ViewModel {
 
         RelayCommand openCommand;
         RelayCommand buildGraphCommand;
+        RelayCommand clearAllCurrentData;
+
 
         Window window;
         IDialogService dialogService;
         string filePath;
+        IBidirectionalGraph<object, IEdge<object>> graphToShow;
 
         #endregion
 
         #region Public Propeties
 
-        IBidirectionalGraph<object, IEdge<object>> graphToShow;
         public IBidirectionalGraph<object, IEdge<object>> GraphToShow {
             get => graphToShow;
             set {
@@ -43,7 +45,7 @@ namespace ViewModel {
         #endregion
 
         #region Commands
-    
+
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
@@ -66,6 +68,18 @@ namespace ViewModel {
                 }));
         }
 
+        public RelayCommand ClearAllCurrentDataCommand {
+            get => clearAllCurrentData ??
+                (clearAllCurrentData = new RelayCommand(() => {
+                    if (GraphToShow == null)
+                        return;
+                    var dialogResult = dialogService.AlertDialog("All unsaved data will be deleted. ");
+                    if (dialogResult == MessageBoxResult.OK) {
+                        ClearData();
+                    }
+                }));
+        }
+
         #endregion
 
         #region Constructor
@@ -79,6 +93,11 @@ namespace ViewModel {
         #endregion
 
         #region Methods
+
+        private void ClearData() {
+            FilePath = null;
+            GraphToShow = null;
+        }
 
         void CreateGraphForShow() {
             try {
