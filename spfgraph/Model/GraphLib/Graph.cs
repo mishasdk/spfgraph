@@ -3,26 +3,17 @@ using System.Collections.Generic;
 
 namespace Model {
     public class Graph {
-
-        #region Properties
-
         protected int[][] adjacencyList;
         public int[][] AdjacencyList {
             get => adjacencyList;
         }
 
-        #endregion
-
-        #region Constructors
-
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
         public Graph(Graph gr) : this(gr.adjacencyList) { }
-        public Graph(int[][] list) { adjacencyList = Proceed(list); }
+        public Graph(int[][] list) { adjacencyList = Copy(list); }
         protected Graph() { }
 
-        #endregion
-
-        #region Methods
+        #region Help Methods  
 
         // Transforms List<int>[] adjacency list to int[][]
         protected static int[][] Proceed(List<int>[] list) {
@@ -36,7 +27,7 @@ namespace Model {
             return newList;
         }
 
-        protected static int[][] Proceed(int[][] list) {
+        protected static int[][] Copy(int[][] list) {
             var newList = new int[list.Length][];
             for (int i = 0; i < newList.Length; i++) {
                 var line = list[i];
@@ -59,7 +50,7 @@ namespace Model {
             return mes;
         }
 
-        #endregion
+        #endregion  
 
     }
 }

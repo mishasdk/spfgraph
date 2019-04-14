@@ -17,7 +17,6 @@ namespace Model {
         }
 
         static List<int>[] ReadAdjacencyListWith(AdjacencyListReader listReader) {
-            // TODO: Code refactoring.
             var adjacencyList = new List<int>[listReader.AmoutOfVertex];
             var separator = "->";
             for (int i = 0; i < adjacencyList.Length; i++) {

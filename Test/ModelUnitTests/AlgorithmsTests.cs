@@ -91,5 +91,6 @@ namespace Testing {
             var graph = new Graph(list);
             Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
         }
+
     }
 }

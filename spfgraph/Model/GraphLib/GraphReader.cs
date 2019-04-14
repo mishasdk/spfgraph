@@ -12,7 +12,7 @@ namespace Model {
             var list = DataProvider.CreateAdjacencyListFromFile(filePath);
             graph = new Graph(list);
             try {
-                var stackedGraph = StackedFromGraph(graph);
+                graph = StackedFromGraph(graph);
             } catch (GraphErrorException) {
                 ;
             }

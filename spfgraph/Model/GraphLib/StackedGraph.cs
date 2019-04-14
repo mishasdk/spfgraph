@@ -4,51 +4,31 @@ using System.Collections.Generic;
 
 namespace Model {
     public class StackedGraph : Graph {
+        public List<List<int>> GraphLayers { get; set; }
 
-        #region Private Fields
-
-        protected List<List<int>> graphLayers;
-
-        #endregion
-
-        #region Constructors
-
-        public StackedGraph(Graph graph) : base(graph) {
-            ConstructSPF();
-        }
         protected StackedGraph() { }
+        public StackedGraph(Graph graph) : base(graph) {
+            SetGraphLayers();
+        }
 
-        #endregion
+        /// <summary>
+        /// Gets a specification of StackedGraph
+        /// </summary>
+        /// <returns></returns>
+        public GraphFeatures GetGraphFeatures() {
+            var features = new GraphFeatures();
 
-        #region Privates Methods
+            features.Height = GraphLayers.Count;
 
-        protected void ConstructSPF() {
-            var g = Proceed(adjacencyList);
-            graphLayers = new List<List<int>>();
-            bool[] u = new bool[g.Length];
-            for (int i = 0; i < u.Length; i++)
-                u[i] = false;
+            int maxCount = 0;
+            for (int i = 0; i < GraphLayers.Count; i++)
+                if (maxCount < GraphLayers[i].Count)
+                    maxCount = GraphLayers[i].Count;
+            features.Width = maxCount;
 
-            while (!AllUsed(u)) {
-                int[] counter = new int[g.Length];
-                graphLayers.Add(new List<int>());
+            features.AvrgWidth = (double)AdjacencyList.Length / GraphLayers.Count;
 
-                for (int i = 0; i < g.Length; i++) {
-                    if (!u[i])
-                        for (int j = 0; j < g[i].Length; j++)
-                            counter[g[i][j]]++;
-                }
-
-                for (int i = 0; i < counter.Length; i++)
-                    if (!u[i])
-                        if (counter[i] == 0) {
-                            u[i] = true;
-                            graphLayers[graphLayers.Count - 1].Add(i);
-                        }
-
-                for (int i = 0; i < graphLayers[graphLayers.Count - 1].Count; i++)
-                    g[i] = new int[0];
-            }
+            return features;
         }
 
         protected void SetGraphLayers() {
@@ -71,7 +51,6 @@ namespace Model {
             }
 
             int amountOfLayers = 1;
-
             while (q.Count != 0) {
                 int v = q.Dequeue();
                 for (int i = 0; i < g[v].Length; i++) {
@@ -86,12 +65,43 @@ namespace Model {
                 }
             }
 
-            graphLayers = new List<List<int>>();
+            GraphLayers = new List<List<int>>();
             for (int i = 0; i < amountOfLayers; i++)
-                graphLayers.Add(new List<int>());
+                GraphLayers.Add(new List<int>());
 
             for (int i = 0; i < verds.Length; i++)
-                graphLayers[verds[i].Second].Add(i);
+                GraphLayers[verds[i].Second].Add(i);
+        }
+
+        #region Help Methods
+
+        protected void ConstructSPF() {
+            var g = adjacencyList;
+            GraphLayers = new List<List<int>>();
+            bool[] u = new bool[g.Length];
+            for (int i = 0; i < u.Length; i++)
+                u[i] = false;
+
+            while (!AllUsed(u)) {
+                int[] counter = new int[g.Length];
+                GraphLayers.Add(new List<int>());
+
+                for (int i = 0; i < g.Length; i++) {
+                    if (!u[i])
+                        for (int j = 0; j < g[i].Length; j++)
+                            counter[g[i][j]]++;
+                }
+
+                for (int i = 0; i < counter.Length; i++)
+                    if (!u[i])
+                        if (counter[i] == 0) {
+                            u[i] = true;
+                            GraphLayers[GraphLayers.Count - 1].Add(i);
+                        }
+
+                for (int i = 0; i < GraphLayers[GraphLayers.Count - 1].Count; i++)
+                    g[i] = new int[0];
+            }
         }
 
         protected bool AllUsed(bool[] u) {
