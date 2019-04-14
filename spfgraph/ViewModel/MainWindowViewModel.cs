@@ -12,6 +12,9 @@ namespace ViewModel {
 
         #region Private Fields
 
+        RelayCommand openCommand;
+        RelayCommand buildGraphCommand;
+
         Window window;
         IDialogService dialogService;
         string filePath;
@@ -40,9 +43,7 @@ namespace ViewModel {
         #endregion
 
         #region Commands
-
-        RelayCommand openCommand;
-        RelayCommand buildGraphCommand;
+    
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
@@ -88,8 +89,6 @@ namespace ViewModel {
                 dialogService.ShowMessage(ex.Message);
             }
         }
-
-   
 
         #endregion
     }
