@@ -1,6 +1,4 @@
-﻿using Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Model {
     public class StackedGraph : Graph {
@@ -8,6 +6,8 @@ namespace Model {
 
         protected StackedGraph() { }
         public StackedGraph(Graph graph) : base(graph) {
+            if (Algorithms.IsGraphСyclic(graph))
+                throw new GraphErrorException("Can't create stacked graph, it's can't be cyclic.");
             SetGraphLayers();
         }
 
@@ -31,10 +31,16 @@ namespace Model {
             return features;
         }
 
+        #region Help Methods
+
+        /// <summary>
+        /// Construct stacked parallel form of current graph
+        /// </summary>
         protected void SetGraphLayers() {
             var verds = new Pair<int>[adjacencyList.Length];
             var q = new Queue<int>();
             var g = adjacencyList;
+            var amountOfLayers = 1;
 
             for (int i = 0; i < verds.Length; i++)
                 verds[i] = new Pair<int>(0, -1);
@@ -50,7 +56,6 @@ namespace Model {
                 }
             }
 
-            int amountOfLayers = 1;
             while (q.Count != 0) {
                 int v = q.Dequeue();
                 for (int i = 0; i < g[v].Length; i++) {
@@ -72,9 +77,7 @@ namespace Model {
             for (int i = 0; i < verds.Length; i++)
                 GraphLayers[verds[i].Second].Add(i);
         }
-
-        #region Help Methods
-
+        
         protected void ConstructSPF() {
             var g = adjacencyList;
             GraphLayers = new List<List<int>>();

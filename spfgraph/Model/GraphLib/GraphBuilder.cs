@@ -7,7 +7,7 @@ using QuickGraph;
 
 namespace Model {
     public class GraphBuilder {
-        Graph graph { get; set; }
+        Graph graph;
         BidirectionalGraph<object, IEdge<object>> graphToViz;
 
         public GraphBuilder(Graph graph) {

@@ -82,10 +82,6 @@ namespace ViewModel {
         void CreateGraphForShow() {
             try {
                 var g = GraphReader.ReadGraphFromFile(FilePath);
-                if (g.GetType() != typeof(StackedGraph)) {
-                    dialogService.ShowMessage("Graph can't transform into spf, it's cyclic.");
-                }
-
                 var builder = new GraphBuilder(g);
                 GraphToShow = builder.CeateBidirectionalGraphToViz();
             } catch (DataProviderException ex) {
@@ -93,31 +89,7 @@ namespace ViewModel {
             }
         }
 
-        Graph CreateGraph(string fileName) {
-            var adjacencyList = DataProvider.CreateAdjacencyListFromFile(fileName);
-            var graph = new Graph(adjacencyList);
-            return graph;
-        }
-
-        void ConstructGraphToShow(Graph graph) {
-            var g = new BidirectionalGraph<object, IEdge<object>>();
-            int[][] adjacencyList = graph.AdjacencyList;
-
-            var ver = new List<string>();
-            for (int i = 0; i < adjacencyList.Length; i++)
-                ver.Add(i.ToString());
-            g.AddVertexRange(ver);
-
-            var edg = new List<Edge<object>>();
-            for (int i = 0; i < adjacencyList.Length; i++)
-                for (int j = 0; j < adjacencyList[i].Length; j++) {
-                    int v = i;
-                    int to = adjacencyList[i][j];
-                    edg.Add(new Edge<object>(ver[v], ver[to]));
-                }
-            g.AddEdgeRange(edg);
-            GraphToShow = g;
-        }
+   
 
         #endregion
     }
