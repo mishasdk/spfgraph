@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Model;
+﻿using Model;
 using QuickGraph;
+using System;
+using System.Windows;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
