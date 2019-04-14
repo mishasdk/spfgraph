@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
-using System;
 
 namespace Testing {
     [TestClass()]
@@ -92,5 +91,6 @@ namespace Testing {
             var graph = new Graph(list);
             Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
         }
+
     }
 }

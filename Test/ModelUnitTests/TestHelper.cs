@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Model;
 
 namespace Testing {
     public class TestHelper {
@@ -105,6 +103,15 @@ namespace Testing {
                     Console.WriteLine();
                 }
             }
+        }
+
+        public static void ShowFeaturesOfGraphs(GraphFeatures expected, GraphFeatures actual) {
+            Console.WriteLine("Expected: ");
+            Console.WriteLine(expected);
+            Console.WriteLine();
+
+            Console.WriteLine("Actual: ");
+            Console.WriteLine(actual);
         }
     }
 }

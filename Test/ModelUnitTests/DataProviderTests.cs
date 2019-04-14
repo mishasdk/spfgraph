@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
-using System;
 using System.Collections.Generic;
-using Testing.Properties;
 
 
 namespace Testing {
