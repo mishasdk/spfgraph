@@ -14,6 +14,10 @@ namespace Model {
                 return false;
         }
 
+        public MessageBoxResult AlertDialog(string message) {
+            return MessageBox.Show(message, "Alert", MessageBoxButton.OKCancel);
+        }
+
         public void ShowMessage(string message) {
             MessageBox.Show(message, "Message", MessageBoxButton.OK);
         }
