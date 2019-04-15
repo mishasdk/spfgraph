@@ -1,7 +1,10 @@
 ﻿using Model;
 using QuickGraph;
 using System;
+using View;
 using System.Windows;
+using GraphSharp.Controls;
+using System.Windows.Controls;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -12,7 +15,7 @@ namespace ViewModel {
         RelayCommand buildGraphCommand;
         RelayCommand clearAllCurrentData;
 
-
+        DrawingTool drawingTool;
         Window window;
         IDialogService dialogService;
         string filePath;
@@ -41,10 +44,19 @@ namespace ViewModel {
         #endregion
 
         #region Commands
+        RelayCommand drawPicture;
+        public RelayCommand DrawPicture {
+            get => drawPicture ??
+                (drawPicture = new RelayCommand(() => {
+                    var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
+                    drawingTool.DrawGraph(graph);
+                }));
+        }
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
+                    GraphToShow = null;
                     if (FilePath == "" || FilePath == null)
                         return;
                     CreateGraphForShow();
@@ -80,10 +92,12 @@ namespace ViewModel {
 
         #region Constructor
 
-        public MainWindowViewModel(Window window) {
+        public MainWindowViewModel(Window window, Canvas canvas) {
             this.window = window;
             dialogService = new DefaultDialogService();
 
+
+            drawingTool = new DrawingTool(canvas);
         }
 
         #endregion
@@ -106,6 +120,7 @@ namespace ViewModel {
         }
 
         #endregion
+
     }
 }
 

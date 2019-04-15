@@ -12,10 +12,12 @@ namespace View {
         public MainWindow() {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(this);
+            DataContext = new MainWindowViewModel(this, MainCanvas);
         }
 
         #endregion
 
+        private void Button_Click_1(object sender, RoutedEventArgs e) {
+        }
     }
 }

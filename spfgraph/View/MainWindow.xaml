@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:View"
         xmlns:grsh="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        xmlns:Model="clr-namespace:Model"
         mc:Ignorable="d"
         x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960"
         MinWidth="400" MinHeight="250"
         >
+
     <Window.Resources>
         <local:GraphToVisibilityConverter x:Key="ZoomVisibilityConverter" />
     </Window.Resources>
@@ -59,18 +61,29 @@
                     <Button Grid.Column="1" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
                     <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Button Content="Delete Graph" Command="{Binding ClearAllCurrentDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Separator Margin="0 0 0 10" BorderBrush="Black"/>
+
+                    <Button Content="Draw from VM" Command="{Binding DrawPicture}" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Button Content="Draw from code" Click="Button_Click_1" Width="120" Height="30" Margin="0 0 0 10"/>
+
                 </StackPanel>
             </Border>
 
             <!--Right side of the main page-->
             <Border Grid.Column="1" Background="White">
-                <zoom:ZoomControl MinZoom="1" MaxZoom="3" Visibility="{Binding GraphToShow, ValidatesOnExceptions=True, Converter={StaticResource ZoomVisibilityConverter}}">
+                <!--<zoom:ZoomControl MinZoom="1" MaxZoom="3" Visibility="{Binding GraphToShow, ValidatesOnExceptions=True, Converter={StaticResource ZoomVisibilityConverter}}">
                     <grsh:GraphLayout
+                    x:Name="Layout"
                     Graph="{Binding GraphToShow}"
                     LayoutMode="Simple"
-                    LayoutAlgorithmType="EfficientSugiyama"
-                    />
+                    LayoutAlgorithmType="EfficientSugiyama"/>
+                </zoom:ZoomControl>-->
+                <zoom:ZoomControl MinZoom="1" MaxZoom="3">
+                    <Canvas x:FieldModifier="public" x:Name="MainCanvas">
+                        
+                    </Canvas>
                 </zoom:ZoomControl>
+
             </Border>
         </Grid>
 
