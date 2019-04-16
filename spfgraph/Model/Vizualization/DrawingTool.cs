@@ -17,34 +17,41 @@ namespace Model {
 
         public void DrawGraph(Graph g) {
             var domGraph = new StackedGraph(g);
-            var vertices = new List<Pair<Node, Point>>();
+            var layouts = new List<Layout>();
+            var nodes = new List<Node>();
             var edges = new List<Edge>();
             int currentHeight = 0;
             int startLeft = (int)Canvas.ActualWidth / 2;
+            var widthStep = 60;
+            var heightStep = 50;
 
             for (int i = 0; i < domGraph.GraphLayers.Count; i++) {
-                currentHeight += 50;
+                currentHeight += heightStep;
+                int shift = domGraph.GraphLayers[i].Count * widthStep / 2;
+                layouts.Add(new Layout());
                 for (int j = 0; j < domGraph.GraphLayers[i].Count; j++) {
-                    var currentWidth = startLeft + 60 * j;
-                    var p = new Point(currentWidth, currentHeight);
-                    var node = new Node(domGraph.GraphLayers[i][j]);
-                    Canvas.SetLeft(node, p.X);
-                    Canvas.SetTop(node, p.Y);
-                    vertices.Add(new Pair<Node, Point>(node, p));
+                    var currentWidth = startLeft + widthStep * j;
+                    var vertex = new Vertex(domGraph.GraphLayers[i][j]);
+                    var point = new Point(currentWidth - shift, currentHeight);
+                    var node = new Node(vertex, point);
+                    nodes.Add(node);
+                    layouts[i].AddVertex(node);
                 }
             }
 
-            for (int i = 0; i < vertices.Count; i++) {
+
+            for (int i = 0; i < domGraph.AdjacencyList.Length; i++)
                 for (int j = 0; j < domGraph.AdjacencyList[i].Length; j++) {
                     int to = domGraph.AdjacencyList[i][j];
-                    edges.Add(new Edge(vertices[i], vertices[to]));
+                    edges.Add(new Edge(nodes[i], nodes[to]));
                 }
-            }
 
             foreach (var edge in edges)
                 Canvas.Children.Add(edge.GetVizualizationOfEdge());
-            foreach (var vertex in vertices)
-                Canvas.Children.Add(vertex.First);
+
+            foreach (var layout in layouts)
+                layout.DrawElement(Canvas);
+
         }
     }
 }

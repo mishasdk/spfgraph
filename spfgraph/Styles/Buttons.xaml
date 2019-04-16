@@ -10,7 +10,7 @@
         <Setter Property="BorderBrush" Value="#444"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Model:RoundButton">
+                <ControlTemplate TargetType="Model:Node">
                     <Grid>
                         <Ellipse Fill="#fff" Width="36" Height="36" StrokeThickness="2" Stroke="#444" />
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />

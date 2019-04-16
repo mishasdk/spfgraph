@@ -12,13 +12,9 @@ namespace Model {
         public Point Source { get; set; }
         public Point Target { get; set; }
 
-        public Edge() {
-
-        }
-
-        public Edge(Pair<Node, Point> source, Pair<Node, Point> target) {
-            Source = source.Second;
-            Target = target.Second;
+        public Edge(Node source, Node target) {
+            Source = source.Point;
+            Target = target.Point;
         }
 
         public Line GetVizualizationOfEdge() {
