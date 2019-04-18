@@ -60,7 +60,7 @@
                     <TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10"/>
                     <Button Grid.Column="1" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
                     <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
-                    <Button Content="Delete Graph" Command="{Binding ClearAllCurrentDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Button Content="Delete Graph" Command="{Binding ClearDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Separator Margin="0 0 0 10" BorderBrush="Black"/>
                     <Button Content="Draw from VM" Command="{Binding DrawPicture}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Button Content="Draw from code" Width="120" Height="30" Margin="0 0 0 10"/>
@@ -70,30 +70,32 @@
 
             <!--Right side of the main page-->
             <Grid Grid.Column="1" Background="White">
-                <ItemsControl ItemsSource="{Binding GraphToViz}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.Resources>
-                        <DataTemplate DataType="{x:Type Model:Node}">
-                            <Button Style="{StaticResource RoundNode}" Content="{Binding Value}">
-                                <Button.RenderTransform>
-                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
-                                </Button.RenderTransform>
-                            </Button>
-                        </DataTemplate>
+                <zoom:ZoomControl>
+                    <ItemsControl ItemsSource="{Binding GraphToViz, Mode=TwoWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type Model:Node}">
+                                <Button Style="{StaticResource RoundNode}" Content="{Binding Value}">
+                                    <Button.RenderTransform>
+                                        <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+                                    </Button.RenderTransform>
+                                </Button>
+                            </DataTemplate>
 
-                        <DataTemplate DataType="{x:Type Model:Edge}">
-                            <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" >
-                                <Line.RenderTransform>
-                                    <TranslateTransform X="18" Y="18"/>
-                                </Line.RenderTransform>
-                            </Line>
-                        </DataTemplate>
-                    </ItemsControl.Resources>
-                </ItemsControl>
+                            <DataTemplate DataType="{x:Type Model:Edge}">
+                                <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" >
+                                    <Line.RenderTransform>
+                                        <TranslateTransform X="18" Y="18"/>
+                                    </Line.RenderTransform>
+                                </Line>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </ItemsControl>
+                </zoom:ZoomControl>
             </Grid>
         </Grid>
 

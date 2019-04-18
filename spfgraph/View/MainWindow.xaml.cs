@@ -12,7 +12,7 @@ namespace View {
         public MainWindow() {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(this);
+            DataContext = new MainWindowViewModel();
         }
 
         #endregion

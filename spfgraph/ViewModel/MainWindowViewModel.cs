@@ -12,12 +12,10 @@ namespace ViewModel {
 
         RelayCommand openCommand;
         RelayCommand buildGraphCommand;
-        //RelayCommand clearAllCurrentData;
+        RelayCommand clearDataCommand;
 
-        Window window;
         IDialogService dialogService;
         string filePath;
-
 
         #endregion
 
@@ -43,20 +41,15 @@ namespace ViewModel {
         #endregion
 
         #region Commands
-        RelayCommand drawPicture;
-        public RelayCommand DrawPicture {
-            get => drawPicture ??
-                (drawPicture = new RelayCommand(() => {
-
-
-                }));
-        }
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
-
-                    CreateGraphForShow();
+                    if (FilePath == null)
+                        return;
+                    var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
+                    var builder = new GraphVizBuilder(graph);
+                    GraphToViz = builder.CreateGraphVizualization();
                 }));
         }
 
@@ -73,15 +66,20 @@ namespace ViewModel {
                 }));
         }
 
+        public RelayCommand ClearDataCommand {
+            get => clearDataCommand ??
+                (clearDataCommand = new RelayCommand(() => {
+                    ClearData();
+                }));
+        }
+
         #endregion
 
         #region Constructor
 
-        public MainWindowViewModel(Window window) {
-            this.window = window;
+        public MainWindowViewModel() {
             graphToViz = new ObservableCollection<Element>();
             dialogService = new DefaultDialogService();
-            CreateGraphForShow();
         }
 
         #endregion
@@ -90,24 +88,8 @@ namespace ViewModel {
 
         private void ClearData() {
             FilePath = null;
+            GraphToViz = null;
 
-        }
-
-        void CreateGraphForShow() {
-            var vertices = new Node[] {
-                new Node(10, 100, 1),
-                new Node(60, 110, 2),
-                new Node(110, 120, 3)
-            };
-            var edges = new Edge[] {
-                new Edge(vertices[0], vertices[1]),
-                new Edge(vertices[1], vertices[2])
-             };
-
-            foreach (var i in edges)
-                GraphToViz.Add(i);
-            foreach (var i in vertices)
-                GraphToViz.Add(i);
         }
 
         #endregion
