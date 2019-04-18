@@ -8,24 +8,17 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Model {
-    public class Node : Button {
-        public Vertex Vertex { get; set; }
-        public Point Point { get; set; }
+    public class Node : Element {
+        public int Value { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-        public Node(Vertex vertex, Point point) {
-            Vertex = vertex;
-            Point = point;
-            Content = Vertex.Value;
+        public Node(int x, int y, int value) {
+            Value = value;
+            X = x;
+            Y = y;
         }
 
-        public Node(Node n) : this(new Vertex(n.Vertex.Value), new Point(n.Point.X, n.Point.Y)) { }
-
-        public Node() { }
-
-        public void DrawElement(Canvas canvas) {
-            Canvas.SetLeft(this, Point.X);
-            Canvas.SetTop(this, Point.Y);
-            canvas.Children.Add(this);
-        }
+        public Node(Node n) : this(n.X, n.Y, n.Value) { }
     }
 }

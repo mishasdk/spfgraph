@@ -8,23 +8,17 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Model {
-    public class Edge {
-        public Point Source { get; set; }
-        public Point Target { get; set; }
+    public class Edge : Element {
+        public int X1 { get; set; }
+        public int Y1 { get; set; }
+        public int X2 { get; set; }
+        public int Y2 { get; set; }
 
         public Edge(Node source, Node target) {
-            Source = source.Point;
-            Target = target.Point;
-        }
-
-        public Line GetVizualizationOfEdge() {
-            return new Line {
-                X1 = Source.X,
-                Y1 = Source.Y,
-                X2 = Target.X,
-                Y2 = Target.Y,
-                Stroke = new SolidColorBrush(Color.FromRgb(60, 60, 60)),
-            };
+            X1 = source.X;
+            Y1 = source.Y;
+            X2 = target.X;
+            Y2 = target.Y;
         }
     }
 }

@@ -22,11 +22,6 @@ namespace Model {
             Nodes.AddRange(v);
         }
 
-        public void DrawElement(Canvas canvas) {
-            foreach (var v in Nodes)
-                v.DrawElement(canvas);
-        }
-
         //public void Swap(int index1, int index2) {
         //    var v1 = new Node(Nodes[index2]);
         //    var v2 = new Node(Nodes[index1]);

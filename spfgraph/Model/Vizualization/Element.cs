@@ -5,11 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Model {
-    public class GraphLayout {
-
-        GraphLayout() {
-
-        }
+    public abstract class Element {
 
     }
 }

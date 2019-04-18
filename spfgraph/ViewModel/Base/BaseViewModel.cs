@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ViewModel {
-    public class BaseViewModel : INotifyPropertyChanged {
+    public abstract class BaseViewModel : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         protected void OnPropertyChanged(string propertyName) {

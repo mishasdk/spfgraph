@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 namespace Model {
     public class GraphVizBuilder {
         public Graph Graph { get; set; }
+        string GraphLayoutAlgorithmType { get; set; }
 
         public GraphVizBuilder(Graph g) {
             Graph = g;
         }
 
-        public GraphLayout ConstructGraphLayout() {
-
-
+        public BiderectionalGraph ConstructGraphToShow() {
 
             throw new NotImplementedException();
         }

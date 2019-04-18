@@ -4,13 +4,13 @@
                     xmlns:Model="clr-namespace:Model"
                     >
 
-   <!--Round Button-->
-    <Style TargetType="Model:Node" BasedOn="{StaticResource BaseControl}">
+    <!--Round Button-->
+    <Style TargetType="Button" x:Key="RoundNode" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Background" Value="#fff"/>
         <Setter Property="BorderBrush" Value="#444"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Model:Node">
+                <ControlTemplate TargetType="Button">
                     <Grid>
                         <Ellipse Fill="#fff" Width="36" Height="36" StrokeThickness="2" Stroke="#444" />
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -19,11 +19,11 @@
             </Setter.Value>
         </Setter>
 
-        <Setter Property="RenderTransform" >
+        <!--<Setter Property="RenderTransform" >
             <Setter.Value>
                 <TranslateTransform X="-18" Y="-18"/>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
  

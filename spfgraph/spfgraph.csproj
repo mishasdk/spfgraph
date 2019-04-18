@@ -90,6 +90,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\GraphCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,13 +118,15 @@
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Data\GraphReader.cs" />
+    <Compile Include="Model\Vizualization\BiderectionalGraph.cs" />
+    <Compile Include="Model\Vizualization\Element.cs" />
+    <Compile Include="Model\Vizualization\GraphCanvas.cs" />
     <Compile Include="Model\Vizualization\GraphLayout.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Vizualization\DrawingTool.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />
     <Compile Include="Model\Vizualization\Layout.cs" />
     <Compile Include="Model\Vizualization\Node.cs" />
-    <Compile Include="Model\Vizualization\Vertex.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

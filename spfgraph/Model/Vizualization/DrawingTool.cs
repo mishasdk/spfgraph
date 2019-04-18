@@ -31,9 +31,9 @@ namespace Model {
                 layouts.Add(new Layout());
                 for (int j = 0; j < domGraph.GraphLayers[i].Count; j++) {
                     var currentWidth = startLeft + widthStep * j;
-                    var vertex = new Vertex(domGraph.GraphLayers[i][j]);
+                    var value = domGraph.GraphLayers[i][j];
                     var point = new Point(currentWidth - shift, currentHeight);
-                    var node = new Node(vertex, point);
+                    var node = new Node((int)point.X, (int)point.Y, value);
                     nodes.Add(node);
                     layouts[i].AddVertex(node);
                 }
@@ -46,11 +46,7 @@ namespace Model {
                     edges.Add(new Edge(nodes[i], nodes[to]));
                 }
 
-            foreach (var edge in edges)
-                Canvas.Children.Add(edge.GetVizualizationOfEdge());
-
-            foreach (var layout in layouts)
-                layout.DrawElement(Canvas);
+            
 
         }
     }

@@ -1,9 +1,8 @@
 ﻿using Model;
 using QuickGraph;
 using System;
-using View;
+using System.Collections.ObjectModel;
 using System.Windows;
-using GraphSharp.Controls;
 using System.Windows.Controls;
 
 namespace ViewModel {
@@ -13,23 +12,23 @@ namespace ViewModel {
 
         RelayCommand openCommand;
         RelayCommand buildGraphCommand;
-        RelayCommand clearAllCurrentData;
+        //RelayCommand clearAllCurrentData;
 
-        DrawingTool drawingTool;
         Window window;
         IDialogService dialogService;
         string filePath;
-        IBidirectionalGraph<object, IEdge<object>> graphToShow;
+
 
         #endregion
 
         #region Public Propeties
 
-        public IBidirectionalGraph<object, IEdge<object>> GraphToShow {
-            get => graphToShow;
+        ObservableCollection<Element> graphToViz;
+        public ObservableCollection<Element> GraphToViz {
+            get => graphToViz;
             set {
-                graphToShow = value;
-                OnPropertyChanged(nameof(GraphToShow));
+                graphToViz = value;
+                OnPropertyChanged(nameof(GraphToViz));
             }
         }
 
@@ -48,17 +47,15 @@ namespace ViewModel {
         public RelayCommand DrawPicture {
             get => drawPicture ??
                 (drawPicture = new RelayCommand(() => {
-                    var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
-                    drawingTool.DrawGraph(graph);
+
+
                 }));
         }
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
-                    GraphToShow = null;
-                    if (FilePath == "" || FilePath == null)
-                        return;
+
                     CreateGraphForShow();
                 }));
         }
@@ -76,28 +73,15 @@ namespace ViewModel {
                 }));
         }
 
-        public RelayCommand ClearAllCurrentDataCommand {
-            get => clearAllCurrentData ??
-                (clearAllCurrentData = new RelayCommand(() => {
-                    if (GraphToShow == null)
-                        return;
-                    var dialogResult = dialogService.AlertDialog("All unsaved data will be deleted. ");
-                    if (dialogResult == MessageBoxResult.OK) {
-                        ClearData();
-                    }
-                }));
-        }
-
         #endregion
 
         #region Constructor
 
-        public MainWindowViewModel(Window window, Canvas canvas) {
+        public MainWindowViewModel(Window window) {
             this.window = window;
+            graphToViz = new ObservableCollection<Element>();
             dialogService = new DefaultDialogService();
-
-
-            drawingTool = new DrawingTool(canvas);
+            CreateGraphForShow();
         }
 
         #endregion
@@ -106,17 +90,24 @@ namespace ViewModel {
 
         private void ClearData() {
             FilePath = null;
-            GraphToShow = null;
+
         }
 
         void CreateGraphForShow() {
-            try {
-                var g = GraphReader.ReadGraphFromFile(FilePath);
-                var builder = new GraphBuilder(g);
-                GraphToShow = builder.CeateBidirectionalGraphToViz();
-            } catch (DataProviderException ex) {
-                dialogService.ShowMessage(ex.Message);
-            }
+            var vertices = new Node[] {
+                new Node(10, 100, 1),
+                new Node(60, 110, 2),
+                new Node(110, 120, 3)
+            };
+            var edges = new Edge[] {
+                new Edge(vertices[0], vertices[1]),
+                new Edge(vertices[1], vertices[2])
+             };
+
+            foreach (var i in edges)
+                GraphToViz.Add(i);
+            foreach (var i in vertices)
+                GraphToViz.Add(i);
         }
 
         #endregion
