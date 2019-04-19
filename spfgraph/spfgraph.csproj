@@ -114,6 +114,7 @@
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Data\GraphReader.cs" />
+    <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />

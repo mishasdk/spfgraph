@@ -35,13 +35,27 @@ namespace Model {
             return result;
         }
 
-        public static List<List<int>> TheLongestPathLayout(Graph g) {
-            var adjacencyList = g.AdjacencyList;
-
+        public static List<List<int>> TheShortestPathLayout(int[][] adjacencyList) {
             var firtsLayoutList = StraightPass(adjacencyList);
             var secondLayoutList = ReversePass(adjacencyList);
 
-            throw new NotImplementedException();
+            if (secondLayoutList.Count != firtsLayoutList.Count)
+                throw new AlgorithmException("Wrong height of tree");
+
+            int maxWidth1 = 0;
+            int maxWidth2 = 0;
+            for (int i = 0; i < firtsLayoutList.Count; i++) {
+                if (maxWidth1 < firtsLayoutList[i].Count)
+                    maxWidth1 = firtsLayoutList[i].Count;
+                if (maxWidth2 < secondLayoutList[i].Count)
+                    maxWidth2 = secondLayoutList[i].Count;
+            }
+
+            // Choose which one who has less maxWidth
+            if (maxWidth1 <= maxWidth2)
+                return firtsLayoutList;
+            else
+                return secondLayoutList;
         }
 
         public static List<List<int>> StraightPass(int[][] adjacencyList) {
