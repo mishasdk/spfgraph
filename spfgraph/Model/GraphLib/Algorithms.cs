@@ -75,7 +75,7 @@ namespace Model {
                     if (verds[to].First == 0) {
                         q.Enqueue(to);
                         verds[to].Second = verds[v].Second + 1;
-                        if (amountOfLayers == verds[to].Second)
+                        if (amountOfLayers <= verds[to].Second)
                             amountOfLayers++;
                     }
                 }
@@ -94,9 +94,11 @@ namespace Model {
             var reversedAdjacencyList = new List<int>[g.Length];
             var reversedList = new int[g.Length][];
 
+            for (int i = 0; i < g.Length; i++)
+                reversedAdjacencyList[i] = new List<int>();
+
             // Fill list with reversed edges from adjacencyList
             for (int i = 0; i < g.Length; i++) {
-                reversedAdjacencyList[i] = new List<int>();
                 for (int j = 0; j < g[i].Length; j++)
                     reversedAdjacencyList[g[i][j]].Add(i);
             }
