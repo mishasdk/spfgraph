@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
+using System.Collections.Generic;
 
 namespace Testing {
     [TestClass()]
@@ -90,6 +91,26 @@ namespace Testing {
             };
             var graph = new Graph(list);
             Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
+        }
+
+        [TestMethod()]
+        public void StraightPassAndReversed() {
+            int[][] List = new int[][] {
+                new int[] {5, 2, 1 },
+                new int[] {5 },
+                new int[] {3, 4},
+                new int[] {5 },
+                new int[] {5},
+                new int[] { },
+            };
+
+            List<List<int>> a = Algorithms.StraightPass(List);
+            List<List<int>> b = Algorithms.ReversePass(List);
+
+            System.Console.WriteLine("streight");
+            TestHelper.ShowGraph(a);
+            System.Console.WriteLine("reverse");
+            TestHelper.ShowGraph(b);
         }
 
     }

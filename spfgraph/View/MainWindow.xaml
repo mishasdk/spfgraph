@@ -62,21 +62,21 @@
                     <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Button Content="Delete Graph" Command="{Binding ClearDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                    <Button Content="Draw from VM" Command="{Binding DrawPicture}" Width="120" Height="30" Margin="0 0 0 10"/>
-                    <Button Content="Draw from code" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Button Content="Show Width" Command="{Binding ShowWidthCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
 
                 </StackPanel>
             </Border>
 
             <!--Right side of the main page-->
             <Grid Grid.Column="1" Background="White">
-                <zoom:ZoomControl>
+                <zoom:ZoomControl Visibility="{Binding GraphToViz, Converter={StaticResource ZoomVisibilityConverter}}">
                     <ItemsControl ItemsSource="{Binding GraphToViz, Mode=TwoWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas />
+                                <Canvas/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+
                         <ItemsControl.Resources>
                             <DataTemplate DataType="{x:Type Model:Node}">
                                 <Button Style="{StaticResource RoundNode}" Content="{Binding Value}">

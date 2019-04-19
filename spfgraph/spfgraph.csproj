@@ -116,7 +116,6 @@
     <Compile Include="Model\Data\GraphReader.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
-    <Compile Include="Model\Vizualization\DrawingTool.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />
     <Compile Include="Model\Vizualization\Node.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />

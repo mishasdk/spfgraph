@@ -14,14 +14,24 @@ namespace ViewModel {
         RelayCommand buildGraphCommand;
         RelayCommand clearDataCommand;
 
+        ObservableCollection<Element> graphToViz;
         IDialogService dialogService;
         string filePath;
+        Window window;
+        double canvasWidth;
 
         #endregion
 
         #region Public Propeties
 
-        ObservableCollection<Element> graphToViz;
+        public double CanvasWidth {
+            get => canvasWidth;
+            set {
+                canvasWidth = value;
+                OnPropertyChanged(nameof(CanvasWidth));
+            }
+        }
+
         public ObservableCollection<Element> GraphToViz {
             get => graphToViz;
             set {
@@ -41,6 +51,14 @@ namespace ViewModel {
         #endregion
 
         #region Commands
+
+        RelayCommand showWidthCommand;
+        public RelayCommand ShowWidthCommand {
+            get => showWidthCommand ??
+                (showWidthCommand = new RelayCommand(() => {
+                    dialogService.ShowMessage(CanvasWidth.ToString());
+                }));
+        }
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
@@ -77,9 +95,10 @@ namespace ViewModel {
 
         #region Constructor
 
-        public MainWindowViewModel() {
-            graphToViz = new ObservableCollection<Element>();
+        public MainWindowViewModel(Window window) {
             dialogService = new DefaultDialogService();
+            this.window = window;
+
         }
 
         #endregion

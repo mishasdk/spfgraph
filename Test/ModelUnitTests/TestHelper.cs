@@ -113,5 +113,14 @@ namespace Testing {
             Console.WriteLine("Actual: ");
             Console.WriteLine(actual);
         }
+
+        public static void ShowGraph(List<List<int>> g) {
+            foreach (var i in g) {
+                foreach (var j in i)
+                    Console.Write(j + " ");
+                Console.WriteLine();
+            }
+
+        }
     }
 }
