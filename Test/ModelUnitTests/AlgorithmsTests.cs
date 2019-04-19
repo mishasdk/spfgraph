@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
+using System.Collections.Generic;
 
 namespace Testing {
     [TestClass()]
@@ -90,6 +91,55 @@ namespace Testing {
             };
             var graph = new Graph(list);
             Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
+        }
+
+        [TestMethod()]
+        public void StraightPassAndReversed_01() {
+            int[][] List = new int[][] {
+                new int[] {5, 2, 1 },
+                new int[] {5 },
+                new int[] {3, 4},
+                new int[] {5 },
+                new int[] {5},
+                new int[] { },
+            };
+            CreateTwoDiffLayers(List);
+        }
+
+        [TestMethod()]
+        public void StraightPassAndReversed_02() {
+            int[][] list = new int[][] {
+                new int[] { 1, 2, 3 },
+                new int[] { 2, 3 },
+                new int[] { 3 },
+                new int[] { }
+            };
+            CreateTwoDiffLayers(list);
+        }
+
+        [TestMethod()]
+        public void StraightPassAndReversed_03() {
+            int[][] list = new int[][] {
+                new int[] { 3 },
+                new int[] { 2 },
+                new int[] { 4, 5, 6 },
+                new int[] { 5, 6, 7 },
+                new int[] { },
+                new int[] { },
+                new int[] { },
+                new int[] { },
+            };
+            CreateTwoDiffLayers(list);
+        }
+
+        private static void CreateTwoDiffLayers(int[][] List) {
+            List<List<int>> a = Algorithms.StraightPass(List);
+            List<List<int>> b = Algorithms.ReversePass(List);
+
+            System.Console.WriteLine("streight");
+            TestHelper.ShowGraph(a);
+            System.Console.WriteLine("reverse");
+            TestHelper.ShowGraph(b);
         }
 
     }

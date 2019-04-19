@@ -1,7 +1,9 @@
 ﻿using Model;
 using QuickGraph;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -10,23 +12,31 @@ namespace ViewModel {
 
         RelayCommand openCommand;
         RelayCommand buildGraphCommand;
-        RelayCommand clearAllCurrentData;
+        RelayCommand clearDataCommand;
 
-
-        Window window;
+        ObservableCollection<Element> graphToViz;
         IDialogService dialogService;
         string filePath;
-        IBidirectionalGraph<object, IEdge<object>> graphToShow;
+        Window window;
+        double canvasWidth;
 
         #endregion
 
         #region Public Propeties
 
-        public IBidirectionalGraph<object, IEdge<object>> GraphToShow {
-            get => graphToShow;
+        public double CanvasWidth {
+            get => canvasWidth;
             set {
-                graphToShow = value;
-                OnPropertyChanged(nameof(GraphToShow));
+                canvasWidth = value;
+                OnPropertyChanged(nameof(CanvasWidth));
+            }
+        }
+
+        public ObservableCollection<Element> GraphToViz {
+            get => graphToViz;
+            set {
+                graphToViz = value;
+                OnPropertyChanged(nameof(GraphToViz));
             }
         }
 
@@ -42,12 +52,22 @@ namespace ViewModel {
 
         #region Commands
 
+        RelayCommand showWidthCommand;
+        public RelayCommand ShowWidthCommand {
+            get => showWidthCommand ??
+                (showWidthCommand = new RelayCommand(() => {
+                    dialogService.ShowMessage(CanvasWidth.ToString());
+                }));
+        }
+
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
-                    if (FilePath == "" || FilePath == null)
+                    if (FilePath == null)
                         return;
-                    CreateGraphForShow();
+                    var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
+                    var builder = new GraphVizBuilder(graph);
+                    GraphToViz = builder.CreateGraphVizualization();
                 }));
         }
 
@@ -64,15 +84,10 @@ namespace ViewModel {
                 }));
         }
 
-        public RelayCommand ClearAllCurrentDataCommand {
-            get => clearAllCurrentData ??
-                (clearAllCurrentData = new RelayCommand(() => {
-                    if (GraphToShow == null)
-                        return;
-                    var dialogResult = dialogService.AlertDialog("All unsaved data will be deleted. ");
-                    if (dialogResult == MessageBoxResult.OK) {
-                        ClearData();
-                    }
+        public RelayCommand ClearDataCommand {
+            get => clearDataCommand ??
+                (clearDataCommand = new RelayCommand(() => {
+                    ClearData();
                 }));
         }
 
@@ -81,8 +96,8 @@ namespace ViewModel {
         #region Constructor
 
         public MainWindowViewModel(Window window) {
-            this.window = window;
             dialogService = new DefaultDialogService();
+            this.window = window;
 
         }
 
@@ -92,20 +107,12 @@ namespace ViewModel {
 
         private void ClearData() {
             FilePath = null;
-            GraphToShow = null;
-        }
+            GraphToViz = null;
 
-        void CreateGraphForShow() {
-            try {
-                var g = GraphReader.ReadGraphFromFile(FilePath);
-                var builder = new GraphBuilder(g);
-                GraphToShow = builder.CeateBidirectionalGraphToViz();
-            } catch (DataProviderException ex) {
-                dialogService.ShowMessage(ex.Message);
-            }
         }
 
         #endregion
+
     }
 }
 
