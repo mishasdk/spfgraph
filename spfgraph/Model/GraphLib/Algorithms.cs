@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Model {
     public class Algorithms {
+
+        #region Check For Cyclic
+        /// <summary>
+        /// Check graph for presence of cycles
+        /// </summary>
+        /// <param name="graph">Graph for check</param>
+        /// <returns></returns>
         public static bool IsGraphСyclic(Graph graph) {
             var g = graph.AdjacencyList;
             var color = new int[g.Length];
@@ -34,6 +41,10 @@ namespace Model {
             }
             return result;
         }
+
+        #endregion
+
+        #region The Shortest Path Layout
 
         public static List<List<int>> TheShortestPathLayout(int[][] adjacencyList) {
             var firtsLayoutList = StraightPass(adjacencyList);
@@ -127,5 +138,9 @@ namespace Model {
             graphLayers.Reverse();
             return graphLayers;
         }
+
+        #endregion
+
+
     }
 }
