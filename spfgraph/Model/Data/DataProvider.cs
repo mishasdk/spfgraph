@@ -6,9 +6,9 @@ namespace Model {
     public static class DataProvider {
 
         public static Graph ReadGraphFromFile(string fileName) {
-
+            var list = CreateAdjacencyListFromFile(fileName);
+            return new Graph(list);
         }
-
 
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
