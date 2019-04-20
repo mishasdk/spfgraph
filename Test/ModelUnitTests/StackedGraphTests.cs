@@ -21,7 +21,7 @@ namespace Testing {
             };
             adjacencyList = list;
 
-            ConstructSPF();
+            SetGraphLayers();
 
             ShowLayers();
             Console.WriteLine(this);
@@ -278,7 +278,7 @@ namespace Testing {
             var actual = GetGraphFeatures();
             var expected = new GraphFeatures {
                 Height = 4,
-                Width = 4,
+                Width = 3,
                 AvrgWidth = 1.75,
                 Irregular = 0
             };

@@ -65,9 +65,14 @@ namespace ViewModel {
                 (buildGraphCommand = new RelayCommand(() => {
                     if (FilePath == null)
                         return;
-                    var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
-                    var builder = new GraphVizBuilder(graph);
-                    GraphToViz = builder.CreateGraphVizualization();
+                    try {
+                        var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
+                        var builder = new GraphVizBuilder(graph);
+                        GraphToViz = builder.CreateGraphVizualization();
+                    }
+                    catch (GraphErrorException ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    }
                 }));
         }
 
