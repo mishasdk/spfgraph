@@ -80,6 +80,29 @@ namespace Testing {
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void IsGraphCyclicTest_06() {
+            int[][] list = new int[][] {
+                new int[] {5},
+                new int[] {11, 9},
+                new int[] {3, 0, 11},
+                new int[] {6},
+                new int[] {6},
+                new int[] {8},
+                new int[] {7},
+                new int[] {},
+                new int[] {4},
+                new int[] {1, 2},
+                new int[] {4}
+            };
+            var gr = new Graph(list);
+            var expected = false;
+
+            var actual = Algorithms.IsGraphСyclic(gr);
+
+            Assert.AreEqual(expected, actual);
+        }
+
 
         [TestMethod()]
         public void OneVertexCycleTest_01() {

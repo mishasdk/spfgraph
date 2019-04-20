@@ -5,6 +5,11 @@ using System.IO;
 namespace Model {
     public static class DataProvider {
 
+        public static Graph ReadGraphFromFile(string fileName) {
+
+        }
+
+
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
             using (var listReader = new AdjacencyListReader(filePath)) {
