@@ -7,11 +7,31 @@ using QuickGraph;
 
 namespace Model {
     public class GraphBuilder {
-        Graph graph;
-        public GraphBuilder(Graph graph) {
-            this.graph = graph;
+        Graph Graph { get; set; }
+        LayoutTypes layoutType;
+
+        public GraphBuilder(LayoutTypes layoutType) {
+
+            this.layoutType = layoutType;
+
         }
 
+        public void ReadGraphFromFile(string fileName) {
+            var list = DataProvider.CreateAdjacencyListFromFile(fileName);
+            Graph = new Graph(list);
+        }
 
+        public void ConstructSpfForm() {
+            switch (layoutType) {
+                case LayoutTypes.TheShortestHeigth:
+                    ConstructTheShortestHeigth();
+                    break;
+            }
+
+        }
+
+        private void ConstructTheShortestHeigth() {
+            
+        }
     }
 }
