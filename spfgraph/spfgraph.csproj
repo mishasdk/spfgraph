@@ -98,10 +98,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\WindowChrome.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -113,7 +109,6 @@
     <Compile Include="Converters\GraphToVisibilityConverter.cs" />
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
-    <Compile Include="Model\Data\GraphReader.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
     <Compile Include="Model\GraphLib\LayoutTypes.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
@@ -122,6 +117,7 @@
     <Compile Include="Model\Vizualization\Node.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="ViewModel\GraphFeaturesViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\Data\AdjacencyListReader.cs" />
     <Compile Include="Model\Data\DataProvider.cs" />

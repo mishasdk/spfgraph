@@ -9,8 +9,8 @@ namespace spfgraph.Model.Vizualization {
      
         #region Paramentrs
 
-        public int CurrentHeight { get; set; } = 0;
-        public int HeightStep { get; set; } = 50;
+        public int StartHeighth { get; set; } = 100;
+        public int HeightStep { get; set; } = 60;
         public int WidthStep { get; set; } = 60;
         public int StartLeft { get; set; } = 0;
 
@@ -27,17 +27,18 @@ namespace spfgraph.Model.Vizualization {
             var nodes = new List<Node>();
             var edges = new List<Edge>();
             var indexByName = new SortedDictionary<int, int>();
+            var currentHeight = StartHeighth;
             for (int i = 0; i < domGraph.GraphLayers.Count; i++) {
-                CurrentHeight += HeightStep;
                 int shift = domGraph.GraphLayers[i].Count * WidthStep / 2;
                 for (int j = 0; j < domGraph.GraphLayers[i].Count; j++) {
                     var currentWidth = StartLeft + WidthStep * j;
                     var value = domGraph.GraphLayers[i][j];
-                    var point = new Point(currentWidth - shift, CurrentHeight);
+                    var point = new Point(currentWidth - shift, currentHeight);
                     var node = new Node((int)point.X, (int)point.Y, value);
                     nodes.Add(node);
                     indexByName[domGraph.GraphLayers[i][j]] = nodes.Count - 1;
                 }
+                currentHeight += HeightStep;
             }
 
             for (int i = 0; i < domGraph.AdjacencyList.Length; i++)
