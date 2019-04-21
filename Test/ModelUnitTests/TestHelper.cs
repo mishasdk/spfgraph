@@ -74,6 +74,37 @@ namespace Testing {
             }
         }
 
+        public static bool CheckListsForIdentity(int[][] expected, int[][] actual) {
+            try {
+                if (expected.Length != actual.Length)
+                    return false;
+                for (int i = 0; i < expected.Length; i++) {
+                    if (expected[i].Length != actual[i].Length)
+                        return false;
+                    for (int j = 0; j < expected[i].Length; j++)
+                        if (expected[i][j] != actual[i][j])
+                            return false;
+                }
+                return true;
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+            } finally {
+                Console.WriteLine("Expected: ");
+                foreach (var i in expected) {
+                    foreach (var j in i)
+                        Console.Write(j + " ");
+                    Console.WriteLine();
+                }
+                Console.WriteLine("actual: ");
+                foreach (var i in actual) {
+                    foreach (var j in i)
+                        Console.Write(j + " ");
+                    Console.WriteLine();
+                }
+            }
+        }
+
         public static bool CheckListsForIdentity(List<List<int>> expected, List<List<int>> actual) {
             try {
                 if (expected.Count != actual.Count)

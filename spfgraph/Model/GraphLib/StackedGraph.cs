@@ -16,8 +16,7 @@ namespace spfgraph.Model.GraphLib {
         public StackedGraph(Graph graph) : base(graph) {
             if (Algorithms.IsGraphСyclic(graph))
                 throw new GraphErrorException("Can't create stacked graph, it's can't be cyclic.");
-            SetGraphLayers();
-        }
+        }   
 
         #endregion
 
