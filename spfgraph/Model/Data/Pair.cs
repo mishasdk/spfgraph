@@ -1,4 +1,4 @@
-﻿namespace Model {
+﻿namespace spfgraph.Model.Data {
     public class Pair<T> {
         public T First { get; set; }
         public T Second { get; set; }

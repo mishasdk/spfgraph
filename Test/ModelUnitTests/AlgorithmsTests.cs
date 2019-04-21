@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using spfgraph.Model.GraphLib;
 using System.Collections.Generic;
 
 namespace Testing {

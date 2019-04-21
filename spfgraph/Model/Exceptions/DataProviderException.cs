@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model {
+namespace spfgraph.Model.Exceptions {
 
     public class DataProviderException : Exception {
         public DataProviderException() { }

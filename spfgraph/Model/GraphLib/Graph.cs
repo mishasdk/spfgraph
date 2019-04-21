@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class Graph {
         protected int[][] adjacencyList;
         public int[][] AdjacencyList {

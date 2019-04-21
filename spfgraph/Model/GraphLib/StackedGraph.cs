@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using spfgraph.Model.Exceptions;
+using System.Collections.Generic;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class StackedGraph : Graph {
         GraphFeatures graphFeatures;
 

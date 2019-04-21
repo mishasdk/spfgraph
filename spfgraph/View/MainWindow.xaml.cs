@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using ViewModel;
+﻿using spfgraph.ViewModel;
+using System.Windows;
 
-namespace View {
+namespace spfgraph.View {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

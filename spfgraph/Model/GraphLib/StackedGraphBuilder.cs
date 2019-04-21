@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using QuickGraph;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class StackedGraphBuilder {
-        StackedGraph dagGraph;
+        protected StackedGraph dagGraph;
         public LayoutTypes LayoutType { get; set; }
 
         #region Build Parallel Form
@@ -26,7 +21,7 @@ namespace Model {
             return dagGraph;
         }
 
-        void ConstructTheShortestHeigth() {
+        protected void ConstructTheShortestHeigth() {
             dagGraph.GraphLayers = Algorithms.TheShortestPathLayout(dagGraph.AdjacencyList);
         }
 

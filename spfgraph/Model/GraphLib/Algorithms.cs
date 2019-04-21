@@ -1,7 +1,8 @@
-﻿using System;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.Exceptions;
 using System.Collections.Generic;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class Algorithms {
 
         #region Check For Cyclic

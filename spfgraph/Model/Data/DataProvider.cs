@@ -1,8 +1,9 @@
-﻿using System;
+﻿using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
-using System.IO;
 
-namespace Model {
+namespace spfgraph.Model.Data {
     public static class DataProvider {
 
         public static Graph ReadGraphFromFile(string fileName) {
