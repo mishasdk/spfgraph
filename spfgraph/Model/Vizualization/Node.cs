@@ -1,4 +1,4 @@
-﻿namespace spfgraph.Model.Vizualiztion {
+﻿namespace spfgraph.Model.Vizualization {
     public class Node : Element {
         public int Value { get; set; }
         public int X { get; set; }

@@ -2,7 +2,7 @@
 using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
 using spfgraph.Model.GraphLib;
-using spfgraph.Model.Vizualiztion;
+using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;

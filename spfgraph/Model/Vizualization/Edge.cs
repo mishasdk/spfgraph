@@ -1,4 +1,4 @@
-﻿namespace spfgraph.Model.Vizualiztion {
+﻿namespace spfgraph.Model.Vizualization {
     public class Edge : Element {
         public int X1 { get; set; }
         public int Y1 { get; set; }

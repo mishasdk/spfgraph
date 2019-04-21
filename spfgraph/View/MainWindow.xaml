@@ -6,13 +6,12 @@
         xmlns:local="clr-namespace:spfgraph.View"
         xmlns:converters="clr-namespace:spfgraph.Converters"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-        xmlns:viz="clr-namespace:spfgraph.Model.Vizualiztion"
+        xmlns:viz="clr-namespace:spfgraph.Model.Vizualization"
         mc:Ignorable="d"
         x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960"
-        MinWidth="400" MinHeight="250"
-        >
+        MinWidth="400" MinHeight="250" >
 
     <Window.Resources>
         <converters:GraphToVisibilityConverter x:Key="ZoomVisibilityConverter" />

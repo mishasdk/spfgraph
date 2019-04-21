@@ -90,6 +90,7 @@ namespace Testing {
                 new int[] {6},
                 new int[] {8},
                 new int[] {7},
+                new int[] {8},
                 new int[] {},
                 new int[] {4},
                 new int[] {1, 2},
@@ -98,7 +99,7 @@ namespace Testing {
             var gr = new Graph(list);
             var expected = false;
 
-            var actual = Algorithms.IsGraphСyclic(gr);
+            var actual = IsGraphСyclic(gr);
 
             Assert.AreEqual(expected, actual);
         }

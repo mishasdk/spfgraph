@@ -1,4 +1,4 @@
-﻿namespace spfgraph.Model.Vizualiztion {
+﻿namespace spfgraph.Model.Vizualization {
     public abstract class Element {
 
     }
