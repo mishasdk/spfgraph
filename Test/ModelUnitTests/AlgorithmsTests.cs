@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Testing {
     [TestClass()]
-    public class AlgorithmsTests {
+    public class AlgorithmsTests : Algorithms {
         [TestMethod()]
         public void IsGraphCyclicTest_01() {
             int[][] list = new int[][] {
