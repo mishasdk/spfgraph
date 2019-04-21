@@ -37,6 +37,10 @@ namespace spfgraph.Model.Data {
                     throw new DataProviderException("Reading from file error.\n" + $"Invalid amount of verds line {listReader.CurrentLineIndex}.");
 
                 var indexOfSeparator = line.IndexOf(separator);
+                var lastIndexOfSeparator = line.LastIndexOf(separator);
+
+                if (indexOfSeparator != lastIndexOfSeparator)
+                    throw new DataProviderException("Reading from file error.\n" + $"Wrong format, more than 1 arrow in line: {listReader.CurrentLineIndex}. ");
                 if (indexOfSeparator == 0)
                     throw new DataProviderException("Reading from file error.\n" + $"No verd's value in line: {listReader.CurrentLineIndex}. ");
                 else if (indexOfSeparator == -1)
