@@ -32,14 +32,14 @@ namespace spfgraph.Model.GraphLib {
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (color[to] == 0) {
-                    result = CheckForCyclicDFS(g, color, to);
-                    color[to] = 2;
+                    result = CheckForCyclicDFS(g, color, to); 
                 } else if (color[to] == 1) {
                     result = true;
                 }
                 if (result)
                     return true;
             }
+            color[v] = 2;
             return result;
         }
 
