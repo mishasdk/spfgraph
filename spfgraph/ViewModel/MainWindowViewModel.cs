@@ -7,6 +7,9 @@ using spfgraph.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace spfgraph.ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -63,14 +66,6 @@ namespace spfgraph.ViewModel {
         #endregion
 
         #region Commands
-
-        RelayCommand showWidthCommand;
-        public RelayCommand ShowWidthCommand {
-            get => showWidthCommand ??
-                (showWidthCommand = new RelayCommand(() => {
-                    dialogService.ShowMessage(CanvasWidth.ToString());
-                }));
-        }
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??

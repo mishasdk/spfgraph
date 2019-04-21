@@ -16,15 +16,27 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <!--<Setter Property="RenderTransform" >
-            <Setter.Value>
-                <TranslateTransform X="-18" Y="-18"/>
-            </Setter.Value>
-        </Setter>-->
     </Style>
 
- 
+    <!--Round Button-->
+    <Style TargetType="Button" x:Key="CustomButton" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Background}" CornerRadius="5" BorderThickness="2" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background"  Value="#eee"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--Window System Buttons-->
     <Style TargetType="{x:Type Button}" x:Key="WindowControlButton" BasedOn="{StaticResource BaseControl}">

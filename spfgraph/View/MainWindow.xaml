@@ -57,19 +57,19 @@
                 <StackPanel >
                     <TextBlock Text="Path" Margin="0 0 0 5"/>
                     <TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10"/>
-                    <Button Grid.Column="1" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
+                    <Button Grid.Column="1" Style="{StaticResource CustomButton}" Command="{Binding OpenCommand}"  Content="Change Path" Width="120" Height="30" Margin="0 0 0 10" />
                     <Button Content="Build Graph" Command="{Binding BuildGraphCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Button Content="Delete Graph" Command="{Binding ClearDataCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                     <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                    <Button Content="Show Width" Command="{Binding ShowWidthCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                    <Button Content="Draw Rectangle" Command="{Binding DrawRectangleCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
 
                 </StackPanel>
             </Border>
 
             <!--Right side of the main page-->
             <Grid Grid.Column="1" Background="White">
-                <zoom:ZoomControl Visibility="{Binding ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
-                    <ItemsControl ItemsSource="{Binding ElementsToViz   , Mode=TwoWay}">
+                <zoom:ZoomControl Mode="Fill" Visibility="{Binding ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding ElementsToViz}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas/>
