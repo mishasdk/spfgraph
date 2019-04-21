@@ -1,6 +1,7 @@
-﻿using System;
+﻿using spfgraph.Model.GraphLib;
+using System;
 
-namespace Model {
+namespace spfgraph.Model.Data {
     public static class GraphReader {
 
         public static Graph ReadGraphFromFile(string filePath) {

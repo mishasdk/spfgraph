@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 
-namespace Model {
+namespace spfgraph.Model.Dialog {
     public class DefaultDialogService : IDialogService {
         public string FilePath { get; set; }
 

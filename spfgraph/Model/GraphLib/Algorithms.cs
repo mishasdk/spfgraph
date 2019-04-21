@@ -1,7 +1,8 @@
-﻿using System;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.Exceptions;
 using System.Collections.Generic;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class Algorithms {
 
         #region Check For Cyclic
@@ -25,20 +26,20 @@ namespace Model {
             return result;
         }
 
-        static bool CheckForCyclicDFS(int[][] g, int[] color, int v) {
+        protected static bool CheckForCyclicDFS(int[][] g, int[] color, int v) {
             color[v] = 1;
             var result = false;
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (color[to] == 0) {
-                    result = CheckForCyclicDFS(g, color, to);
-                    color[to] = 2;
+                    result = CheckForCyclicDFS(g, color, to); 
                 } else if (color[to] == 1) {
                     result = true;
                 }
                 if (result)
                     return true;
             }
+            color[v] = 2;
             return result;
         }
 
@@ -69,7 +70,7 @@ namespace Model {
                 return secondLayoutList;
         }
 
-        public static List<List<int>> StraightPass(int[][] adjacencyList) {
+        protected static List<List<int>> StraightPass(int[][] adjacencyList) {
             var g = adjacencyList;
             var verds = new Pair<int>[g.Length];
             var q = new Queue<int>();
@@ -114,7 +115,7 @@ namespace Model {
             return graphLayers;
         }
 
-        public static List<List<int>> ReversePass(int[][] adjacencyList) {
+        protected static List<List<int>> ReversePass(int[][] adjacencyList) {
             var g = adjacencyList;
             var reversedAdjacencyList = new List<int>[g.Length];
             var reversedList = new int[g.Length][];
@@ -140,7 +141,6 @@ namespace Model {
         }
 
         #endregion
-
 
     }
 }

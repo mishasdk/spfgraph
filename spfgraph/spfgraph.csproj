@@ -115,6 +115,7 @@
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Data\GraphReader.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
+    <Compile Include="Model\GraphLib\LayoutTypes.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />
@@ -127,10 +128,10 @@
     <Compile Include="Model\Exceptions\DataProviderException.cs" />
     <Compile Include="Model\Exceptions\GraphErrorException.cs" />
     <Compile Include="Model\GraphLib\Algorithms.cs" />
-    <Compile Include="Model\GraphLib\GraphBuilder.cs" />
+    <Compile Include="Model\GraphLib\StackedGraphBuilder.cs" />
     <Compile Include="Model\GraphLib\Graph.cs" />
     <Compile Include="Model\GraphLib\GraphFeatures.cs" />
-    <Compile Include="Model\GraphLib\Pair.cs" />
+    <Compile Include="Model\Data\Pair.cs" />
     <Compile Include="Model\GraphLib\StackedGraph.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

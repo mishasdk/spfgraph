@@ -1,6 +1,6 @@
-﻿using System;
+﻿using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
-using Model;
 
 namespace Testing {
     public class TestHelper {
@@ -51,6 +51,37 @@ namespace Testing {
                     if (expected[i].Count != actual[i].Count)
                         return false;
                     for (int j = 0; j < expected[i].Count; j++)
+                        if (expected[i][j] != actual[i][j])
+                            return false;
+                }
+                return true;
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+            } finally {
+                Console.WriteLine("Expected: ");
+                foreach (var i in expected) {
+                    foreach (var j in i)
+                        Console.Write(j + " ");
+                    Console.WriteLine();
+                }
+                Console.WriteLine("actual: ");
+                foreach (var i in actual) {
+                    foreach (var j in i)
+                        Console.Write(j + " ");
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        public static bool CheckListsForIdentity(int[][] expected, int[][] actual) {
+            try {
+                if (expected.Length != actual.Length)
+                    return false;
+                for (int i = 0; i < expected.Length; i++) {
+                    if (expected[i].Length != actual[i].Length)
+                        return false;
+                    for (int j = 0; j < expected[i].Length; j++)
                         if (expected[i][j] != actual[i][j])
                             return false;
                 }

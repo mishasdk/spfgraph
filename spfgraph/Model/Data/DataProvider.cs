@@ -1,14 +1,15 @@
-﻿using System;
+﻿using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
-using System.IO;
 
-namespace Model {
+namespace spfgraph.Model.Data {
     public static class DataProvider {
 
         public static Graph ReadGraphFromFile(string fileName) {
-
+            var list = CreateAdjacencyListFromFile(fileName);
+            return new Graph(list);
         }
-
 
         public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
@@ -20,6 +21,8 @@ namespace Model {
             }
             return adjacencyList;
         }
+
+        #region Read Adjacency List
 
         static List<int>[] ReadAdjacencyListWith(AdjacencyListReader listReader) {
             var adjacencyList = new List<int>[listReader.AmoutOfVertex];
@@ -90,6 +93,8 @@ namespace Model {
                 throw new DataProviderException("Reading from file error.\n" + $"Invalid value for verd {CurrentLineIndex}. ");
             return verd;
         }
+
+        #endregion
 
     }
 }

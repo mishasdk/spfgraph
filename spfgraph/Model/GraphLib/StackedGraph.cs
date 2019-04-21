@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using spfgraph.Model.Exceptions;
+using System.Collections.Generic;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class StackedGraph : Graph {
         GraphFeatures graphFeatures;
 
@@ -15,8 +16,7 @@ namespace Model {
         public StackedGraph(Graph graph) : base(graph) {
             if (Algorithms.IsGraphСyclic(graph))
                 throw new GraphErrorException("Can't create stacked graph, it's can't be cyclic.");
-            SetGraphLayers();
-        }
+        }   
 
         #endregion
 

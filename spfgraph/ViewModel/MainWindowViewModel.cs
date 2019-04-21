@@ -1,11 +1,14 @@
-﻿using Model;
-using QuickGraph;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.Dialog;
+using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
+using spfgraph.Model.Vizualization;
+using spfgraph.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace ViewModel {
+namespace spfgraph.ViewModel {
     public class MainWindowViewModel : BaseViewModel {
 
         #region Private Fields
@@ -14,15 +17,24 @@ namespace ViewModel {
         RelayCommand buildGraphCommand;
         RelayCommand clearDataCommand;
 
-        ObservableCollection<Element> graphToViz;
+        ObservableCollection<Element> elementsToViz;
         IDialogService dialogService;
         string filePath;
-        Window window;
         double canvasWidth;
+        LayoutTypes selectedLayoutType;
+        Window window;
 
         #endregion
 
         #region Public Propeties
+
+        public LayoutTypes SelectedLayoutType {
+            get => selectedLayoutType;
+            set {
+                selectedLayoutType = value;
+                OnPropertyChanged(nameof(SelectedLayoutType));
+            }
+        }
 
         public double CanvasWidth {
             get => canvasWidth;
@@ -32,11 +44,11 @@ namespace ViewModel {
             }
         }
 
-        public ObservableCollection<Element> GraphToViz {
-            get => graphToViz;
+        public ObservableCollection<Element> ElementsToViz {
+            get => elementsToViz;
             set {
-                graphToViz = value;
-                OnPropertyChanged(nameof(GraphToViz));
+                elementsToViz = value;
+                OnPropertyChanged(nameof(ElementsToViz));
             }
         }
 
@@ -66,11 +78,16 @@ namespace ViewModel {
                     if (FilePath == null)
                         return;
                     try {
-                        var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
-                        var builder = new GraphVizBuilder(graph);
-                        GraphToViz = builder.CreateGraphVizualization();
-                    }
-                    catch (GraphErrorException ex) {
+                        var builder = new StackedGraphBuilder() {
+                            LayoutType = SelectedLayoutType
+                        };
+                        var graph = DataProvider.ReadGraphFromFile(FilePath);
+                        var dagGraph = builder.ConstructSpf(graph);
+
+                        var graphViz = new GraphVizBuilder();
+                        ElementsToViz = graphViz.CreateGraphVizualization(dagGraph);
+
+                    } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     }
                 }));
@@ -112,7 +129,7 @@ namespace ViewModel {
 
         private void ClearData() {
             FilePath = null;
-            GraphToViz = null;
+            ElementsToViz = null;
 
         }
 

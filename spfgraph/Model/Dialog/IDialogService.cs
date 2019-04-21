@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Model {
+namespace spfgraph.Model.Dialog {
     public interface IDialogService {
         string FilePath { get; set; }
         bool OpenFileDialog();

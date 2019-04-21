@@ -1,10 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using spfgraph.Model.GraphLib;
 using System.Collections.Generic;
 
 namespace Testing {
     [TestClass()]
-    public class AlgorithmsTests {
+    public class AlgorithmsTests : Algorithms {
+
+        #region IsGraphCyclic Tests
+
         [TestMethod()]
         public void IsGraphCyclicTest_01() {
             int[][] list = new int[][] {
@@ -90,6 +93,7 @@ namespace Testing {
                 new int[] {6},
                 new int[] {8},
                 new int[] {7},
+                new int[] {8},
                 new int[] {},
                 new int[] {4},
                 new int[] {1, 2},
@@ -98,7 +102,7 @@ namespace Testing {
             var gr = new Graph(list);
             var expected = false;
 
-            var actual = Algorithms.IsGraphСyclic(gr);
+            var actual = IsGraphСyclic(gr);
 
             Assert.AreEqual(expected, actual);
         }
@@ -115,6 +119,10 @@ namespace Testing {
             var graph = new Graph(list);
             Assert.AreEqual(true, Algorithms.IsGraphСyclic(graph));
         }
+
+        #endregion
+
+        #region StraightPassAndReversed Tests
 
         [TestMethod()]
         public void StraightPassAndReversed_01() {
@@ -155,6 +163,25 @@ namespace Testing {
             CreateTwoDiffLayers(list);
         }
 
+        [TestMethod()]
+        public void StraightPassAndReversed_04() {
+            int[][] list = new int[][] {
+                new int[] {5},
+                new int[] {11, 9},
+                new int[] {3, 0, 11},
+                new int[] {6},
+                new int[] {6},
+                new int[] {8},
+                new int[] {7},
+                new int[] {8},
+                new int[] {},
+                new int[] {4},
+                new int[] {1, 2},
+                new int[] {4}
+            };
+            CreateTwoDiffLayers(list);
+        }
+
         private static void CreateTwoDiffLayers(int[][] List) {
             List<List<int>> a = Algorithms.StraightPass(List);
             List<List<int>> b = Algorithms.ReversePass(List);
@@ -165,5 +192,30 @@ namespace Testing {
             TestHelper.ShowGraph(b);
         }
 
+        #endregion
+
+        #region TheShortestLayout Test
+
+        [TestMethod()]
+        public void BuildTheShortestLayout_06() {
+            int[][] list = new int[][] {
+                new int[] {5},
+                new int[] {11, 9},
+                new int[] {3, 0, 11},
+                new int[] {6},
+                new int[] {6},
+                new int[] {8},
+                new int[] {7},
+                new int[] {8},
+                new int[] {},
+                new int[] {4},
+                new int[] {1, 2},
+                new int[] {4}
+            };
+            var layout = TheShortestPathLayout(list);
+            TestHelper.ShowGraph(layout);
+        }
+
+        #endregion
     }
 }

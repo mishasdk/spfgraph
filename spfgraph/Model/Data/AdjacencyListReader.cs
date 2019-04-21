@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Model {
+namespace spfgraph.Model.Data {
     public class AdjacencyListReader : IDisposable {
         StreamReader reader;
 
