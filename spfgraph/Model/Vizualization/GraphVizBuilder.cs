@@ -1,14 +1,17 @@
-﻿using System;
+﻿using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace Model {
+namespace spfgraph.Model.Vizualiztion {
     public class GraphVizBuilder {
-        StackedGraph domGraph;
+        protected StackedGraph domGraph;
+        private Graph graph;
+
+        public GraphVizBuilder(Graph graph) {
+            this.graph = graph;
+        }
 
         #region Paramentrs
 
@@ -26,7 +29,7 @@ namespace Model {
             return elements;
         }
 
-        ObservableCollection<Element> CreateElementsToShow() {
+        protected ObservableCollection<Element> CreateElementsToShow() {
             var nodes = new List<Node>();
             var edges = new List<Edge>();
             var indexByName = new SortedDictionary<int, int>();
@@ -58,7 +61,11 @@ namespace Model {
             return graph;
         }
 
-        void OptimizeVisualization() {
+        internal ObservableCollection<Element> CreateGraphVizualization() {
+            throw new NotImplementedException();
+        }
+
+        protected void OptimizeVisualization() {
             for (int i = 1; i != domGraph.GraphLayers.Count; ++i) {
                 var curLayerCounter = new SortedDictionary<int, int>();
                 var curLayerEnterCounter = new SortedDictionary<int, int>();

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
-using Model;
 
 namespace Testing {
     public class TestHelper {

@@ -1,11 +1,14 @@
-﻿using Model;
-using QuickGraph;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.Dialog;
+using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
+using spfgraph.Model.Vizualiztion;
+using spfgraph.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace ViewModel {
+namespace spfgraph.ViewModel {
     public class MainWindowViewModel : BaseViewModel {
 
         #region Private Fields
@@ -69,8 +72,7 @@ namespace ViewModel {
                         var graph = new Graph(DataProvider.CreateAdjacencyListFromFile(FilePath));
                         var builder = new GraphVizBuilder(graph);
                         GraphToViz = builder.CreateGraphVizualization();
-                    }
-                    catch (GraphErrorException ex) {
+                    } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     }
                 }));

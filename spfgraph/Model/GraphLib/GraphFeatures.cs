@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model {
+namespace spfgraph.Model.GraphLib {
     public class GraphFeatures {
         public int Height { get; set; }
         public int Width { get; set; }

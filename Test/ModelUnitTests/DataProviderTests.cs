@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using spfgraph.Model.Data;
+using spfgraph.Model.Exceptions;
 using System.Collections.Generic;
 
 

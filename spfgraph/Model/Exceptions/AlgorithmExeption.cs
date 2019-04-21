@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model{
+namespace spfgraph.Model.Exceptions {
     public class AlgorithmException : Exception {
         public AlgorithmException() { }
         public AlgorithmException(string message) : base(message) { }
