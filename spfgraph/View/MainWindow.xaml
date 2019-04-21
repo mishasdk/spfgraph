@@ -69,8 +69,8 @@
 
             <!--Right side of the main page-->
             <Grid Grid.Column="1" Background="White">
-                <zoom:ZoomControl Visibility="{Binding GraphToViz, Converter={StaticResource ZoomVisibilityConverter}}">
-                    <ItemsControl ItemsSource="{Binding GraphToViz, Mode=TwoWay}">
+                <zoom:ZoomControl Visibility="{Binding ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding ElementsToViz   , Mode=TwoWay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas/>

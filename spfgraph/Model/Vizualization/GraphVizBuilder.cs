@@ -7,12 +7,7 @@ using System.Windows;
 namespace spfgraph.Model.Vizualiztion {
     public class GraphVizBuilder {
         protected StackedGraph domGraph;
-        private Graph graph;
-
-        public GraphVizBuilder(Graph graph) {
-            this.graph = graph;
-        }
-
+     
         #region Paramentrs
 
         public int CurrentHeight { get; set; } = 0;
@@ -59,10 +54,6 @@ namespace spfgraph.Model.Vizualiztion {
                 graph.Add(i);
 
             return graph;
-        }
-
-        internal ObservableCollection<Element> CreateGraphVizualization() {
-            throw new NotImplementedException();
         }
 
         protected void OptimizeVisualization() {
