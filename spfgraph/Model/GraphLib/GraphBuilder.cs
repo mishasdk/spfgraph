@@ -6,32 +6,31 @@ using System.Threading.Tasks;
 using QuickGraph;
 
 namespace Model {
-    public class GraphBuilder {
-        Graph Graph { get; set; }
-        LayoutTypes layoutType;
+    public class StackedGraphBuilder {
+        StackedGraph dagGraph;
+        public LayoutTypes LayoutType { get; set; }
 
-        public GraphBuilder(LayoutTypes layoutType) {
+        #region Build Parallel Form
 
-            this.layoutType = layoutType;
+        public StackedGraph ConstructSpf(Graph graph) {
+            dagGraph = new StackedGraph(graph);
 
-        }
-
-        public void ReadGraphFromFile(string fileName) {
-            var list = DataProvider.CreateAdjacencyListFromFile(fileName);
-            Graph = new Graph(list);
-        }
-
-        public void ConstructSpfForm() {
-            switch (layoutType) {
+            switch (LayoutType) {
                 case LayoutTypes.TheShortestHeigth:
                     ConstructTheShortestHeigth();
                     break;
+                default:
+                    throw new Exception("Need to choose layout type.");
             }
 
+            return dagGraph;
         }
 
-        private void ConstructTheShortestHeigth() {
-            
+        void ConstructTheShortestHeigth() {
+            dagGraph.GraphLayers = Algorithms.TheShortestPathLayout(dagGraph.AdjacencyList);
         }
+
+        #endregion
+
     }
 }
