@@ -89,6 +89,8 @@ namespace spfgraph.ViewModel {
 
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
+                    } catch (DataProviderException ex) {
+                        dialogService.ShowMessage(ex.Message);
                     }
                 }));
         }

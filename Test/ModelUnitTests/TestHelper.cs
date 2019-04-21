@@ -151,7 +151,14 @@ namespace Testing {
                     Console.Write(j + " ");
                 Console.WriteLine();
             }
+        }
 
+        public static void ShowAdjacencyList(List<int>[] g) {
+            foreach (var i in g) {
+                foreach (var j in i)
+                    Console.Write(j + " ");
+                Console.WriteLine();
+            }
         }
     }
 }
