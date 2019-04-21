@@ -128,10 +128,10 @@
     <Compile Include="Model\Exceptions\DataProviderException.cs" />
     <Compile Include="Model\Exceptions\GraphErrorException.cs" />
     <Compile Include="Model\GraphLib\Algorithms.cs" />
-    <Compile Include="Model\GraphLib\GraphBuilder.cs" />
+    <Compile Include="Model\GraphLib\StackedGraphBuilder.cs" />
     <Compile Include="Model\GraphLib\Graph.cs" />
     <Compile Include="Model\GraphLib\GraphFeatures.cs" />
-    <Compile Include="Model\GraphLib\Pair.cs" />
+    <Compile Include="Model\Data\Pair.cs" />
     <Compile Include="Model\GraphLib\StackedGraph.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

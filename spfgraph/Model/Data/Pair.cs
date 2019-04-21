@@ -9,14 +9,4 @@
         }
 
     }
-
-    public class Pair<T, V> {
-        public T First { get; set; }
-        public V Second { get; set; }
-
-        public Pair(T a, V b) {
-            First = a;
-            Second = b;
-        }
-    }
 }
