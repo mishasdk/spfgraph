@@ -10,7 +10,6 @@
                 <ResourceDictionary Source="Styles/Colors.xaml"/>
                 <ResourceDictionary Source="Styles/UI_Elements.xaml"/>
                 <ResourceDictionary Source="Styles/Buttons.xaml"/>
-                <ResourceDictionary Source="Styles/WindowChrome.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
