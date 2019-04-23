@@ -1,4 +1,5 @@
-﻿using spfgraph.Model.GraphLib;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.GraphLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -6,7 +7,7 @@ using System.Windows;
 namespace spfgraph.Model.Vizualization {
     public class GraphVizBuilder {
         protected StackedGraph domGraph;
-     
+
         #region Paramentrs
 
         public int StartHeight { get; set; } = 0;
@@ -83,6 +84,35 @@ namespace spfgraph.Model.Vizualization {
                     if (first < second) return -1;
                     return 1;
                 });
+            }
+        }
+
+        protected void SugyamaVis(StackedGraph dagGraph) {
+            var g = dagGraph.AdjacencyList;
+            var u = new bool[g.Length];
+            var mst = new List<Pair<int>>();
+
+            // Building mst
+            for (int i = 0; i < g.Length; i++)
+                if (!u[i])
+                    Dfs(g, u, mst, i);
+
+           // var countValues = new List<Pair<>>
+            // Count cut value
+
+            
+
+
+        }
+
+        void Dfs(int[][] g, bool[] u, List<Pair<int>> mst, int v) {
+            u[v] = true;
+            for (int i = 0; i < g[v].Length; i++) {
+                int to = g[v][i];
+                if (!u[to]) {
+                    mst.Add(new Pair<int>(v, to));
+                    Dfs(g, u, mst, to);
+                }
             }
         }
     }
