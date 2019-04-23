@@ -15,7 +15,7 @@
         MinWidth="400" MinHeight="250" >
 
     <Window.Resources>
-        <converters:GraphToVisibilityConverter x:Key="ZoomVisibilityConverter" />
+        <converters:NullRefToVisibilityConverter x:Key="NullRefToVisibilityConverter" />
     </Window.Resources>
 
     <Border BorderThickness="2" BorderBrush="{StaticResource DarkGrayColorBrush}">
@@ -117,7 +117,7 @@
 
                 <!--Right side of the main page-->
                 <Grid Grid.Column="1" Background="White">
-                    <zoom:ZoomControl Mode="Fill" Visibility="{Binding Path=GraphVM.ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
+                    <zoom:ZoomControl Mode="Fill" Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -150,7 +150,8 @@
             <!--Bottom dock panel-->
             <DockPanel Height="22" Grid.Row="2" Background="{StaticResource CleanBlueBrush}" >
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock VerticalAlignment="Center" Background="{StaticResource CleanBlueBrush}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
+                    <TextBlock Text="Path" Foreground="White" Margin="20 0 0 0" />
+                    <TextBlock Text="{Binding Path=FilePath}" Foreground="White" Margin="5 0 0 0" />
                 </StackPanel>
             </DockPanel>
         </Grid>

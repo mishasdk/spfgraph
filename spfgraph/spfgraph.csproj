@@ -85,7 +85,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\GraphToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullRefToVisibilityConverter.cs" />
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />

@@ -9,7 +9,7 @@ namespace spfgraph.Model.Vizualization {
      
         #region Paramentrs
 
-        public int StartHeighth { get; set; } = 100;
+        public int StartHeight { get; set; } = 0;
         public int HeightStep { get; set; } = 60;
         public int WidthStep { get; set; } = 60;
         public int StartLeft { get; set; } = 0;
@@ -27,7 +27,7 @@ namespace spfgraph.Model.Vizualization {
             var nodes = new List<Node>();
             var edges = new List<Edge>();
             var indexByName = new SortedDictionary<int, int>();
-            var currentHeight = StartHeighth;
+            var currentHeight = StartHeight;
             for (int i = 0; i < domGraph.GraphLayers.Count; i++) {
                 int shift = domGraph.GraphLayers[i].Count * WidthStep / 2;
                 for (int j = 0; j < domGraph.GraphLayers[i].Count; j++) {

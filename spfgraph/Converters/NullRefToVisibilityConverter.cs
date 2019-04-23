@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace spfgraph.Converters {
-    public class GraphToVisibilityConverter : IValueConverter {
+    public class NullRefToVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null)
                 return Visibility.Hidden;
