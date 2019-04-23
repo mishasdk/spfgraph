@@ -39,15 +39,18 @@ namespace spfgraph.ViewModel {
         }
 
         public GraphViewModel(string filePath) {
+            ReadGraphAndCreateVizElements(filePath);
+        }
+
+        private void ReadGraphAndCreateVizElements(string filePath) {
             var graph = DataProvider.ReadGraphFromFile(filePath);
             var builder = new StackedGraphBuilder() {
                 LayoutType = LayoutTypes.TheShortestHeigth
             };
             var dagGraph = builder.ConstructSpf(graph);
             var graphVizBuilder = new GraphVizBuilder();
-
+            ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
             features = dagGraph.GetGraphFeatures();
-           ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
         }
     }
 }
