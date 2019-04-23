@@ -20,16 +20,24 @@ namespace spfgraph.ViewModel {
         RelayCommand buildGraphCommand;
         RelayCommand clearDataCommand;
 
-        ObservableCollection<Element> elementsToViz;
         IDialogService dialogService;
         string filePath;
         double canvasWidth;
         LayoutTypes selectedLayoutType;
         Window window;
+        GraphViewModel graphVM;
 
         #endregion
 
         #region Public Propeties
+
+        public GraphViewModel GraphVM {
+            get => graphVM;
+            set {
+                graphVM = value;
+                OnPropertyChanged(nameof(GraphVM));
+            }
+        }
 
         public LayoutTypes SelectedLayoutType {
             get => selectedLayoutType;
@@ -47,14 +55,6 @@ namespace spfgraph.ViewModel {
             }
         }
 
-        public ObservableCollection<Element> ElementsToViz {
-            get => elementsToViz;
-            set {
-                elementsToViz = value;
-                OnPropertyChanged(nameof(ElementsToViz));
-            }
-        }
-
         public string FilePath {
             get => filePath;
             set {
@@ -67,21 +67,25 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
+        RelayCommand showInfoCommand;
+        public RelayCommand ShowInfoCommand {
+            get => showInfoCommand ??
+                (showInfoCommand = new RelayCommand(() => {
+                    try {
+                        dialogService.ShowMessage($"Heigth: {GraphVM.GraphHeight}");
+                    } catch {
+                        dialogService.ShowMessage("Empty graphVM");
+                    }
+                }));
+        }
+
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
                     if (FilePath == null)
                         return;
                     try {
-                        var builder = new StackedGraphBuilder() {
-                            LayoutType = SelectedLayoutType
-                        };
-                        var graph = DataProvider.ReadGraphFromFile(FilePath);
-                        var dagGraph = builder.ConstructSpf(graph);
-
-                        var graphViz = new GraphVizBuilder();
-                        ElementsToViz = graphViz.CreateGraphVizualization(dagGraph);
-
+                        GraphVM = new GraphViewModel(filePath);
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     } catch (DataProviderException ex) {
@@ -126,7 +130,7 @@ namespace spfgraph.ViewModel {
 
         private void ClearData() {
             FilePath = null;
-            ElementsToViz = null;
+            GraphVM = null;
 
         }
 

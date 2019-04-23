@@ -65,23 +65,21 @@
                         <Button Content="Build Graph" Style="{StaticResource CustomButton}" Command="{Binding BuildGraphCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Button Content="Delete Graph" Style="{StaticResource CustomButton}" Command="{Binding ClearDataCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                        <Button Content="Draw Rectangle" Command="{Binding DrawRectangleCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Show Info" Command="{Binding ShowInfoCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 
                         <TextBlock Text="Graph Features" Margin="0 0 0 10"/>
 
-                       
 
-                        <Grid DataContext="">
+
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Heigth" />
-                            <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" />
-
-                            <!--<TextBlock Grid.Column="1" Text="{Binding GraphHeigth, Mode=TwoWay}" />-->
+                            <TextBlock Text="Heigth"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=GraphVM.GraphHeight, Mode=OneWay}" />
                         </Grid>
 
                         <Grid>
@@ -90,9 +88,8 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Width" />  
-                            <TextBlock Grid.Column="1" Text="{Binding GraphWidth}" />
-
+                            <TextBlock Text="Width" />
+                            <TextBlock Grid.Column="1" Text="{Binding Path=GraphVM.GraphWidth}" />
                         </Grid>
 
                         <Grid>
@@ -102,8 +99,7 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Avrg Width" />
-                            <TextBlock Grid.Column="1" Text="{Binding GraphAvrgWidth}" />
-
+                            <TextBlock Grid.Column="1" Text="{Binding Path=GraphVM.GraphAvrgWidth}" />
                         </Grid>
 
                         <Grid>
@@ -113,18 +109,16 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="Irregular" />
-                            <TextBlock Grid.Column="1" Text="{Binding GraphIrregular}" />
-
+                            <TextBlock Grid.Column="1" Text="{Binding Path=GraphVM.GraphIrregular}" />
                         </Grid>
-
 
                     </StackPanel>
                 </Border>
 
                 <!--Right side of the main page-->
                 <Grid Grid.Column="1" Background="White">
-                    <zoom:ZoomControl Mode="Fill" Visibility="{Binding ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
-                        <ItemsControl ItemsSource="{Binding ElementsToViz}">
+                    <zoom:ZoomControl Mode="Fill" Visibility="{Binding Path=GraphVM.ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
+                        <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas/>
