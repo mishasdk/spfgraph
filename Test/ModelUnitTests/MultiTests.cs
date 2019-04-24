@@ -4,7 +4,7 @@ namespace Testing {
 
     [TestClass()]
     public class MultiTests {
-        string testSourceFolderPath = "../../TestSource/";
+        //string testSourceFolderPath = "../../TestSource/";
 
     }
 }

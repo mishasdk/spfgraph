@@ -1,5 +1,6 @@
 ﻿using spfgraph.Model.Data;
 using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -89,29 +90,65 @@ namespace spfgraph.Model.Vizualization {
 
         protected void SugyamaVis(StackedGraph dagGraph) {
             var g = dagGraph.AdjacencyList;
-            var u = new bool[g.Length];
             var mst = new List<Pair<int>>();
 
             // Building mst
-            for (int i = 0; i < g.Length; i++)
-                if (!u[i])
-                    Dfs(g, u, mst, i);
+            BuildMst(g, mst);
 
-           // var countValues = new List<Pair<>>
+
             // Count cut value
-
-            
+            foreach (var edge in mst) {
+                var cutValue = CountCutValue(edge, g);
+            }
 
 
         }
 
-        void Dfs(int[][] g, bool[] u, List<Pair<int>> mst, int v) {
+        protected void BuildMst(int[][] g, List<Pair<int>> mst) {
+            var u = new bool[g.Length];
+            for (int i = 0; i < g.Length; i++)
+                if (!u[i])
+                    Dfs_ForMst(g, u, mst, i);
+        }
+
+        protected int CountCutValue(Pair<int> edge, int[][] g) {
+            int toTail = 0, toHead = 0;
+            var u = new bool[g.Length];
+
+            Dfs_MarkAdjacencyVertices(g, u, edge.Second);
+
+            for (int i = 0; i < g.Length; i++)
+                for (int j = 0; j < g[i].Length; j++) {
+                    int v = i, to = g[i][j];
+                    if (u[v] != u[to]) {
+                        if (u[v] && !u[to])
+                            toHead++;
+                        else
+                            toTail++;
+                    }
+                }
+
+            return toTail - toHead;
+        }
+
+        protected void Dfs_MarkAdjacencyVertices(int[][] g, bool[] u, int v) {
+            u[v] = true;
+            for (int i = 0; i < g[v].Length; i++) {
+                int to = g[v][i];
+                if (!u[to]) {
+                    Dfs_MarkAdjacencyVertices(g, u, to);
+                }
+            }
+        }
+
+
+        protected void Dfs_ForMst(int[][] g, bool[] u, List<Pair<int>> mst, int v) {
             u[v] = true;
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (!u[to]) {
                     mst.Add(new Pair<int>(v, to));
-                    Dfs(g, u, mst, to);
+                    Dfs_ForMst(g, u, mst, to);
                 }
             }
         }
