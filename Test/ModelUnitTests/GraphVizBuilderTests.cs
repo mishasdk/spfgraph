@@ -26,14 +26,21 @@ namespace Testing.ModelUnitTests {
                 for (int j = 0; j < g[i].Length; j++)
                     g[i][j]--;
 
-            var mst = new List<Pair<int>>();
-
             // Building mst
-            BuildMst(g, mst);
+            var mst = BuildMst(g);
 
-            foreach (var edge in mst)
-                Console.WriteLine($"Edge: {edge.First + 1}  {edge.Second + 1}");
+            for (int i = 0; i < mst.Count; i++) {
+                var u = new bool[g.Length];
 
+                Dfs_MarkAdjacencyVertices(mst, u, mst[i].Second, mst[i].First);
+
+                for (int j = 0; j < g.Length; j++)
+                    if (u[j])
+                        Console.Write($"{j + 1} ");
+
+                Console.WriteLine($"Edge: {mst[i].First + 1}  {mst[i].Second + 1}");
+
+            }
         }
 
         [TestMethod()]
@@ -51,16 +58,13 @@ namespace Testing.ModelUnitTests {
             for (int i = 0; i < g.Length; i++)
                 for (int j = 0; j < g[i].Length; j++)
                     g[i][j]--;
-            var mst = new List<Pair<int>>();
 
-            // Building mst
-            BuildMst(g, mst);
+            var mst = BuildMst(g);
 
-            var u = new bool[g.Length];
-            var edge = mst[0];
-            var res = CountCutValue(edge, g);
-
-            Console.WriteLine(res);
+            for (int i = 0; i < mst.Count; i++) {
+                var n = CountCutValue(g, mst, mst[i]);
+                Console.WriteLine(n);
+            }
         }
 
     }

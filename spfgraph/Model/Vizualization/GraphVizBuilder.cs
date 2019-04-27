@@ -90,32 +90,61 @@ namespace spfgraph.Model.Vizualization {
 
         protected void SugyamaVis(StackedGraph dagGraph) {
             var g = dagGraph.AdjacencyList;
-            var mst = new List<Pair<int>>();
+            var dict = new SortedDictionary<Pair<int>, int>();
 
             // Building mst
-            BuildMst(g, mst);
-
+            var mst = BuildMst(g);
 
             // Count cut value
             foreach (var edge in mst) {
-                var cutValue = CountCutValue(edge, g);
+                var cutValue = CountCutValue(g, mst, edge);
+                dict.Add(edge, cutValue);
             }
 
+            while (IsNegativeCutValue(dict)) {
+                var e = FindeNegativeEdge(dict);
+                dict.Remove(e);
+                var u = new bool[g.Length];
+                Dfs_MarkAdjacencyVertices(mst, u, e.Second);
 
+                
+
+                //var b = FindNewEdge(g, mst);
+            }
         }
 
-        protected void BuildMst(int[][] g, List<Pair<int>> mst) {
+        //private Pair<int> FindNewEdge(int[][] g, List<Pair<int>> mst) {
+
+        //}
+
+        private Pair<int> FindeNegativeEdge(SortedDictionary<Pair<int>, int> dict) {
+            foreach (var e in dict)
+                if (e.Value < 0)
+                    return e.Key;
+            return null;
+        }
+
+        private bool IsNegativeCutValue(SortedDictionary<Pair<int>, int> dict) {
+            foreach (var e in dict)
+                if (e.Value < 0)
+                    return true;
+            return false;
+        }
+
+        protected List<Pair<int>> BuildMst(int[][] g) {
+            var mst = new List<Pair<int>>();
             var u = new bool[g.Length];
             for (int i = 0; i < g.Length; i++)
                 if (!u[i])
                     Dfs_ForMst(g, u, mst, i);
+            return mst;
         }
 
-        protected int CountCutValue(Pair<int> edge, int[][] g) {
+        protected int CountCutValue(int[][] g, List<Pair<int>> mst, Pair<int> edge) {
             int toTail = 0, toHead = 0;
             var u = new bool[g.Length];
 
-            Dfs_MarkAdjacencyVertices(g, u, edge.Second);
+            Dfs_MarkAdjacencyVertices(mst, u, edge.Second, edge.First);
 
             for (int i = 0; i < g.Length; i++)
                 for (int j = 0; j < g[i].Length; j++) {
@@ -131,14 +160,13 @@ namespace spfgraph.Model.Vizualization {
             return toTail - toHead;
         }
 
-        protected void Dfs_MarkAdjacencyVertices(int[][] g, bool[] u, int v) {
+        protected void Dfs_MarkAdjacencyVertices(List<Pair<int>> mst, bool[] u, int v, int except = -1) {
             u[v] = true;
-            for (int i = 0; i < g[v].Length; i++) {
-                int to = g[v][i];
-                if (!u[to]) {
-                    Dfs_MarkAdjacencyVertices(g, u, to);
-                }
-            }
+            for (int i = 0; i < mst.Count; i++)
+                if (mst[i].Second == v && mst[i].First != except && !u[mst[i].First])
+                    Dfs_MarkAdjacencyVertices(mst, u, mst[i].First);
+                else if (mst[i].First == v && !u[mst[i].Second])
+                    Dfs_MarkAdjacencyVertices(mst, u, mst[i].Second);
         }
 
 
@@ -152,5 +180,6 @@ namespace spfgraph.Model.Vizualization {
                 }
             }
         }
+
     }
 }
