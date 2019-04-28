@@ -3,7 +3,7 @@
         public int Value { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public Color NodeColor { get; set; }
+        public Color NodeColor { get; set; }    
 
         public Node(int x, int y, int value) {
             Value = value;
