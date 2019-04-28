@@ -81,15 +81,22 @@ namespace spfgraph.Model.Vizualization {
                 currentHeight += HeightStep;
             }
 
-            // Set node color
+            // Set node colors
             ColorizeNode(nodes);
 
             // Creating edges
             for (int i = 0; i < dagGraph.AdjacencyList.Length; i++)
                 for (int j = 0; j < dagGraph.AdjacencyList[i].Length; j++) {
                     int to = dagGraph.AdjacencyList[i][j];
-                    edges.Add(new Edge(nodes[indexByName[i]], nodes[indexByName[to]]));
+                    // Set edges colors
+                    var source = nodes[indexByName[i]];
+                    var target = nodes[indexByName[to]];
+                    var edgeColor = nodes[indexByName[i]].NodeColor;
+                    var edge = new Edge(source, target, edgeColor);
+                    edges.Add(edge);
                 }
+
+
 
             // Creating output colection of elements
             var graph = new ObservableCollection<Element>();
