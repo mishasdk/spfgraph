@@ -16,11 +16,10 @@
 
     <Window.Resources>
         <converters:NullRefToVisibilityConverter x:Key="NullRefToVisibilityConverter" />
+        <converters:ColorToStrokeConverter x:Key="ColorToStroke"/>
     </Window.Resources>
 
     <Border BorderThickness="2" BorderBrush="{StaticResource DarkGrayColorBrush}">
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -70,8 +69,6 @@
 
                         <TextBlock Text="Graph Features" Margin="0 0 0 10"/>
 
-
-
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -115,27 +112,44 @@
                     </StackPanel>
                 </Border>
 
+                <!--<Grid Panel.ZIndex="10" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Expander VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 10 15 0" Header="Layout parameters" Height="200" Width="150">
+                            <Expander.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4" />
+                            </Expander.Effect>
+                            <Grid Background="#fff">
+                                <Grid.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4" />
+                                </Grid.Effect>
+                            </Grid>
+                        </Expander>
+                    </Grid>-->
+
                 <!--Right side of the main page-->
-                <Grid Grid.Column="1" Background="White">
+                <Grid Grid.Column="1">
                     <zoom:ZoomControl Mode="Fill" Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas/>
+                                    <Canvas />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type viz:Node}">
-                                    <Button Style="{StaticResource RoundNode}" Content="{Binding Value}">
-                                        <Button.RenderTransform>
+                                    <Viewbox Width="40" Height="40">
+                                        <Grid Width="40" Height="40">
+                                            <Ellipse StrokeThickness="3" Fill="White" Stroke="{Binding Path=NodeColor, Converter={StaticResource ColorToStroke }}"/>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding Value}" TextAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Viewbox.RenderTransform>
                                             <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
-                                        </Button.RenderTransform>
-                                    </Button>
+                                        </Viewbox.RenderTransform>
+                                    </Viewbox>
                                 </DataTemplate>
 
                                 <DataTemplate DataType="{x:Type viz:Edge}">
-                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" >
+                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{StaticResource DarkGrayColorBrush}" >
                                         <Line.RenderTransform>
                                             <TranslateTransform X="18" Y="18"/>
                                         </Line.RenderTransform>
