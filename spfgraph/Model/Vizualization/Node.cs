@@ -1,9 +1,21 @@
-﻿namespace spfgraph.Model.Vizualization {
+﻿using System.Runtime.Serialization;
+
+
+namespace spfgraph.Model.Vizualization {
+    [DataContract]
     public class Node : Element {
+
+        [DataMember]
         public int Value { get; set; }
+
+        [DataMember]
         public int X { get; set; }
+
+        [DataMember]
         public int Y { get; set; }
-        public Color NodeColor { get; set; }    
+
+        [DataMember]
+        public Color NodeColor { get; set; }
 
         public Node(int x, int y, int value) {
             Value = value;

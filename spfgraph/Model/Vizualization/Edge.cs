@@ -1,9 +1,21 @@
-﻿namespace spfgraph.Model.Vizualization {
+﻿using System.Runtime.Serialization;
+
+namespace spfgraph.Model.Vizualization {
+    [DataContract]
     public class Edge : Element {
+        [DataMember]
         public int X1 { get; set; }
+
+        [DataMember]
         public int Y1 { get; set; }
+
+        [DataMember]
         public int X2 { get; set; }
+
+        [DataMember]
         public int Y2 { get; set; }
+
+        [DataMember]
         public Color EdgeColor { get; set; } = new Color(0, 0, 0);
 
         public Edge(Node source, Node target) {
