@@ -7,7 +7,6 @@
         xmlns:converters="clr-namespace:spfgraph.Converters"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:viz="clr-namespace:spfgraph.Model.Vizualization"
-        xmlns:viewModel="clr-namespace:spfgraph.ViewModel"
         mc:Ignorable="d"
         x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
@@ -64,7 +63,7 @@
                         <Button Content="Build Graph" Style="{StaticResource CustomButton}" Command="{Binding BuildGraphCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Button Content="Delete Graph" Style="{StaticResource CustomButton}" Command="{Binding ClearDataCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                        <Button Content="Show Info" Command="{Binding ShowInfoCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Json Export" Command="{Binding Path=GraphVM.ExportToJsonCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 
                         <TextBlock Text="Graph Features" Margin="0 0 0 10"/>
@@ -118,7 +117,9 @@
                           Width="200"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Top">
-                        <Expander VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 10 15 0" Header="Layout parameters" Height="200" Width="150">
+                        <Expander VerticalAlignment="Top" HorizontalAlignment="Right"
+                                  Margin="0 10 15 0" Header="Layout parameters"
+                                  Height="200" Width="160" FontSize="14" >
                             <Expander.Effect>
                                 <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4" />
                             </Expander.Effect>

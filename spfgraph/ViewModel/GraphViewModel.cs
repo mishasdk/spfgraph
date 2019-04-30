@@ -3,11 +3,11 @@ using spfgraph.Model.GraphLib;
 using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Windows;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
@@ -51,6 +51,21 @@ namespace spfgraph.ViewModel {
             var graphVizBuilder = new GraphVizBuilder();
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
             features = dagGraph.GetGraphFeatures();
+        }
+
+        RelayCommand exportToJsonCommand;
+        public RelayCommand ExportToJsonCommand {
+            get => exportToJsonCommand ??
+                (exportToJsonCommand = new RelayCommand(() => {
+                    MessageBox.Show("fdfdf");
+                    var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
+                    using (var fs = new FileStream("../../../elementsCollection.json", FileMode.Create)) {
+                        jsonFormatter.WriteObject(fs, ElementsToViz);
+                    }
+
+                }));
+
+
         }
     }
 }

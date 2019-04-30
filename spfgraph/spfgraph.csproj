@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -111,9 +112,11 @@
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
     <Compile Include="Model\GraphLib\LayoutTypes.cs" />
-    <Compile Include="Model\Vizualization\Color.cs" />
-    <Compile Include="Model\Vizualization\ColorBuilder.cs" />
-    <Compile Include="Model\Vizualization\ColorSchemeType.cs" />
+    <Compile Include="Model\Vizualization\Color Builder\DefaultColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Color Builder\Color.cs" />
+    <Compile Include="Model\Vizualization\Color Builder\IColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Color Builder\ParametricColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Color Builder\ColorSchemeType.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />

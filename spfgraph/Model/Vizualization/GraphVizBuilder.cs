@@ -7,7 +7,7 @@ using System.Windows;
 namespace spfgraph.Model.Vizualization {
     public class GraphVizBuilder {
         protected StackedGraph dagGraph;
-        protected ColorBuilder colorBuilder;
+        protected IColorBuilder colorBuilder;
 
         #region Paramentrs
 
@@ -35,30 +35,85 @@ namespace spfgraph.Model.Vizualization {
                     InDegreeColorScheme();
                     break;
                 case (ColorSchemeType.OutDegree):
+                    OutDegreeColorScheme();
                     break;
                 case (ColorSchemeType.SumDegree):
+                    SumDegreeColorScheme();
                     break;
                 case (ColorSchemeType.None):
+                    NoneDegreeColorScheme();
                     break;
             }
         }
 
+        private void NoneDegreeColorScheme() {
+            colorBuilder = new DefaultColorBuilder();
+        }
+
         protected void InDegreeColorScheme() {
+            var inDegree = InDegreeArrayCount();
+
+            var maxInDegree = 0;
+            for (int i = 0; i < inDegree.Length; i++)
+                if (inDegree[i] > maxInDegree)
+                    maxInDegree = inDegree[i];
+            colorBuilder = new ParametricColorBuilder(inDegree, maxInDegree);
+        }
+
+        protected void OutDegreeColorScheme() {
+            var outDegree = OutDegreeArrayCount();
+            var maxOutDegree = 0;
+
+            for (int i = 0; i < outDegree.Length; i++)
+                if (outDegree[i] > maxOutDegree)
+                    maxOutDegree = outDegree[i];
+            colorBuilder = new ParametricColorBuilder(outDegree, maxOutDegree);
+        }
+
+        protected void SumDegreeColorScheme() {
+            var sumDegree = SumDegreeArrayCount();
+            int max = -1, min = int.MaxValue;
+
+            for (int i = 0; i < sumDegree.Length; i++) {
+                if (max < sumDegree[i])
+                    max = sumDegree[i];
+                if (min > sumDegree[i])
+                    min = sumDegree[i];
+            }
+
+            colorBuilder = new ParametricColorBuilder(sumDegree, max, min);
+        }
+
+        protected int[] InDegreeArrayCount() {
             var g = dagGraph.AdjacencyList;
             var inDegree = new int[g.Length];
 
             for (int i = 0; i < g.Length; i++)
                 for (int j = 0; j < g[i].Length; j++)
                     inDegree[g[i][j]]++;
-
-            var maxInDegree = 0;
-            for (int i = 0; i < inDegree.Length; i++)
-                if (inDegree[i] > maxInDegree)
-                    maxInDegree = inDegree[i];
-
-            colorBuilder = new ColorBuilder(inDegree, maxInDegree);
+            return inDegree;
         }
 
+        protected int[] OutDegreeArrayCount() {
+            var g = dagGraph.AdjacencyList;
+            var outDegree = new int[g.Length];
+
+            for (int i = 0; i < g.Length; i++)
+                outDegree[i] = g[i].Length;
+            return outDegree;
+        }
+
+        protected int[] SumDegreeArrayCount() {
+            var g = dagGraph.AdjacencyList;
+            var inDegree = InDegreeArrayCount();
+            var outDegree = OutDegreeArrayCount();
+            var sumDegree = new int[g.Length];
+
+            for (int i = 0; i < g.Length; i++) {
+                sumDegree[i] = inDegree[i] + outDegree[i];
+            }
+            return sumDegree;
+        }
         #endregion
 
         protected ObservableCollection<Element> CreateElementsToShow() {
@@ -95,8 +150,6 @@ namespace spfgraph.Model.Vizualization {
                     var edge = new Edge(source, target, edgeColor);
                     edges.Add(edge);
                 }
-
-
 
             // Creating output colection of elements
             var graph = new ObservableCollection<Element>();
@@ -145,6 +198,8 @@ namespace spfgraph.Model.Vizualization {
                 });
             }
         }
+
+        #region Sugyama algo
 
         //protected void SugyamaVis(StackedGraph dagGraph) {
         //    var g = dagGraph.AdjacencyList;
@@ -236,6 +291,8 @@ namespace spfgraph.Model.Vizualization {
         //        }
         //    }
         //}
+
+        #endregion
 
     }
 }
