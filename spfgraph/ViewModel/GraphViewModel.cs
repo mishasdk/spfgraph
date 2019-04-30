@@ -5,9 +5,7 @@ using spfgraph.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Windows;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
@@ -57,7 +55,6 @@ namespace spfgraph.ViewModel {
         public RelayCommand ExportToJsonCommand {
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new RelayCommand(() => {
-                    MessageBox.Show("fdfdf");
                     var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
                     using (var fs = new FileStream("../../../elementsCollection.json", FileMode.Create)) {
                         jsonFormatter.WriteObject(fs, ElementsToViz);
