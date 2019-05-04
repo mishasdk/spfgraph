@@ -5,6 +5,7 @@ using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -71,14 +72,34 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
-        RelayCommand setColorSchemeFromRadioButton;
-        public RelayCommand SetColorSchemeFromRadioButton {
+        ICommand setColorSchemeFromRadioButton;
+        public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
-                (setColorSchemeFromRadioButton = new RelayCommand(() => {
-                    
-                }));
+                (setColorSchemeFromRadioButton = new ParametrizedCommand(ExecuteMethod, CanExecuteMethod));
         }
-        
+
+        bool CanExecuteMethod(object parameter) {
+            return parameter == null ? false : true;
+        }
+
+        void ExecuteMethod(object parameter) {
+            var str = (string)parameter;
+            switch (str) {
+                case "In Degree":
+                    ColorScheme = ColorSchemeTypes.InDegree;
+                    break;
+                case "Out Degree":
+                    ColorScheme = ColorSchemeTypes.OutDegree;
+                    break;
+                case "Sum Degree":
+                    ColorScheme = ColorSchemeTypes.SumDegree;
+                    break;
+                case "Default":
+                    ColorScheme = ColorSchemeTypes.None;
+                    break;
+            }
+        }
+
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
