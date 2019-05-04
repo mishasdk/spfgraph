@@ -107,21 +107,25 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\ColorToStrokeConverter.cs" />
+    <Compile Include="Converters\IsCheckedToColorScheme.cs" />
+    <Compile Include="Converters\IsCheckedToLayoutType.cs" />
     <Compile Include="Converters\NullRefToVisibilityConverter.cs" />
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
-    <Compile Include="Model\GraphLib\LayoutTypes.cs" />
-    <Compile Include="Model\Vizualization\Color Builder\DefaultColorBuilder.cs" />
-    <Compile Include="Model\Vizualization\Color Builder\Color.cs" />
-    <Compile Include="Model\Vizualization\Color Builder\IColorBuilder.cs" />
-    <Compile Include="Model\Vizualization\Color Builder\ParametricColorBuilder.cs" />
-    <Compile Include="Model\Vizualization\Color Builder\ColorSchemeType.cs" />
+    <Compile Include="Model\GraphLib\LayoutAlgorithmTypes.cs" />
+    <Compile Include="Model\Vizualization\Colorize Graph\DefaultColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Colorize Graph\Color.cs" />
+    <Compile Include="Model\Vizualization\Colorize Graph\IColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Colorize Graph\ParametricColorBuilder.cs" />
+    <Compile Include="Model\Vizualization\Colorize Graph\ColorSchemeTypes.cs" />
     <Compile Include="Model\Vizualization\Element.cs" />
     <Compile Include="Model\Vizualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Vizualization\Edge.cs" />
     <Compile Include="Model\Vizualization\Node.cs" />
+    <Compile Include="Model\Vizualization\OptimizeVizualizationTypes.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Base\ParametrizedCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

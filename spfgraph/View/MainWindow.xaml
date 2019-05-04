@@ -14,8 +14,11 @@
         MinWidth="400" MinHeight="250" >
 
     <Window.Resources>
+        <!--Converrters-->
         <converters:NullRefToVisibilityConverter x:Key="NullRefToVisibilityConverter" />
         <converters:ColorToStrokeConverter x:Key="ColorToStroke"/>
+        <converters:IsCheckedToColorScheme x:Key="IsCheckedToColorScheme"/>
+        <!--<converters:IsCheckedToLayoutType x:Key="IsCheckedToLayoutType"/>-->
     </Window.Resources>
 
     <Border BorderThickness="2" BorderBrush="{StaticResource DarkGrayColorBrush}">
@@ -62,8 +65,11 @@
                         <Button Grid.Column="1" Style="{StaticResource CustomButton}" Command="{Binding OpenCommand}"  Content="Change Path" Width="130" Height="30" Margin="0 0 0 10" />
                         <Button Content="Build Graph" Style="{StaticResource CustomButton}" Command="{Binding BuildGraphCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Button Content="Delete Graph" Style="{StaticResource CustomButton}" Command="{Binding ClearDataCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Json Export" Style="{StaticResource CustomButton}" Command="{Binding Path=GraphVM.ExportToJsonCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
+
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                        <Button Content="Json Export" Command="{Binding Path=GraphVM.ExportToJsonCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+
+                        <Button Content="Color Type" Command="{Binding Path=ShowColorType}" Width="120" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 
                         <TextBlock Text="Graph Features" Margin="0 0 0 10"/>
@@ -113,23 +119,34 @@
 
                 <!--Right side of the main page-->
                 <Grid Grid.Column="1">
-                    <Grid Panel.ZIndex="10"
-                          Width="200"
-                          HorizontalAlignment="Right"
-                          VerticalAlignment="Top">
-                        <Expander VerticalAlignment="Top" HorizontalAlignment="Right"
-                                  Margin="0 10 15 0" Header="Layout parameters"
-                                  Height="200" Width="160" FontSize="14" >
-                            <Expander.Effect>
-                                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4" />
-                            </Expander.Effect>
-                            <Grid Background="#fff">
-                                <Grid.Effect>
-                                    <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4"/>
-                                </Grid.Effect>
-                            </Grid>
-                        </Expander>
-                    </Grid>
+
+                    <Expander Panel.ZIndex="10"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                               Margin="0 10 15 0" Header="Layout parameters"
+                               Padding="0 3 5 0"  FontSize="14" >
+                        <StackPanel Background="#fff">
+
+                            <GroupBox Header="Color Scheme" Margin="5">
+                                <StackPanel>
+                                    <!--<RadioButton Content="In Degree" IsChecked="{Binding Path=ColorSchemeType,
+                                        Converter={StaticResource IsCheckedToColorScheme}, Mode=OneWay}" Margin="5 5 0 0" />-->
+                                    <RadioButton Content="Out Degree"  Margin="5 5 0 0" />
+                                    <RadioButton Content="Sum Degree"  Margin="5 5 0 0" />
+                                    <RadioButton Content="Default" Margin="5 5 0 0" />
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Minimize Crosses" Margin="5">
+                                <!--<StackPanel>
+                                    <RadioButton Content="Minimize" IsChecked="{Binding Path=GraphVM.LayoutType,
+                                        Converter={StaticResource IsCheckedToLayoutType}}" Margin="5 5 0 0" />
+                                    <RadioButton Content="Default" IsChecked="{Binding Path=GraphVM.LayoutType,
+                                        Converter={StaticResource IsCheckedToLayoutType}}"  Margin="5 5 0 0" />
+                                </StackPanel>-->
+                            </GroupBox>
+
+                        </StackPanel>
+                    </Expander>
+
                     <zoom:ZoomControl Mode="Fill" Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>

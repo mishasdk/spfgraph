@@ -16,7 +16,7 @@ namespace spfgraph.Model.Vizualization {
         public int Y2 { get; set; }
 
         [DataMember]
-        public Color EdgeColor { get; set; } = new Color(0, 0, 0);
+        public Color EdgeColor { get; set; }
 
         public Edge(Node source, Node target) {
             X1 = source.X;

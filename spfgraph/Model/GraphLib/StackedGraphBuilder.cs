@@ -3,7 +3,7 @@
 namespace spfgraph.Model.GraphLib {
     public class StackedGraphBuilder {
         protected StackedGraph dagGraph;
-        public LayoutTypes LayoutType { get; set; }
+        public LayoutAlgorithmTypes LayoutType { get; set; }
 
         #region Build Parallel Form
 
@@ -11,7 +11,7 @@ namespace spfgraph.Model.GraphLib {
             dagGraph = new StackedGraph(graph);
 
             switch (LayoutType) {
-                case LayoutTypes.TheShortestHeigth:
+                case LayoutAlgorithmTypes.TheShortestHeigth:
                     ConstructTheShortestHeigth();
                     break;
                 default:

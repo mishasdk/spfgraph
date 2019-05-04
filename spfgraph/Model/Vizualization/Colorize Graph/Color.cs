@@ -17,6 +17,8 @@ namespace spfgraph.Model.Vizualization {
             G = g;
             B = b;
         }
+        public Color() { }
+
 
     }
 }

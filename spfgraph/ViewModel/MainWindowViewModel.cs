@@ -1,15 +1,10 @@
-﻿using spfgraph.Model.Data;
-using spfgraph.Model.Dialog;
+﻿using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
 using spfgraph.Model.GraphLib;
 using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
-using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace spfgraph.ViewModel {
     public class MainWindowViewModel : BaseViewModel {
@@ -23,27 +18,36 @@ namespace spfgraph.ViewModel {
         IDialogService dialogService;
         string filePath;
         double canvasWidth;
-        LayoutTypes selectedLayoutType;
         Window window;
         GraphViewModel graphVM;
+        ColorSchemeTypes colorScheme;
+        OptimizeVisualizationTypes optimizeLayout;
 
         #endregion
 
         #region Public Propeties
+
+        public OptimizeVisualizationTypes OptimizeLayout {
+            get => optimizeLayout;
+            set {
+                optimizeLayout = value;
+                OnPropertyChanged(nameof(OptimizeLayout));
+            }
+        }
+
+        public ColorSchemeTypes ColorScheme {
+            get => colorScheme;
+            set {
+                colorScheme = value;
+                OnPropertyChanged(nameof(ColorScheme));
+            }
+        }
 
         public GraphViewModel GraphVM {
             get => graphVM;
             set {
                 graphVM = value;
                 OnPropertyChanged(nameof(GraphVM));
-            }
-        }
-
-        public LayoutTypes SelectedLayoutType {
-            get => selectedLayoutType;
-            set {
-                selectedLayoutType = value;
-                OnPropertyChanged(nameof(SelectedLayoutType));
             }
         }
 
@@ -67,17 +71,14 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
-        RelayCommand showInfoCommand;
-        public RelayCommand ShowInfoCommand {
-            get => showInfoCommand ??
-                (showInfoCommand = new RelayCommand(() => {
-                    try {
-                        dialogService.ShowMessage($"Heigth: {GraphVM.GraphHeight}");
-                    } catch {
-                        dialogService.ShowMessage("Empty graphVM");
-                    }
+        RelayCommand setColorSchemeFromRadioButton;
+        public RelayCommand SetColorSchemeFromRadioButton {
+            get => setColorSchemeFromRadioButton ??
+                (setColorSchemeFromRadioButton = new RelayCommand(() => {
+                    
                 }));
         }
+        
 
         public RelayCommand BuildGraphCommand {
             get => buildGraphCommand ??
@@ -85,7 +86,7 @@ namespace spfgraph.ViewModel {
                     if (FilePath == null)
                         return;
                     try {
-                        GraphVM = new GraphViewModel(filePath);
+                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme);
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     } catch (DataProviderException ex) {
@@ -114,6 +115,14 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
+        RelayCommand showColorType;
+        public RelayCommand ShowColorType {
+            get => showColorType ??
+                (showColorType = new RelayCommand(() => {
+                    MessageBox.Show(ColorScheme.ToString());
+                }));
+        }
+
         #endregion
 
         #region Constructor
@@ -122,6 +131,8 @@ namespace spfgraph.ViewModel {
             dialogService = new DefaultDialogService();
             this.window = window;
 
+            OptimizeLayout = OptimizeVisualizationTypes.MinimizeCrosses;
+            ColorScheme = ColorSchemeTypes.InDegree;
         }
 
         #endregion

@@ -6,11 +6,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Windows;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
         ObservableCollection<Element> elementsToViz;
-        GraphFeatures features;
 
         public ObservableCollection<Element> ElementsToViz {
             get => elementsToViz;
@@ -19,6 +19,10 @@ namespace spfgraph.ViewModel {
                 OnPropertyChanged(nameof(ElementsToViz));
             }
         }
+
+        #region Graph Features
+
+        GraphFeatures features;
 
         public int GraphHeight {
             get => features.Height;
@@ -36,20 +40,26 @@ namespace spfgraph.ViewModel {
             get => features.Irregular;
         }
 
-        public GraphViewModel(string filePath) {
-            ReadGraphAndCreateVizElements(filePath);
-        }
+        #endregion
 
-        private void ReadGraphAndCreateVizElements(string filePath) {
+        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme) {
             var graph = DataProvider.ReadGraphFromFile(filePath);
             var builder = new StackedGraphBuilder() {
-                LayoutType = LayoutTypes.TheShortestHeigth
+                LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
             };
             var dagGraph = builder.ConstructSpf(graph);
-            var graphVizBuilder = new GraphVizBuilder();
+
+            // Create GraphVizBuilder
+            var graphVizBuilder = new GraphVizBuilder() {
+                ColorScheme = colorScheme,
+                OptimizeLayout = optimizeLayout,
+            };
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
             features = dagGraph.GetGraphFeatures();
         }
+
+
+        #region Commands
 
         RelayCommand exportToJsonCommand;
         public RelayCommand ExportToJsonCommand {
@@ -61,8 +71,10 @@ namespace spfgraph.ViewModel {
                     }
 
                 }));
-
-
         }
+
+       
+        #endregion
+
     }
 }

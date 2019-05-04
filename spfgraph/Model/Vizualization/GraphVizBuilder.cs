@@ -1,5 +1,4 @@
 ﻿using spfgraph.Model.GraphLib;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -9,9 +8,11 @@ namespace spfgraph.Model.Vizualization {
         protected StackedGraph dagGraph;
         protected IColorBuilder colorBuilder;
 
-        #region Paramentrs
+        public OptimizeVisualizationTypes OptimizeLayout { get; set; }
+        public ColorSchemeTypes ColorScheme { get; set; }
 
-        public ColorSchemeType ColorType { get; set; } = ColorSchemeType.InDegree;
+        #region Location Paramenters
+
         public int StartHeight { get; set; } = 0;
         public int HeightStep { get; set; } = 60;
         public int WidthStep { get; set; } = 60;
@@ -19,28 +20,76 @@ namespace spfgraph.Model.Vizualization {
 
         #endregion
 
+        public GraphVizBuilder() { }
+
         public ObservableCollection<Element> CreateGraphVizualization(StackedGraph dagGraph) {
             this.dagGraph = dagGraph;
-            OptimizeVisualization();
+            UseOptimizeLayoutAlgorithm();
             SetColorScheme();
-            var elements = CreateElementsToShow();
-            return elements;
+            return CreateElementsToShow();
+
         }
+
+        #region Optimize Layout
+
+        private void UseOptimizeLayoutAlgorithm() {
+            switch (OptimizeLayout) {
+                case (OptimizeVisualizationTypes.MinimizeCrosses):
+                    MinimizeCrosses();
+                    break;
+                case (OptimizeVisualizationTypes.None):
+                default:
+                    // Nothing
+                    break;
+            }
+        }
+
+        protected void MinimizeCrosses() {
+            for (int i = 1; i != dagGraph.GraphLayers.Count; ++i) {
+                var curLayerCounter = new SortedDictionary<int, int>();
+                var curLayerEnterCounter = new SortedDictionary<int, int>();
+                for (var index = 0; index != dagGraph.GraphLayers[i - 1].Count; ++index) {
+                    var value = dagGraph.GraphLayers[i - 1][index];
+                    for (int j = 0; j != dagGraph.AdjacencyList[value].Length; ++j) {
+                        int to = dagGraph.AdjacencyList[value][j];
+                        if (!curLayerCounter.ContainsKey(to)) {
+                            curLayerCounter[to] = 0;
+                            curLayerEnterCounter[to] = 0;
+                        }
+                        curLayerCounter[to] += index + 1;
+                        curLayerEnterCounter[to] += 1;
+                    }
+                }
+                dagGraph.GraphLayers[i].Sort((a, b) => {
+                    double first = 0.0;
+                    if (curLayerCounter.ContainsKey(a))
+                        first = (double)curLayerCounter[a] / curLayerEnterCounter[a];
+                    double second = 0.0;
+                    if (curLayerCounter.ContainsKey(b))
+                        second = (double)curLayerCounter[b] / curLayerEnterCounter[b];
+                    if (first == second) return 0;
+                    if (first < second) return -1;
+                    return 1;
+                });
+            }
+        }
+
+        #endregion
 
         #region Color Scheme Constructing
 
         protected void SetColorScheme() {
-            switch (ColorType) {
-                case (ColorSchemeType.InDegree):
+            switch (ColorScheme) {
+                case (ColorSchemeTypes.InDegree):
                     InDegreeColorScheme();
                     break;
-                case (ColorSchemeType.OutDegree):
+                case (ColorSchemeTypes.OutDegree):
                     OutDegreeColorScheme();
                     break;
-                case (ColorSchemeType.SumDegree):
+                case (ColorSchemeTypes.SumDegree):
                     SumDegreeColorScheme();
                     break;
-                case (ColorSchemeType.None):
+                case (ColorSchemeTypes.None):
                     NoneDegreeColorScheme();
                     break;
             }
@@ -114,6 +163,7 @@ namespace spfgraph.Model.Vizualization {
             }
             return sumDegree;
         }
+
         #endregion
 
         protected ObservableCollection<Element> CreateElementsToShow() {
@@ -137,7 +187,7 @@ namespace spfgraph.Model.Vizualization {
             }
 
             // Set node colors
-            ColorizeNode(nodes);
+            ColorizeNodes(nodes);
 
             // Creating edges
             for (int i = 0; i < dagGraph.AdjacencyList.Length; i++)
@@ -151,52 +201,20 @@ namespace spfgraph.Model.Vizualization {
                     edges.Add(edge);
                 }
 
-            // Creating output colection of elements
-            var graph = new ObservableCollection<Element>();
+            // Creating output colection of elementss
+            var elementsCollection = new ObservableCollection<Element>();
             foreach (var i in edges)
-                graph.Add(i);
-            foreach (var node in nodes) {
-                graph.Add(node);
-            }
-            return graph;
+                elementsCollection.Add(i);
+            foreach (var node in nodes)
+                elementsCollection.Add(node);
+
+            return elementsCollection;
         }
 
-        private void ColorizeNode(List<Node> nodes) {
-            if (ColorType == ColorSchemeType.InDegree) {
-                foreach (var node in nodes)
-                    colorBuilder.SetNodeColor(node);
-            }
+        private void ColorizeNodes(List<Node> nodes) {
+            foreach (var node in nodes)
+                colorBuilder.SetNodeColor(node);
 
-        }
-
-        protected void OptimizeVisualization() {
-            for (int i = 1; i != dagGraph.GraphLayers.Count; ++i) {
-                var curLayerCounter = new SortedDictionary<int, int>();
-                var curLayerEnterCounter = new SortedDictionary<int, int>();
-                for (var index = 0; index != dagGraph.GraphLayers[i - 1].Count; ++index) {
-                    var value = dagGraph.GraphLayers[i - 1][index];
-                    for (int j = 0; j != dagGraph.AdjacencyList[value].Length; ++j) {
-                        int to = dagGraph.AdjacencyList[value][j];
-                        if (!curLayerCounter.ContainsKey(to)) {
-                            curLayerCounter[to] = 0;
-                            curLayerEnterCounter[to] = 0;
-                        }
-                        curLayerCounter[to] += index + 1;
-                        curLayerEnterCounter[to] += 1;
-                    }
-                }
-                dagGraph.GraphLayers[i].Sort((a, b) => {
-                    double first = 0.0;
-                    if (curLayerCounter.ContainsKey(a))
-                        first = (double)curLayerCounter[a] / curLayerEnterCounter[a];
-                    double second = 0.0;
-                    if (curLayerCounter.ContainsKey(b))
-                        second = (double)curLayerCounter[b] / curLayerEnterCounter[b];
-                    if (first == second) return 0;
-                    if (first < second) return -1;
-                    return 1;
-                });
-            }
         }
 
         #region Sugyama algo
