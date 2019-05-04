@@ -27,8 +27,9 @@ namespace spfgraph.Model.GraphLib {
         /// </summary>
         /// <returns></returns>
         public GraphFeatures GetGraphFeatures() {
-            var features = new GraphFeatures();
-            features.Height = GraphLayers.Count;
+            var features = new GraphFeatures {
+                Height = GraphLayers.Count
+            };
             int maxCount = 0;
             for (int i = 0; i < GraphLayers.Count; i++)
                 if (maxCount < GraphLayers[i].Count)
@@ -36,13 +37,6 @@ namespace spfgraph.Model.GraphLib {
             features.Width = maxCount;
             features.AvrgWidth = (double)AdjacencyList.Length / GraphLayers.Count;
             return features;
-        }
-
-        /// <summary>
-        /// Construct stacked parallel form of current graph
-        /// </summary>
-        protected void SetGraphLayers() {
-            GraphLayers = Algorithms.TheShortestPathLayout(AdjacencyList);
         }
 
         #endregion

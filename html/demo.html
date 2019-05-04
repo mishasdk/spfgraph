@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SPFGraph</title>
+    <style>
+        * {
+            padding: 0 0;
+            margin: 0 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .graph-canvas {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            width: 52px;
+            height: 240px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid rgb(87, 87, 87);
+            background-color: rgba(190, 190, 190, 0.836);
+        }
+
+        .overlay.night {
+            background-color: rgba(190, 190, 190, 0.1);
+            color: white;
+        }
+
+        .scaleWrapper {
+            width: 52px;
+            height: 120px;
+        }
+
+        .scaleRange {
+            width: 100px;
+            height: 50px;
+            transform-origin: 26px 26px;
+            transform: rotate(90deg);
+            display: block;
+        }
+
+        .btn {
+            padding: 5px;
+            border: 1px solid grey;
+            border-radius: 4px;
+            display: block;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            width: 50px;
+        }
+
+        .overlay.night .btn {
+            background-color: rgba(100, 100, 100, .1);
+            color: white;
+        }
+
+        .center {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        :root {
+            --theme-day-bgcolor: #fefffe;
+            --theme-night-bgcolor: #1b263b;
+        }
+        
+        .theme_mode {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid;
+            border-radius: 6px;
+            padding: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all ease .5s;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+
+        .theme_mode .theme_icon {
+            width: 22px;
+            height: 22px;   
+        }
+
+        .theme_mode.day {
+            background-color: var(--theme-day-bgcolor);
+            color: var(--theme-night-bgcolor);
+            border-color: var(--theme-night-bgcolor);
+        }
+
+        .theme_mode.night {
+            background-color: var(--theme-night-bgcolor);
+            color: var(--theme-day-bgcolor);
+            border-color: var(--theme-day-bgcolor);
+        }
+
+        .theme_mode .theme_span {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="graph-canvas" id="canvas"></canvas>
+    <div class="overlay" id="overlay">
+        <div class="scaleWrapper">
+            <input class="scaleRange" id="scaleRange" type="range" />
+        </div>
+        <div class="center">
+            <div id="scaleValue" class="scaleValue"></div>
+        </div>
+        <div class="center">
+            <button class="btn" id="oneToOne">1:1</button>
+        </div>
+        <div class="center">
+            <button class="btn" id="fillBtn">Fill</button>
+        </div>
+    </div>
+    <button class="theme_mode day" id="mode_theme">
+        <img src="night.svg" alt="Night icon" class="theme_icon" id="theme_btn_icon" />
+        <span class="theme_span" id="theme_btn_span">Night mode</span>
+    </button>
+
+    <script>
+        window.onload = () => {
+            const data = [{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":30,"G":25,"R":25},"X1":-30,"X2":-90,"Y1":0,"Y2":60},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":30,"G":25,"R":25},"X1":-30,"X2":-30,"Y1":0,"Y2":60},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":30,"G":25,"R":25},"X1":-30,"X2":30,"Y1":0,"Y2":60},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-90,"X2":-120,"Y1":60,"Y2":120},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-90,"X2":-60,"Y1":60,"Y2":120},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-30,"X2":0,"Y1":60,"Y2":120},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-30,"X2":60,"Y1":60,"Y2":120},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":30,"X2":60,"Y1":60,"Y2":120},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-120,"X2":-90,"Y1":120,"Y2":180},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-60,"X2":-90,"Y1":120,"Y2":180},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":194,"G":239,"R":185},"X1":60,"X2":30,"Y1":120,"Y2":180},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":0,"X2":-30,"Y1":120,"Y2":180},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":30,"X2":60,"Y1":180,"Y2":240},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":30,"X2":0,"Y1":180,"Y2":240},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":194,"G":239,"R":185},"X1":-90,"X2":-120,"Y1":180,"Y2":240},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-30,"X2":-60,"Y1":180,"Y2":240},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-30,"X2":0,"Y1":180,"Y2":240},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":60,"X2":90,"Y1":240,"Y2":300},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-60,"X2":-30,"Y1":240,"Y2":300},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":194,"G":239,"R":185},"X1":0,"X2":30,"Y1":240,"Y2":300},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-120,"X2":-150,"Y1":240,"Y2":300},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-120,"X2":-90,"Y1":240,"Y2":300},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-30,"X2":60,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":30,"X2":60,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":90,"X2":60,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-150,"X2":-120,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-150,"X2":-60,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-90,"X2":-60,"Y1":300,"Y2":420},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-90,"X2":0,"Y1":300,"Y2":360},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-120,"X2":-60,"Y1":360,"Y2":420},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":-60,"X2":-60,"Y1":360,"Y2":420},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":0,"X2":-60,"Y1":360,"Y2":420},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":148,"G":218,"R":137},"X1":60,"X2":0,"Y1":360,"Y2":420},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":102,"G":197,"R":89},"X1":-60,"X2":-30,"Y1":420,"Y2":480},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":194,"G":239,"R":185},"X1":-30,"X2":-30,"Y1":480,"Y2":540},{"__type":"Edge:#spfgraph.Model.Vizualization","EdgeColor":{"B":240,"G":4,"R":233},"X1":0,"X2":-30,"Y1":420,"Y2":480},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":30,"G":25,"R":25},"Value":0,"X":-30,"Y":0},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":1,"X":-90,"Y":60},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":2,"X":-30,"Y":60},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":3,"X":30,"Y":60},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":4,"X":-120,"Y":120},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":5,"X":-60,"Y":120},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":7,"X":0,"Y":120},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":194,"G":239,"R":185},"Value":6,"X":60,"Y":120},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":194,"G":239,"R":185},"Value":9,"X":-90,"Y":180},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":10,"X":-30,"Y":180},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":8,"X":30,"Y":180},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":14,"X":-120,"Y":240},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":12,"X":-60,"Y":240},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":194,"G":239,"R":185},"Value":13,"X":0,"Y":240},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":11,"X":60,"Y":240},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":18,"X":-150,"Y":300},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":19,"X":-90,"Y":300},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":15,"X":-30,"Y":300},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":16,"X":30,"Y":300},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":17,"X":90,"Y":300},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":20,"X":-120,"Y":360},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":21,"X":-60,"Y":360},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":22,"X":0,"Y":360},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":148,"G":218,"R":137},"Value":23,"X":60,"Y":360},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":102,"G":197,"R":89},"Value":24,"X":-60,"Y":420},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":26,"X":0,"Y":420},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":194,"G":239,"R":185},"Value":25,"X":-30,"Y":480},{"__type":"Node:#spfgraph.Model.Vizualization","NodeColor":{"B":240,"G":4,"R":233},"Value":27,"X":-30,"Y":540}]
+            var backgroundColor = '#fff'
+            var textColor = '#424242'
+
+            const canvas = document.getElementById('canvas')
+
+            const setupCanvasSize = () => {
+                canvas.width = window.innerWidth
+                canvas.height = window.innerHeight
+            }
+
+            const themes = {
+                night: { backgroundColor: '#1b263b', textColor: '#fefefe' },
+                day: { backgroundColor: '#fefffe', textColor: '#424242' }
+            }
+    
+            const textSize = 20
+            const minScale = 0.3
+            const maxScale = 3.0
+            
+            var shiftX = 0
+            var shiftY = 0
+            var scale = 1.0
+            var isMouseDown = false
+            var prevX = 0, prevY = 0
+
+            const isNode = (obj) => {
+                return obj.__type.toLowerCase().indexOf("node") != -1
+            }
+
+            const isEdge = (obj) => {
+                return obj.__type.toLowerCase().indexOf("edge") != -1
+            }
+
+            const fillBackground = (g, width, height) => {
+                g.fillStyle = backgroundColor
+                g.fillRect(0, 0, width, height)
+            }
+
+            const paintEdge = (g, edge) => {
+                const colorObj = edge.EdgeColor
+                const color = `rgb(${colorObj.R}, ${colorObj.G}, ${colorObj.B})`
+                g.strokeStyle = color
+                g.lineWidth = 3
+                g.beginPath()
+                g.moveTo(edge.X1, edge.Y1)
+                g.lineTo(edge.X2, edge.Y2)
+                g.stroke()
+            }
+
+            const paintEdges = (g, width, height, data) => {
+                for (let i = 0; i != data.length; ++i) {
+                    if (isEdge(data[i])) {
+                        paintEdge(g, data[i])
+                    }
+                }
+            }
+
+            const paintNode = (g, node) => {
+                const value = node.Value
+                const colorObj = node.NodeColor
+                const color = `rgb(${colorObj.R}, ${colorObj.G}, ${colorObj.B})`
+                const x = node.X
+                const y = node.Y
+                g.fillStyle = backgroundColor
+                g.strokeStyle = color
+                g.lineWidth = 6
+                g.beginPath()
+                g.arc(x, y, 20, 0, Math.PI * 2)
+                g.stroke()
+                g.fill()
+
+                g.font = `${textSize}px Arial`
+                g.textBaseline = 'middle'
+                const textWidth = g.measureText(value).width
+                g.fillStyle = textColor
+                g.fillText(value, x - textWidth / 2, y)
+            }
+
+            const paintVertices = (g, width, height, data) => {
+                for (let i = 0; i != data.length; ++i) {
+                    if (isNode(data[i])) {
+                        paintNode(g, data[i])
+                    }
+                }
+            }
+
+            const setScaleValue = (value) => {
+                document.getElementById('scaleRange').value = (value - minScale) / (maxScale - minScale) * 100
+                document.getElementById('scaleValue').innerHTML = (value * 100 | 0) / 100.0
+            }
+
+            const paint = () => {
+                const g = canvas.getContext('2d')
+                const width = canvas.width
+                const height = canvas.height
+                
+                fillBackground(g, width, height)
+                
+                g.translate(shiftX, shiftY)
+                g.scale(scale, scale)
+                setScaleValue(scale)
+                paintEdges(g, width, height, data)
+                paintVertices(g, width, height, data)
+                g.scale(1 / scale, 1 / scale)
+                g.translate(-shiftX, -shiftY)
+            }
+
+            const setupDragging = (canvas) => {
+                canvas.onmousedown = (event) => {
+                    isMouseDown = true
+                    prevX = event.clientX
+                    prevY = event.clientY   
+                    paint()
+                }
+                canvas.onmousemove = (event) => {
+                    if (isMouseDown) {
+                        shiftX += event.clientX - prevX
+                        shiftY += event.clientY - prevY
+                        
+                        prevX = event.clientX
+                        prevY = event.clientY
+                    }
+                    paint()
+                }
+                canvas.onwheel = (event) => {
+                    if (event.deltaY > 0) {
+                        if (scale >= minScale) {
+                            scale -= 0.1
+                        }
+                        scale = Math.max(scale, minScale)
+                    } else if (event.deltaY < 0) {
+                        if (scale <= maxScale) {
+                            scale += 0.1
+                        }
+                        scale = Math.min(scale, maxScale)
+                    }
+                    paint()
+                }
+                canvas.onmouseup = (event) => {
+                    isMouseDown = false
+                    paint()
+                }   
+            }
+            
+            const moveTo = (toX, toY, toScale, time) => {
+                const fromX = shiftX
+                const fromY = shiftY
+                const vecX = toX - fromX
+                const vecY = toY - fromY
+                const fromScale = scale
+                const vecScale = toScale - fromScale
+                const startTime = Date.now()
+                const animation = () => {
+                    if (isMouseDown) {
+                        clearInterval(interval)
+                        return
+                    }
+                    const nowTime = Date.now()
+                    const animValue = Math.min((nowTime - startTime) / time, 1.0)
+                    shiftX = fromX + vecX * animValue
+                    shiftY = fromY + vecY * animValue
+                    scale = fromScale + vecScale * animValue
+                    paint()
+                    if (nowTime - startTime <= time)
+                        requestAnimationFrame(animation)
+                }
+                requestAnimationFrame(animation)
+            }
+
+            const initializeRange = () => {
+                const range = document.getElementById('scaleRange')
+                range.value = (scale - minScale) / (maxScale - minScale) * 100
+                range.oninput = (event) => {
+                    scale = range.value / 100 * (maxScale - minScale) + minScale
+                    setScaleValue(scale)
+                    paint()
+                }
+            }
+            
+            const measureGraphWithScale = (data, scale) => {
+                var minX = 10000
+                var maxX = -10000
+                var minY = 10000
+                var maxY = -10000
+                for (let i = 0; i != data.length; ++i) {
+                    if (isNode(data[i])) {
+                        minX = Math.min(minX, data[i].X * scale)
+                        maxX = Math.max(maxX, data[i].X * scale)
+                        minY = Math.min(minY, data[i].Y * scale)
+                        maxY = Math.max(maxY, data[i].Y * scale)
+                    }
+                }
+                return { minX, minY, maxX, maxY }
+            }
+
+            const oneToOne = (scale) => {
+                const bounds = measureGraphWithScale(data, scale)              
+                const centerX = (bounds.minX + bounds.maxX) / 2
+                const centerY = (bounds.minY + bounds.maxY) / 2
+                const toX = window.innerWidth / 2 + centerX
+                const toY = window.innerHeight / 2 - centerY
+                moveTo(toX, toY, scale, 500)
+            }
+
+            const fill = () => {
+                const bounds = measureGraphWithScale(data, 1.0)
+                const realMinY = bounds.minY - 50
+                const realMaxY = bounds.maxY + 50
+                const deltaY = realMaxY - realMinY
+                const toScale = window.innerHeight / deltaY
+                oneToOne(toScale)
+            }
+
+            const applyTheme = (theme) => {
+                textColor = themes[theme].textColor
+                backgroundColor = themes[theme].backgroundColor
+                if (theme === 'day') {
+                    document.getElementById('overlay').classList.remove('night')
+                } else if (theme === 'night') {
+                    document.getElementById('overlay').classList.add('night')
+                }
+            }
+
+            const setupThemeModes = () => {
+                const mode_btn = document.getElementById('mode_theme')
+                const mode_btn_span = document.getElementById('theme_btn_span')
+                const mode_btn_icon = document.getElementById('theme_btn_icon')
+                mode_btn.onclick = () => {
+                    if (mode_btn.classList.contains('day')) {
+                        mode_btn.classList.remove('day')
+                        mode_btn.classList.add('night')
+                        mode_btn_span.innerHTML = 'Day mode'
+                        mode_btn_icon.src = 'day.svg'
+                        applyTheme('night')
+                    } else {
+                        mode_btn.classList.add('day')
+                        mode_btn.classList.remove('night')
+                        mode_btn_span.innerHTML = 'Night mode'
+                        mode_btn_icon.src = 'night.svg'
+                        backgroundColor = themes.day.backgroundColor
+                        applyTheme('day')
+                    }
+                    paint()
+                }
+            }
+
+            window.onresize = () => {
+                setupCanvasSize()
+                paint()
+            }
+
+            document.getElementById('oneToOne').onclick = (event) => { oneToOne(1.0) }
+            document.getElementById('fillBtn').onclick = () => { fill() }
+        
+            setupCanvasSize()
+            setupDragging(canvas)
+            setupThemeModes()
+            initializeRange()
+            fill()
+        }
+    </script>
+</body>
+</html>

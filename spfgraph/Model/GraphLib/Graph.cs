@@ -8,10 +8,14 @@ namespace spfgraph.Model.GraphLib {
             get => adjacencyList;
         }
 
+        #region Constructors
+
         public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
         public Graph(Graph gr) : this(gr.adjacencyList) { }
         public Graph(int[][] list) { adjacencyList = Copy(list); }
         protected Graph() { }
+
+        #endregion
 
         #region Help Methods  
 

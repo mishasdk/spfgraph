@@ -7,7 +7,6 @@
         xmlns:converters="clr-namespace:spfgraph.Converters"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
         xmlns:viz="clr-namespace:spfgraph.Model.Vizualization"
-        xmlns:viewModel="clr-namespace:spfgraph.ViewModel"
         mc:Ignorable="d"
         x:Name="AppWindow"
         WindowStartupLocation="CenterScreen"
@@ -15,12 +14,12 @@
         MinWidth="400" MinHeight="250" >
 
     <Window.Resources>
-        <converters:GraphToVisibilityConverter x:Key="ZoomVisibilityConverter" />
+        <!--Converrters--> 
+        <converters:NullRefToVisibilityConverter x:Key="NullRefToVisibilityConverter" />
+        <converters:ColorToStrokeConverter x:Key="ColorToStroke"/>
     </Window.Resources>
 
     <Border BorderThickness="2" BorderBrush="{StaticResource DarkGrayColorBrush}">
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -52,96 +51,104 @@
             <!--Main page-->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="230"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <!--Left side of the main page-->
-                <Border Background="#ADD7F6" Padding="15 10 15 10">
-                    <StackPanel >
-                        <TextBlock Text="Path" Margin="0 0 0 5"/>
-                        <TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10"/>
-                        <Button Grid.Column="1" Style="{StaticResource CustomButton}" Command="{Binding OpenCommand}"  Content="Change Path" Width="130" Height="30" Margin="0 0 0 10" />
+                <Border Background="#ADD7F6" Padding="20 10 20 10">
+                    <StackPanel>
+                        <!--<TextBlock Text="Path" Margin="0 0 0 5"/>-->
+                        <!--<TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10" MaxWidth="300"/>-->
+                        <Button Grid.Column="1" Style="{StaticResource CustomButton}" Command="{Binding OpenCommand}"  Content="Choose Path" Width="130" Height="30" Margin="0 0 0 10" />
                         <Button Content="Build Graph" Style="{StaticResource CustomButton}" Command="{Binding BuildGraphCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Button Content="Delete Graph" Style="{StaticResource CustomButton}" Command="{Binding ClearDataCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Json Export" Style="{StaticResource CustomButton}" Command="{Binding Path=GraphVM.ExportToJsonCommand}" Width="130" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
-                        <Button Content="Draw Rectangle" Command="{Binding DrawRectangleCommand}" Width="120" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Color Type" Command="{Binding Path=ShowColorType}" Width="120" Height="30" Margin="0 0 0 10"/>
+                        <Button Content="Layout Type" Command="{Binding Path=ShowLayoutType}" Width="120" Height="30" Margin="0 0 0 10"/>
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 
-                        <TextBlock Text="Graph Features" Margin="0 0 0 10"/>
+                        <GroupBox Header="Graph Features" Margin="0 0 0 10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                       
+                                <TextBlock Grid.Row="0" Text="Heigth" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=GraphVM.GraphHeight}" />
 
-                        <Grid DataContext="">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="1" Text="Width" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=GraphVM.GraphWidth}" />
 
-                            <TextBlock Text="Heigth" />
-                            <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" />
+                                <TextBlock Grid.Row="2" Text="Avrg Width" Margin="0 0 5 0"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=GraphVM.GraphAvrgWidth}" />
 
-                            <!--<TextBlock Grid.Column="1" Text="{Binding GraphHeigth, Mode=TwoWay}" />-->
-                        </Grid>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="Width" />  
-                            <TextBlock Grid.Column="1" Text="{Binding GraphWidth}" />
-
-                        </Grid>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="Avrg Width" />
-                            <TextBlock Grid.Column="1" Text="{Binding GraphAvrgWidth}" />
-
-                        </Grid>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="Irregular" />
-                            <TextBlock Grid.Column="1" Text="{Binding GraphIrregular}" />
-
-                        </Grid>
-
-
+                                <TextBlock Grid.Row="3" Text="Irregular" />
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=GraphVM.GraphIrregular}" />
+                            </Grid>
+                        </GroupBox>
                     </StackPanel>
                 </Border>
 
                 <!--Right side of the main page-->
-                <Grid Grid.Column="1" Background="White">
-                    <zoom:ZoomControl Mode="Fill" Visibility="{Binding ElementsToViz, Converter={StaticResource ZoomVisibilityConverter}}">
-                        <ItemsControl ItemsSource="{Binding ElementsToViz}">
+                <Grid Grid.Column="1">
+                    <Expander Panel.ZIndex="10"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+                               Margin="0 10 15 0" Header="Layout parameters" FontSize="14">
+                        <StackPanel Background="#fff" UseLayoutRounding="True">
+                            <GroupBox Header="Color Scheme" Margin="5" >
+                                <StackPanel>
+                                    <RadioButton Command="{Binding Path=SetColorSchemeFromRadioButton}" Name="rbInDegree" IsChecked="True"
+                                                 CommandParameter="{Binding ElementName=rbInDegree, Path=Content}" Content="In Degree" Margin="5 5 0 0" />
+                                    <RadioButton Command="{Binding Path=SetColorSchemeFromRadioButton}" Name="rbOutDegree"
+                                                 CommandParameter="{Binding ElementName=rbOutDegree, Path=Content}"  Content="Out Degree"  Margin="5 5 0 0" />
+                                    <RadioButton Command="{Binding Path=SetColorSchemeFromRadioButton}" Name="rbSumDegree"
+                                                 CommandParameter="{Binding ElementName=rbSumDegree, Path=Content}"  Content="Sum Degree"  Margin="5 5 0 0" />
+                                    <RadioButton Command="{Binding Path=SetColorSchemeFromRadioButton}" Name="rbDefault"
+                                                 CommandParameter="{Binding ElementName=rbDefault, Path=Content}"  Content="Default" Margin="5 5 0 0" />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Optimize Layout" Margin="5">
+                                <StackPanel>
+                                    <RadioButton Content="Minimize Crosses" Command="{Binding Path=SetOptimizeLayotFromRadioButton}" Name="rbMinimize" IsChecked="True"
+                                                 CommandParameter="{Binding ElementName=rbMinimize, Path=Content}" Margin="5 5 0 0" />
+                                    <RadioButton Content="Default" Command="{Binding Path=SetOptimizeLayotFromRadioButton}" Name="rbDefault_1"
+                                                 CommandParameter="{Binding ElementName=rbDefault_1, Path=Content}"  Margin="5 5 0 0" />
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </Expander>
+
+                    <zoom:ZoomControl Mode="Original" Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}">
+                        <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas/>
+                                    <Canvas />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type viz:Node}">
-                                    <Button Style="{StaticResource RoundNode}" Content="{Binding Value}">
-                                        <Button.RenderTransform>
+                                    <Viewbox Width="40" Height="40">
+                                        <Grid Width="40" Height="40">
+                                            <Ellipse StrokeThickness="3" Fill="White"  Stroke="{Binding Path=NodeColor, Converter={StaticResource ColorToStroke }}"/>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding Value}" TextAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Viewbox.RenderTransform>
                                             <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
-                                        </Button.RenderTransform>
-                                    </Button>
+                                        </Viewbox.RenderTransform>
+                                    </Viewbox>
                                 </DataTemplate>
 
                                 <DataTemplate DataType="{x:Type viz:Edge}">
-                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" >
+                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding EdgeColor, Converter={StaticResource ColorToStroke}}" StrokeThickness="3">
                                         <Line.RenderTransform>
                                             <TranslateTransform X="18" Y="18"/>
                                         </Line.RenderTransform>
@@ -156,7 +163,8 @@
             <!--Bottom dock panel-->
             <DockPanel Height="22" Grid.Row="2" Background="{StaticResource CleanBlueBrush}" >
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock VerticalAlignment="Center" Background="{StaticResource CleanBlueBrush}" Foreground="White" Text="Status" Margin="15 0 0 0"/>
+                    <TextBlock Text="Path" Foreground="White" Margin="20 0 0 0" />
+                    <TextBlock Text="{Binding Path=FilePath}" Foreground="White" Margin="5 0 0 0" />
                 </StackPanel>
             </DockPanel>
         </Grid>

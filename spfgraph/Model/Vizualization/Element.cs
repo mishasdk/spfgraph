@@ -1,5 +1,8 @@
-﻿namespace spfgraph.Model.Vizualization {
-    public abstract class Element {
+﻿using System.Runtime.Serialization;
 
+namespace spfgraph.Model.Vizualization {
+
+    [DataContract]
+    public abstract class Element {
     }
 }

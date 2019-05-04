@@ -1,5 +1,5 @@
 ﻿namespace spfgraph.Model.GraphLib {
-    public enum LayoutTypes {
+    public enum LayoutAlgorithmTypes {
         TheShortestHeigth
     }
 }
