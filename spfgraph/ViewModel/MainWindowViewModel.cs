@@ -1,20 +1,21 @@
 ﻿using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
-using spfgraph.Model.GraphLib;
 using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace spfgraph.ViewModel {
-    public class MainWindowViewModel : BaseViewModel {
+namespace spfgraph.ViewModel
+{
+    public class MainWindowViewModel : BaseViewModel
+    {
 
         #region Private Fields
 
-        RelayCommand openCommand;
-        RelayCommand buildGraphCommand;
-        RelayCommand clearDataCommand;
+        ICommand openCommand;
+        ICommand buildGraphCommand;
+        ICommand clearDataCommand;
 
         IDialogService dialogService;
         string filePath;
@@ -72,17 +73,38 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
+        ICommand setOptimizeLayoutFromRadioButton;
+        public ICommand SetOptimizeLayotFromRadioButton {
+            get => setOptimizeLayoutFromRadioButton ??
+                (setOptimizeLayoutFromRadioButton = new ParametrizedCommand(
+                    parameter => {
+                        var str = (string)parameter;
+                        switch (str) {
+                            case "Minimize Crosses":
+                                OptimizeLayout = OptimizeVisualizationTypes.MinimizeCrosses;
+                                break;
+                            case "Default":
+                                OptimizeLayout = OptimizeVisualizationTypes.None;
+                                break;
+                        }},
+                    parameter => { return parameter == null ? false : true; }));
+        }
+
+
+
         ICommand setColorSchemeFromRadioButton;
         public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
                 (setColorSchemeFromRadioButton = new ParametrizedCommand(ExecuteMethod, CanExecuteMethod));
         }
 
-        bool CanExecuteMethod(object parameter) {
+        bool CanExecuteMethod(object parameter)
+        {
             return parameter == null ? false : true;
         }
 
-        void ExecuteMethod(object parameter) {
+        void ExecuteMethod(object parameter)
+        {
             var str = (string)parameter;
             switch (str) {
                 case "In Degree":
@@ -100,8 +122,7 @@ namespace spfgraph.ViewModel {
             }
         }
 
-
-        public RelayCommand BuildGraphCommand {
+        public ICommand BuildGraphCommand {
             get => buildGraphCommand ??
                 (buildGraphCommand = new RelayCommand(() => {
                     if (FilePath == null)
@@ -116,7 +137,7 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
-        public RelayCommand OpenCommand {
+        public ICommand OpenCommand {
             get => openCommand ??
                 (openCommand = new RelayCommand(() => {
                     try {
@@ -129,18 +150,26 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
-        public RelayCommand ClearDataCommand {
+        public ICommand ClearDataCommand {
             get => clearDataCommand ??
                 (clearDataCommand = new RelayCommand(() => {
                     ClearData();
                 }));
         }
 
-        RelayCommand showColorType;
-        public RelayCommand ShowColorType {
+        ICommand showColorType;
+        public ICommand ShowColorType {
             get => showColorType ??
                 (showColorType = new RelayCommand(() => {
                     MessageBox.Show(ColorScheme.ToString());
+                }));
+        }
+
+        ICommand showLayoutType;
+        public ICommand ShowLayoutType {
+            get => showLayoutType ??
+                (showLayoutType = new RelayCommand(() => {
+                    MessageBox.Show(OptimizeLayout.ToString());
                 }));
         }
 
@@ -148,22 +177,19 @@ namespace spfgraph.ViewModel {
 
         #region Constructor
 
-        public MainWindowViewModel(Window window) {
+        public MainWindowViewModel(Window window)
+        {
             dialogService = new DefaultDialogService();
             this.window = window;
-
-            OptimizeLayout = OptimizeVisualizationTypes.MinimizeCrosses;
-            ColorScheme = ColorSchemeTypes.InDegree;
         }
 
         #endregion
 
         #region Methods
 
-        private void ClearData() {
-            FilePath = null;
+        private void ClearData()
+        {
             GraphVM = null;
-
         }
 
         #endregion

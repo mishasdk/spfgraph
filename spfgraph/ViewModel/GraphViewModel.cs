@@ -6,9 +6,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Windows;
 
-namespace spfgraph.ViewModel {
+namespace spfgraph.ViewModel
+{
     public class GraphViewModel : BaseViewModel {
         ObservableCollection<Element> elementsToViz;
 
@@ -33,7 +33,7 @@ namespace spfgraph.ViewModel {
         }
 
         public string GraphAvrgWidth {
-            get => $"{features.AvrgWidth:f3}";
+            get => $"{features.AvrgWidth:f2}";
         }
 
         public int GraphIrregular {
