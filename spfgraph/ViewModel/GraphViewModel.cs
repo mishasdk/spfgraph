@@ -66,7 +66,7 @@ namespace spfgraph.ViewModel
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new RelayCommand(() => {
                     var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
-                    using (var fs = new FileStream("../../../elementsCollection.json", FileMode.Create)) {
+                    using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
                         jsonFormatter.WriteObject(fs, ElementsToViz);
                     }
 
