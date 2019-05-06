@@ -49,7 +49,7 @@ namespace spfgraph.ViewModel {
 
         #endregion
 
-        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme) {
+        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme, Color startColor, Color endColor) {
             var graph = DataProvider.ReadGraphFromFile(filePath);
             var builder = new StackedGraphBuilder() {
                 LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
@@ -62,6 +62,8 @@ namespace spfgraph.ViewModel {
                 ColorScheme = colorScheme,
                 OptimizeLayout = optimizeLayout,
                 StartLeft = GraphWidth * 60 / 2,
+                StartColor = startColor,
+                EndColor = endColor
             };
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
         }

@@ -9,6 +9,9 @@ namespace spfgraph.Model.Vizualization {
         protected StackedGraph dagGraph;
         protected IColorBuilder colorBuilder;
 
+        public Color EndColor { get; set; }
+        public Color StartColor { get; set; }
+
         public OptimizeVisualizationTypes OptimizeLayout { get; set; }
         public ColorSchemeTypes ColorScheme { get; set; }
 
@@ -106,7 +109,7 @@ namespace spfgraph.Model.Vizualization {
             for (int i = 0; i < inDegree.Length; i++)
                 if (inDegree[i] > maxInDegree)
                     maxInDegree = inDegree[i];
-            colorBuilder = new ParametricColorBuilder(inDegree, maxInDegree);
+            colorBuilder = new ParametricColorBuilder(StartColor, EndColor, inDegree, maxInDegree);
         }
 
         protected void OutDegreeColorScheme() {
@@ -116,7 +119,7 @@ namespace spfgraph.Model.Vizualization {
             for (int i = 0; i < outDegree.Length; i++)
                 if (outDegree[i] > maxOutDegree)
                     maxOutDegree = outDegree[i];
-            colorBuilder = new ParametricColorBuilder(outDegree, maxOutDegree);
+            colorBuilder = new ParametricColorBuilder(StartColor, EndColor, outDegree, maxOutDegree);
         }
 
         protected void SumDegreeColorScheme() {
@@ -130,7 +133,7 @@ namespace spfgraph.Model.Vizualization {
                     min = sumDegree[i];
             }
 
-            colorBuilder = new ParametricColorBuilder(sumDegree, max, min);
+            colorBuilder = new ParametricColorBuilder(StartColor, EndColor, sumDegree, max, min);
         }
 
         protected int[] InDegreeArrayCount() {
@@ -216,101 +219,6 @@ namespace spfgraph.Model.Vizualization {
                 colorBuilder.SetNodeColor(node);
 
         }
-
-        #region Sugyama algo
-
-        //protected void SugyamaVis(StackedGraph dagGraph) {
-        //    var g = dagGraph.AdjacencyList;
-        //    var dict = new SortedDictionary<Pair<int>, int>();
-
-        //    // Building mst
-        //    var mst = BuildMst(g);
-
-        //    // Count cut value
-        //    foreach (var edge in mst) {
-        //        var cutValue = CountCutValue(g, mst, edge);
-        //        dict.Add(edge, cutValue);
-        //    }
-
-        //    while (IsNegativeCutValue(dict)) {
-        //        var e = FindeNegativeEdge(dict);
-        //        dict.Remove(e);
-        //        var u = new bool[g.Length];
-        //        Dfs_MarkAdjacencyVertices(mst, u, e.Second);
-
-        //        //var b = FindNewEdge(g, mst);
-        //    }
-        //}
-
-        ////private Pair<int> FindNewEdge(int[][] g, List<Pair<int>> mst) {
-
-        ////}
-
-        //private Pair<int> FindeNegativeEdge(SortedDictionary<Pair<int>, int> dict) {
-        //    foreach (var e in dict)
-        //        if (e.Value < 0)
-        //            return e.Key;
-        //    return null;
-        //}
-
-        //private bool IsNegativeCutValue(SortedDictionary<Pair<int>, int> dict) {
-        //    foreach (var e in dict)
-        //        if (e.Value < 0)
-        //            return true;
-        //    return false;
-        //}
-
-        //protected List<Pair<int>> BuildMst(int[][] g) {
-        //    var mst = new List<Pair<int>>();
-        //    var u = new bool[g.Length];
-        //    for (int i = 0; i < g.Length; i++)
-        //        if (!u[i])
-        //            Dfs_ForMst(g, u, mst, i);
-        //    return mst;
-        //}
-
-        //protected int CountCutValue(int[][] g, List<Pair<int>> mst, Pair<int> edge) {
-        //    int toTail = 0, toHead = 0;
-        //    var u = new bool[g.Length];
-
-        //    Dfs_MarkAdjacencyVertices(mst, u, edge.Second, edge.First);
-
-        //    for (int i = 0; i < g.Length; i++)
-        //        for (int j = 0; j < g[i].Length; j++) {
-        //            int v = i, to = g[i][j];
-        //            if (u[v] != u[to]) {
-        //                if (u[v] && !u[to])
-        //                    toHead++;
-        //                else
-        //                    toTail++;
-        //            }
-        //        }
-
-        //    return toTail - toHead;
-        //}
-
-        //protected void Dfs_MarkAdjacencyVertices(List<Pair<int>> mst, bool[] u, int v, int except = -1) {
-        //    u[v] = true;
-        //    for (int i = 0; i < mst.Count; i++)
-        //        if (mst[i].Second == v && mst[i].First != except && !u[mst[i].First])
-        //            Dfs_MarkAdjacencyVertices(mst, u, mst[i].First);
-        //        else if (mst[i].First == v && !u[mst[i].Second])
-        //            Dfs_MarkAdjacencyVertices(mst, u, mst[i].Second);
-        //}
-
-
-        //protected void Dfs_ForMst(int[][] g, bool[] u, List<Pair<int>> mst, int v) {
-        //    u[v] = true;
-        //    for (int i = 0; i < g[v].Length; i++) {
-        //        int to = g[v][i];
-        //        if (!u[to]) {
-        //            mst.Add(new Pair<int>(v, to));
-        //            Dfs_ForMst(g, u, mst, to);
-        //        }
-        //    }
-        //}
-
-        #endregion
 
     }
 }
