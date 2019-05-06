@@ -76,9 +76,13 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding Path=GraphVM.SaveDagInFile}" Content="Save Graph"/>
 
-                        <Button Width="130" Height="30" Margin="0 0 0 15" 
+                        <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding Path=GraphVM.ExportToJsonCommand}" Content="Json Export"/>
+
+                        <Button Width="130" Height="30" Margin="0 0 0 15" 
+                                Style="{StaticResource CustomButton}"
+                                Command="{Binding Path=OpenHtmlCommand}" Content="Open Demo"/>
 
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 

@@ -217,6 +217,19 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
+        ICommand openHtmlCommand;
+        public ICommand OpenHtmlCommand {
+            get => openHtmlCommand ??
+                (openHtmlCommand = new RelayCommand(() => {
+                    try {
+                        System.Diagnostics.Process.Start("demo.html");
+                    } catch {
+                    }
+
+                }));
+
+        }
+
         #endregion
 
         #region Constructor

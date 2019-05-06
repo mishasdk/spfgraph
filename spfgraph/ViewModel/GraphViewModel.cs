@@ -77,9 +77,13 @@ namespace spfgraph.ViewModel {
         public ICommand ExportToJsonCommand {
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new RelayCommand(() => {
-                    var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
-                    using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
-                        jsonFormatter.WriteObject(fs, ElementsToViz);
+                    try {
+                        var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
+                        using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
+                            jsonFormatter.WriteObject(fs, ElementsToViz);
+                        }
+                    } catch {
+
                     }
 
                 }));
@@ -89,14 +93,20 @@ namespace spfgraph.ViewModel {
         public ICommand SaveDagInFile {
             get => saveDagInFile ??
                 (saveDagInFile = new RelayCommand(() => {
-                    var saveDialog = new DefaultDialogService();
-                    if (!saveDialog.SaveFileDialog())
-                        return;
+                    try {
+                        var saveDialog = new DefaultDialogService();
+                        if (!saveDialog.SaveFileDialog())
+                            return;
 
-                    var filePath = saveDialog.TargetPath;
-                    DataProvider.SaveDagInFile(filePath, dagGraph);
+                        var filePath = saveDialog.TargetPath;
+                        DataProvider.SaveDagInFile(filePath, dagGraph);
+                    } catch {
+
+                    }
                 }));
         }
+
+
 
 
         #endregion
