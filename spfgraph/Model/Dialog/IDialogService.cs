@@ -6,5 +6,6 @@ namespace spfgraph.Model.Dialog {
         bool OpenFileDialog();
         MessageBoxResult AlertDialog(string message);
         void ShowMessage(string message);
+        bool SaveFileDialog();
     }
 }

@@ -2,9 +2,39 @@
 using spfgraph.Model.GraphLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace spfgraph.Model.Data {
     public static class DataProvider {
+
+        public static void SaveDagInFile(string fileName, StackedGraph graph) {
+            var g = graph.AdjacencyList;
+            using (var fs = new FileStream(fileName, FileMode.Create)) {
+                using (var writer = new StreamWriter(fs)) {
+                    int n = g.Length;
+                    writer.WriteLine(n);
+                    writer.WriteLine("#");
+                    for (int i = 0; i < n; i++) {
+                        var sb = new StringBuilder("");
+                        sb.Append(i + " ->");
+                        for (int j = 0; j < g[i].Length; j++) {
+                            sb.Append($" {g[i][j]}");
+                        }
+                        writer.WriteLine(sb.ToString());
+                    }
+                    writer.WriteLine("#");
+                    foreach (var layer in graph.GraphLayers) {
+                        var sb = new StringBuilder("");
+                        foreach (var vertex in layer) {
+                            sb.Append(vertex  + " ");
+                        }
+                        writer.WriteLine(sb.ToString());
+                    }
+                    writer.WriteLine("#");
+                }
+            }
+        }
 
         public static Graph ReadGraphFromFile(string fileName) {
             var list = CreateAdjacencyListFromFile(fileName);

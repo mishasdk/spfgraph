@@ -48,24 +48,24 @@ namespace spfgraph.Model.GraphLib {
         #region The Shortest Path Layout
 
         public static List<List<int>> TheShortestPathLayout(int[][] adjacencyList) {
-            var firtsLayoutList = StraightPass(adjacencyList);
+            var firstLayoutList = StraightPass(adjacencyList);
             var secondLayoutList = ReversePass(adjacencyList);
 
-            if (secondLayoutList.Count != firtsLayoutList.Count)
+            if (secondLayoutList.Count != firstLayoutList.Count)
                 throw new AlgorithmException("Wrong height of tree");
 
             int maxWidth1 = 0;
             int maxWidth2 = 0;
-            for (int i = 0; i < firtsLayoutList.Count; i++) {
-                if (maxWidth1 < firtsLayoutList[i].Count)
-                    maxWidth1 = firtsLayoutList[i].Count;
+            for (int i = 0; i < firstLayoutList.Count; i++) {
+                if (maxWidth1 < firstLayoutList[i].Count)
+                    maxWidth1 = firstLayoutList[i].Count;
                 if (maxWidth2 < secondLayoutList[i].Count)
                     maxWidth2 = secondLayoutList[i].Count;
             }
 
             // Choose which one who has less maxWidth
             if (maxWidth1 <= maxWidth2)
-                return firtsLayoutList;
+                return firstLayoutList;
             else
                 return secondLayoutList;
         }

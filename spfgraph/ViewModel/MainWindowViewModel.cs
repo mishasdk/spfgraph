@@ -6,10 +6,8 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace spfgraph.ViewModel
-{
-    public class MainWindowViewModel : BaseViewModel
-    {
+namespace spfgraph.ViewModel {
+    public class MainWindowViewModel : BaseViewModel {
 
         #region Private Fields
 
@@ -18,9 +16,11 @@ namespace spfgraph.ViewModel
         ICommand clearDataCommand;
 
         IDialogService dialogService;
+        ColorDialogService colorDialog;
         string filePath;
         double canvasWidth;
-        Window window;
+        Color startColor;
+        Color endColor;
         GraphViewModel graphVM;
         ColorSchemeTypes colorScheme;
         OptimizeVisualizationTypes optimizeLayout;
@@ -69,6 +69,22 @@ namespace spfgraph.ViewModel
             }
         }
 
+        public Color StartColor {
+            get => startColor;
+            set {
+                startColor = value;
+                OnPropertyChanged(nameof(StartColor));
+            }
+        }
+
+        public Color EndColor {
+            get => endColor;
+            set {
+                endColor = value;
+                OnPropertyChanged(nameof(EndColor));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -86,11 +102,10 @@ namespace spfgraph.ViewModel
                             case "Default":
                                 OptimizeLayout = OptimizeVisualizationTypes.None;
                                 break;
-                        }},
+                        }
+                    },
                     parameter => { return parameter == null ? false : true; }));
         }
-
-
 
         ICommand setColorSchemeFromRadioButton;
         public ICommand SetColorSchemeFromRadioButton {
@@ -98,13 +113,11 @@ namespace spfgraph.ViewModel
                 (setColorSchemeFromRadioButton = new ParametrizedCommand(ExecuteMethod, CanExecuteMethod));
         }
 
-        bool CanExecuteMethod(object parameter)
-        {
+        bool CanExecuteMethod(object parameter) {
             return parameter == null ? false : true;
         }
 
-        void ExecuteMethod(object parameter)
-        {
+        void ExecuteMethod(object parameter) {
             var str = (string)parameter;
             switch (str) {
                 case "In Degree":
@@ -128,7 +141,7 @@ namespace spfgraph.ViewModel
                     if (FilePath == null)
                         return;
                     try {
-                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme);
+                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, StartColor, EndColor);
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     } catch (DataProviderException ex) {
@@ -173,22 +186,67 @@ namespace spfgraph.ViewModel
                 }));
         }
 
+        ICommand setStartColorCommand;
+        public ICommand SetStartColorCommand {
+            get => setStartColorCommand ??
+                (setStartColorCommand = new RelayCommand(() => {
+                    var color = colorDialog.GetColor();
+                    if (color != null) {
+                        StartColor = color;
+                    }
+                }));
+        }
+
+        ICommand setEndColorCommand;
+        public ICommand SetEndColorCommand {
+            get => setEndColorCommand ??
+                (setEndColorCommand = new RelayCommand(() => {
+                    var color = colorDialog.GetColor();
+                    if (color != null) {
+                        EndColor = color;
+                    }
+                }));
+        }
+
+        ICommand setDefaultColor;
+        public ICommand SetDefaultColor {
+            get => setDefaultColor ??
+                (setDefaultColor = new RelayCommand(() => {
+                    StartColor = new Color(25, 25, 30);
+                    EndColor = new Color(218, 112, 214);
+                }));
+        }
+
+        ICommand openHtmlCommand;
+        public ICommand OpenHtmlCommand {
+            get => openHtmlCommand ??
+                (openHtmlCommand = new RelayCommand(() => {
+                    try {
+                        System.Diagnostics.Process.Start("demo.html");
+                    } catch {
+                    }
+
+                }));
+
+        }
+
         #endregion
 
         #region Constructor
 
-        public MainWindowViewModel(Window window)
-        {
+        public MainWindowViewModel() {
             dialogService = new DefaultDialogService();
-            this.window = window;
+            colorDialog = new ColorDialogService();
+
+            StartColor = new Color(25, 25, 30);
+            EndColor = new Color(218, 112, 214);
         }
 
         #endregion
 
         #region Methods
 
-        private void ClearData()
-        {
+        private void ClearData() {
             GraphVM = null;
         }
 

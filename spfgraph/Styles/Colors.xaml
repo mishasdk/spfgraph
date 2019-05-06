@@ -28,4 +28,8 @@
     <Color x:Key="HoverRedColor">#F85A3E</Color>
     <SolidColorBrush x:Key="HoverRedBrush" Color="{StaticResource HoverRedColor}"/>
 
+    <Color x:Key="GrayTextColor">#999</Color>
+    <SolidColorBrush x:Key="GrayTextBrush" Color="{StaticResource GrayTextColor}"/>
+
+
 </ResourceDictionary>

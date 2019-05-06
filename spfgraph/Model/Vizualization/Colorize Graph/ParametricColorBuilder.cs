@@ -4,29 +4,27 @@
         protected Color endColor;
         protected Color stepColor;
 
-        public int[] VerdsParametrs { get; set; }
+        public int[] VerdsParameters { get; set; }
 
-        public ParametricColorBuilder() {
-            startColor = new Color(25, 25, 30);
-            endColor = new Color(218, 112, 214);
+        public ParametricColorBuilder(Color startColor, Color endColor) {
+            this.startColor = startColor;
+            this.endColor = endColor;
         }
 
-        public ParametricColorBuilder(int[] par, int max, int min = 0) : this() {
-            VerdsParametrs = par;
+        public ParametricColorBuilder(Color start, Color end, int[] par, int max, int min = 0) : this(start, end) {
+            VerdsParameters = par;
             var diff = max - min;
-            var stepRed = startColor.R - endColor.R;
-            var stepGreen = startColor.G - endColor.G;
-            var stepBlue = startColor.B - endColor.B;
+            var diffColor = endColor - startColor;
 
             if (diff != 0)
-                stepColor = new Color((byte)(stepRed / diff), (byte)(stepGreen / diff), (byte)(stepBlue / diff));
+                stepColor = diffColor / diff;
             else
                 stepColor = new Color(0, 0, 0);
         }
 
         public override void SetNodeColor(Node node) {
-            var curPar = VerdsParametrs[node.Value];
-            var newColor = new Color((byte)(startColor.R + stepColor.R * curPar), (byte)(startColor.G + stepColor.G * curPar), (byte)(startColor.B + stepColor.B * curPar));
+            var curPar = VerdsParameters[node.Value];
+            var newColor = startColor + stepColor * curPar;
             node.NodeColor = newColor;
         }
 

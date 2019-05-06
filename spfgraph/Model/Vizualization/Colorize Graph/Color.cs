@@ -19,6 +19,10 @@ namespace spfgraph.Model.Vizualization {
         }
         public Color() { }
 
+        public static Color operator +(Color a, Color b) => new Color((byte)(a.R + b.R), (byte)(a.G + b.G), (byte)(a.B + b.B));
+        public static Color operator -(Color a, Color b) => new Color((byte)(a.R - b.R), (byte)(a.G - b.G), (byte)(a.B - b.B));
+        public static Color operator /(Color a, double b) => new Color((byte)(a.R / b), (byte)(a.G / b), (byte)(a.B / b));
+        public static Color operator *(Color a, double b) => new Color((byte)(a.R * b), (byte)(a.G * b), (byte)(a.B * b));
 
     }
 }
