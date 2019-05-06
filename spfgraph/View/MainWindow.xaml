@@ -72,6 +72,10 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding ClearDataCommand}" Content="Delete Graph"/>
 
+                        <Button Width="130" Height="30" Margin="0 0 0 10" 
+                                Style="{StaticResource CustomButton}"
+                                Command="{Binding Path=GraphVM.SaveDagInFile}" Content="Save Graph"/>
+
                         <Button Width="130" Height="30" Margin="0 0 0 15" 
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding Path=GraphVM.ExportToJsonCommand}" Content="Json Export"/>

@@ -1,4 +1,5 @@
 ﻿using spfgraph.Model.Data;
+using spfgraph.Model.Dialog;
 using spfgraph.Model.GraphLib;
 using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
@@ -6,11 +7,13 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
-        ObservableCollection<Element> elementsToViz;
+        StackedGraph dagGraph;
 
+        ObservableCollection<Element> elementsToViz;
         public ObservableCollection<Element> ElementsToViz {
             get => elementsToViz;
             set {
@@ -54,7 +57,7 @@ namespace spfgraph.ViewModel {
             var builder = new StackedGraphBuilder() {
                 LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
             };
-            var dagGraph = builder.ConstructSpf(graph);
+            dagGraph = builder.ConstructSpf(graph);
             features = dagGraph.GetGraphFeatures();
 
             // Create GraphVizBuilder
@@ -70,8 +73,8 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
-        RelayCommand exportToJsonCommand;
-        public RelayCommand ExportToJsonCommand {
+        ICommand exportToJsonCommand;
+        public ICommand ExportToJsonCommand {
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new RelayCommand(() => {
                     var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
@@ -79,6 +82,19 @@ namespace spfgraph.ViewModel {
                         jsonFormatter.WriteObject(fs, ElementsToViz);
                     }
 
+                }));
+        }
+
+        ICommand saveDagInFile;
+        public ICommand SaveDagInFile {
+            get => saveDagInFile ??
+                (saveDagInFile = new RelayCommand(() => {
+                    var saveDialog = new DefaultDialogService();
+                    if (!saveDialog.SaveFileDialog())
+                        return;
+
+                    var filePath = saveDialog.TargetPath;
+                    DataProvider.SaveDagInFile(filePath, dagGraph);
                 }));
         }
 

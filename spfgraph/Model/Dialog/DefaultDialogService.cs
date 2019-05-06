@@ -3,7 +3,9 @@ using System.Windows;
 
 namespace spfgraph.Model.Dialog {
     public class DefaultDialogService : IDialogService {
+
         public string FilePath { get; set; }
+        public string TargetPath { get; set; }
 
         public bool OpenFileDialog() {
             var fd = new OpenFileDialog();
@@ -20,6 +22,15 @@ namespace spfgraph.Model.Dialog {
 
         public void ShowMessage(string message) {
             MessageBox.Show(message, "Message", MessageBoxButton.OK);
+        }
+
+        public bool SaveFileDialog() {
+            var sd = new SaveFileDialog();
+            if (sd.ShowDialog() == true) {
+                TargetPath = sd.FileName;
+                return true;
+            } else
+                return false;
         }
     }
 }
