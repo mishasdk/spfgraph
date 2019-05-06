@@ -7,8 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Json;
 
-namespace spfgraph.ViewModel
-{
+namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
         ObservableCollection<Element> elementsToViz;
 
@@ -40,6 +39,14 @@ namespace spfgraph.ViewModel
             get => features.Irregular;
         }
 
+        public double CanvasWidth {
+            get => 60 * GraphWidth - 20;
+        }
+
+        public double CanvasHeight {
+            get => 60 * GraphHeight + 20;
+        }
+
         #endregion
 
         public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme) {
@@ -48,16 +55,16 @@ namespace spfgraph.ViewModel
                 LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
             };
             var dagGraph = builder.ConstructSpf(graph);
+            features = dagGraph.GetGraphFeatures();
 
             // Create GraphVizBuilder
             var graphVizBuilder = new GraphVizBuilder() {
                 ColorScheme = colorScheme,
                 OptimizeLayout = optimizeLayout,
+                StartLeft = GraphWidth * 60 / 2,
             };
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
-            features = dagGraph.GetGraphFeatures();
         }
-
 
         #region Commands
 
@@ -73,7 +80,7 @@ namespace spfgraph.ViewModel
                 }));
         }
 
-       
+
         #endregion
 
     }

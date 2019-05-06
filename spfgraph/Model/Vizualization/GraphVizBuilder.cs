@@ -1,4 +1,5 @@
 ﻿using spfgraph.Model.GraphLib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -13,7 +14,7 @@ namespace spfgraph.Model.Vizualization {
 
         #region Location Paramenters
 
-        public int StartHeight { get; set; } = 0;
+        public int StartHeight { get; set; } = 20;
         public int HeightStep { get; set; } = 60;
         public int WidthStep { get; set; } = 60;
         public int StartLeft { get; set; } = 0;
@@ -27,7 +28,6 @@ namespace spfgraph.Model.Vizualization {
             UseOptimizeLayoutAlgorithm();
             SetColorScheme();
             return CreateElementsToShow();
-
         }
 
         #region Optimize Layout

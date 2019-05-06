@@ -130,7 +130,10 @@
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas />
+                                    <Canvas Width="{Binding Path=GraphVM.CanvasWidth}"
+                                            Height="{Binding Path=GraphVM.CanvasHeight}"
+                                            Background="LightBlue"
+                                            />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
@@ -150,7 +153,7 @@
                                 <DataTemplate DataType="{x:Type viz:Edge}">
                                     <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding EdgeColor, Converter={StaticResource ColorToStroke}}" StrokeThickness="3">
                                         <Line.RenderTransform>
-                                            <TranslateTransform X="18" Y="18"/>
+                                            <TranslateTransform X="20" Y="20"/>
                                         </Line.RenderTransform>
                                     </Line>
                                 </DataTemplate>
