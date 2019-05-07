@@ -18,6 +18,15 @@ namespace spfgraph.ViewModel {
         ICommand choosePathForFileCommand;
         ICommand buildGraphCommand;
         ICommand clearDataCommand;
+        ICommand saveGraphInTextFileCommand;
+        ICommand exportToJsonCommand;
+        ICommand openHtmlCommand;
+
+        ICommand setOptimizeLayoutFromRadioButton;
+        ICommand setColorSchemeFromRadioButton;
+        ICommand setStartColorCommand;
+        ICommand setEndColorCommand;
+        ICommand setDefaultColor;
 
         IDialogService dialogService;
         ColorDialogService colorDialog;
@@ -128,59 +137,47 @@ namespace spfgraph.ViewModel {
                 }, IsFilePathExist));
         }
 
-        ICommand exportToJsonCommand;
+        public ICommand SaveGraphInTextFileCommand {
+            get => saveGraphInTextFileCommand ??
+                (saveGraphInTextFileCommand = new ActionCommand(() => {
+                    try {
+                        if (!dialogService.SaveFileDialog())
+                            return;
+                        var filePath = dialogService.FilePath;
+                        DataProvider.SaveDagInFile(filePath, GraphVM.DagGraph);
+                    } catch (Exception ex) {
+                        dialogService.AlertDialog(ex.Message);
+                    }
+                }, IsGraphVMExist));
+        }
+
         public ICommand ExportToJsonCommand {
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new ActionCommand(() => {
                     try {
-                        var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
-                        using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
-                            jsonFormatter.WriteObject(fs, GraphVM.ElementsToViz);
-                        }
-                    } catch {
-
-                    }
-
-                }, IsGraphVMExist));
-        }
-
-        ICommand saveDagInFile;
-        public ICommand SaveDagInFile {
-            get => saveDagInFile ??
-                (saveDagInFile = new ActionCommand(() => {
-                    try {
-                        var saveDialog = new DefaultDialogService();
-                        if (!saveDialog.SaveFileDialog())
+                        if (!dialogService.SaveFileDialog())
                             return;
-
-                        var filePath = saveDialog.TargetPath;
-                        DataProvider.SaveDagInFile(filePath, GraphVM.DagGraph);
-                    } catch {
-
+                        JsonSerializer.Serialize(dialogService.FilePath, GraphVM.ElementsToViz);
+                    } catch (Exception ex) {
+                        dialogService.AlertDialog(ex.Message);
                     }
                 }, IsGraphVMExist));
         }
+      
+        // Demo
+        public ICommand OpenHtmlCommand {
+            get => openHtmlCommand ??
+                (openHtmlCommand = new ActionCommand(() => {
+                    try {
+                        System.Diagnostics.Process.Start("demo.html");
+                    } catch {
+                    }
 
-
-        ICommand setOptimizeLayoutFromRadioButton;
-        public ICommand SetOptimizeLayotFromRadioButton {
-            get => setOptimizeLayoutFromRadioButton ??
-                (setOptimizeLayoutFromRadioButton = new ParametrizedCommand(
-                    parameter => {
-                        var str = (string)parameter;
-                        switch (str) {
-                            case "Minimize Crosses":
-                                OptimizeLayout = OptimizeVisualizationTypes.MinimizeCrosses;
-                                break;
-                            case "Default":
-                                OptimizeLayout = OptimizeVisualizationTypes.None;
-                                break;
-                        }
-                    },
-                    parameter => { return parameter == null ? false : true; }));
+                }, IsGraphVMExist));
         }
 
-        ICommand setColorSchemeFromRadioButton;
+        #region Layout Parameters Commands
+
         public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
                 (setColorSchemeFromRadioButton = new ParametrizedCommand(parameter => {
@@ -201,10 +198,24 @@ namespace spfgraph.ViewModel {
                     }
                 }, parameter => parameter != null));
         }
-
-        #region Color Commands
-
-        ICommand setStartColorCommand;
+   
+        public ICommand SetOptimizeLayotFromRadioButton {
+            get => setOptimizeLayoutFromRadioButton ??
+                (setOptimizeLayoutFromRadioButton = new ParametrizedCommand(
+                    parameter => {
+                        var str = (string)parameter;
+                        switch (str) {
+                            case "Minimize Crosses":
+                                OptimizeLayout = OptimizeVisualizationTypes.MinimizeCrosses;
+                                break;
+                            case "Default":
+                                OptimizeLayout = OptimizeVisualizationTypes.None;
+                                break;
+                        }
+                    },
+                    parameter => { return parameter == null ? false : true; }));
+        }
+ 
         public ICommand SetStartColorCommand {
             get => setStartColorCommand ??
                 (setStartColorCommand = new RelayCommand(() => {
@@ -214,8 +225,7 @@ namespace spfgraph.ViewModel {
                     }
                 }));
         }
-
-        ICommand setEndColorCommand;
+   
         public ICommand SetEndColorCommand {
             get => setEndColorCommand ??
                 (setEndColorCommand = new RelayCommand(() => {
@@ -225,9 +235,8 @@ namespace spfgraph.ViewModel {
                     }
                 }));
         }
-
-        ICommand setDefaultColor;
-        public ICommand SetDefaultColor {
+    
+        public ICommand SetDefaultColors {
             get => setDefaultColor ??
                 (setDefaultColor = new RelayCommand(() => {
                     StartColor = new Color(25, 25, 30);
@@ -235,20 +244,10 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
+      
+
         #endregion
 
-        ICommand openHtmlCommand;
-        public ICommand OpenHtmlCommand {
-            get => openHtmlCommand ??
-                (openHtmlCommand = new ActionCommand(() => {
-                    try {
-                        System.Diagnostics.Process.Start("demo.html");
-                    } catch {
-                    }
-
-                }, IsGraphVMExist));
-        }
-   
         #endregion
 
         #region Constructor
@@ -257,8 +256,7 @@ namespace spfgraph.ViewModel {
             dialogService = new DefaultDialogService();
             colorDialog = new ColorDialogService();
 
-            StartColor = new Color(25, 25, 30);
-            EndColor = new Color(218, 112, 214);
+            SetDefaultColors.Execute(this);
         }
 
         #endregion

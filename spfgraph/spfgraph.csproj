@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="Converters\ColorToSolidBrushConverter.cs" />
     <Compile Include="Converters\NullRefToVisibilityConverter.cs" />
+    <Compile Include="Model\Data\JsonSerializer.cs" />
     <Compile Include="Model\Dialog\ColorDialog.cs" />
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />

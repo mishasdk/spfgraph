@@ -66,8 +66,6 @@
                     </Border.Effect>
 
                     <StackPanel>
-                        <!--<TextBlock Text="Path" Margin="0 0 0 5"/>-->
-                        <!--<TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10" MaxWidth="300"/>-->
                         <Button Width="130" Height="30" Margin="0 0 0 10"
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding ChoosePathForFileCommand}" Content="Choose Path"/>
@@ -82,7 +80,7 @@
 
                         <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding SaveDagInFile}" Content="Save Graph"/>
+                                Command="{Binding SaveGraphInTextFileCommand}" Content="Save Graph"/>
 
                         <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
@@ -130,17 +128,13 @@
 
                 <!--Right side of the main page-->
                 <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="183*"/>
-                        <RowDefinition Height="8*"/>
-                        <RowDefinition Height="258*"/>
-                    </Grid.RowDefinitions>
                     <Expander Panel.ZIndex="10"  VerticalAlignment="Top" HorizontalAlignment="Right" 
                                Margin="0 10 15 0" Header="Layout parameters" FontSize="14">
                         <StackPanel UseLayoutRounding="True">
                             <StackPanel.Background>
                                 <SolidColorBrush Opacity="0.7" Color="White" />
                             </StackPanel.Background>
+                            
                             <GroupBox Header="Color Scheme" Margin="5" >
                                 <StackPanel>
                                     <RadioButton Name="rbInDegree" Command="{Binding Path=SetColorSchemeFromRadioButton}"  
@@ -160,6 +154,7 @@
                                                  Content="Default" Margin="5 5 0 0" />
                                 </StackPanel>
                             </GroupBox>
+                            
                             <GroupBox Header="Optimize Layout" Margin="5">
                                 <StackPanel>
                                     <RadioButton Name="rbMinimize" Command="{Binding Path=SetOptimizeLayotFromRadioButton}" 
@@ -182,6 +177,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
+                                    
                                     <TextBlock Text="Start Color" />
                                     <Button Style="{StaticResource ColorButton}"
                                             Width="30" Height="30" Grid.Column="1" Margin="0 0 0 5"
@@ -199,12 +195,13 @@
                                 </Grid>
                             </GroupBox>
                             <Button Style="{StaticResource RefButton}" Content="Default Colors" 
-                                    Command="{Binding SetDefaultColor}" />
+                                    Command="{Binding SetDefaultColors}" />
                         </StackPanel>
                     </Expander>
 
                     <zoom:ZoomControl Mode="Original" Margin="5 5 5 5"
-                                      Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}" Grid.RowSpan="3">
+                                      Visibility="{Binding Path=GraphVM,
+                                      Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

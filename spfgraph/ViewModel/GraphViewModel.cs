@@ -71,12 +71,5 @@ namespace spfgraph.ViewModel {
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(DagGraph);
         }
 
-        #region Commands
-
-        
-
-
-        #endregion
-
     }
 }
