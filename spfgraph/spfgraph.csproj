@@ -124,6 +124,7 @@
     <Compile Include="Model\Vizualization\Edge.cs" />
     <Compile Include="Model\Vizualization\Node.cs" />
     <Compile Include="Model\Vizualization\OptimizeVizualizationTypes.cs" />
+    <Compile Include="ViewModel\Base\ActionCommand.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\ParametrizedCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />

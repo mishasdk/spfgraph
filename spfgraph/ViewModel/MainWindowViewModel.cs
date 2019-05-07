@@ -1,8 +1,12 @@
-﻿using spfgraph.Model.Dialog;
+﻿using spfgraph.Model.Data;
+using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
 using spfgraph.Model.Vizualization;
 using spfgraph.ViewModel.Base;
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,7 +15,7 @@ namespace spfgraph.ViewModel {
 
         #region Private Fields
 
-        ICommand openCommand;
+        ICommand choosePathForFileCommand;
         ICommand buildGraphCommand;
         ICommand clearDataCommand;
 
@@ -89,6 +93,75 @@ namespace spfgraph.ViewModel {
 
         #region Commands
 
+        public ICommand ChoosePathForFileCommand {
+            get => choosePathForFileCommand ??
+                (choosePathForFileCommand = new RelayCommand(() => {
+                    try {
+                        if (dialogService.OpenFileDialog()) {
+                            FilePath = dialogService.FilePath;
+                        }
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    }
+                }));
+        }
+
+        public ICommand BuildGraphCommand {
+            get => buildGraphCommand ??
+                (buildGraphCommand = new ActionCommand(() => {
+                    try {
+                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, StartColor, EndColor);
+                    } catch (GraphErrorException ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    } catch (DataProviderException ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage(ex.Message);
+                    }
+                }, IsFilePathExist));
+        }
+
+        public ICommand ClearDataCommand {
+            get => clearDataCommand ??
+                (clearDataCommand = new ActionCommand(() => {
+                    ClearData();
+                }, IsFilePathExist));
+        }
+
+        ICommand exportToJsonCommand;
+        public ICommand ExportToJsonCommand {
+            get => exportToJsonCommand ??
+                (exportToJsonCommand = new ActionCommand(() => {
+                    try {
+                        var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
+                        using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
+                            jsonFormatter.WriteObject(fs, GraphVM.ElementsToViz);
+                        }
+                    } catch {
+
+                    }
+
+                }, IsGraphVMExist));
+        }
+
+        ICommand saveDagInFile;
+        public ICommand SaveDagInFile {
+            get => saveDagInFile ??
+                (saveDagInFile = new ActionCommand(() => {
+                    try {
+                        var saveDialog = new DefaultDialogService();
+                        if (!saveDialog.SaveFileDialog())
+                            return;
+
+                        var filePath = saveDialog.TargetPath;
+                        DataProvider.SaveDagInFile(filePath, GraphVM.DagGraph);
+                    } catch {
+
+                    }
+                }, IsGraphVMExist));
+        }
+
+
         ICommand setOptimizeLayoutFromRadioButton;
         public ICommand SetOptimizeLayotFromRadioButton {
             get => setOptimizeLayoutFromRadioButton ??
@@ -110,81 +183,26 @@ namespace spfgraph.ViewModel {
         ICommand setColorSchemeFromRadioButton;
         public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
-                (setColorSchemeFromRadioButton = new ParametrizedCommand(ExecuteMethod, CanExecuteMethod));
-        }
-
-        bool CanExecuteMethod(object parameter) {
-            return parameter == null ? false : true;
-        }
-
-        void ExecuteMethod(object parameter) {
-            var str = (string)parameter;
-            switch (str) {
-                case "In Degree":
-                    ColorScheme = ColorSchemeTypes.InDegree;
-                    break;
-                case "Out Degree":
-                    ColorScheme = ColorSchemeTypes.OutDegree;
-                    break;
-                case "Sum Degree":
-                    ColorScheme = ColorSchemeTypes.SumDegree;
-                    break;
-                case "Default":
-                    ColorScheme = ColorSchemeTypes.None;
-                    break;
-            }
-        }
-
-        public ICommand BuildGraphCommand {
-            get => buildGraphCommand ??
-                (buildGraphCommand = new RelayCommand(() => {
-                    if (FilePath == null)
-                        return;
-                    try {
-                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, StartColor, EndColor);
-                    } catch (GraphErrorException ex) {
-                        dialogService.ShowMessage(ex.Message);
-                    } catch (DataProviderException ex) {
-                        dialogService.ShowMessage(ex.Message);
+                (setColorSchemeFromRadioButton = new ParametrizedCommand(parameter => {
+                    var str = (string)parameter;
+                    switch (str) {
+                        case "In Degree":
+                            ColorScheme = ColorSchemeTypes.InDegree;
+                            break;
+                        case "Out Degree":
+                            ColorScheme = ColorSchemeTypes.OutDegree;
+                            break;
+                        case "Sum Degree":
+                            ColorScheme = ColorSchemeTypes.SumDegree;
+                            break;
+                        case "Default":
+                            ColorScheme = ColorSchemeTypes.None;
+                            break;
                     }
-                }));
+                }, parameter => parameter != null));
         }
 
-        public ICommand OpenCommand {
-            get => openCommand ??
-                (openCommand = new RelayCommand(() => {
-                    try {
-                        if (dialogService.OpenFileDialog()) {
-                            FilePath = dialogService.FilePath;
-                        }
-                    } catch (Exception ex) {
-                        dialogService.ShowMessage(ex.Message);
-                    }
-                }));
-        }
-
-        public ICommand ClearDataCommand {
-            get => clearDataCommand ??
-                (clearDataCommand = new RelayCommand(() => {
-                    ClearData();
-                }));
-        }
-
-        ICommand showColorType;
-        public ICommand ShowColorType {
-            get => showColorType ??
-                (showColorType = new RelayCommand(() => {
-                    MessageBox.Show(ColorScheme.ToString());
-                }));
-        }
-
-        ICommand showLayoutType;
-        public ICommand ShowLayoutType {
-            get => showLayoutType ??
-                (showLayoutType = new RelayCommand(() => {
-                    MessageBox.Show(OptimizeLayout.ToString());
-                }));
-        }
+        #region Color Commands
 
         ICommand setStartColorCommand;
         public ICommand SetStartColorCommand {
@@ -217,19 +235,20 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
+        #endregion
+
         ICommand openHtmlCommand;
         public ICommand OpenHtmlCommand {
             get => openHtmlCommand ??
-                (openHtmlCommand = new RelayCommand(() => {
+                (openHtmlCommand = new ActionCommand(() => {
                     try {
                         System.Diagnostics.Process.Start("demo.html");
                     } catch {
                     }
 
-                }));
-
+                }, IsGraphVMExist));
         }
-
+   
         #endregion
 
         #region Constructor
@@ -248,7 +267,12 @@ namespace spfgraph.ViewModel {
 
         private void ClearData() {
             GraphVM = null;
+            FilePath = null;
         }
+
+        bool IsFilePathExist() => FilePath != null;
+
+        private bool IsGraphVMExist() => GraphVM != null;
 
         #endregion
 
