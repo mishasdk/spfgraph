@@ -38,8 +38,12 @@ namespace spfgraph.ViewModel {
             get => $"{features.AvrgWidth:f2}";
         }
 
-        public int GraphIrregular {
-            get => features.Irregular;
+        public string GraphIrregular {
+            get => $"{features.Irregular:f2}";
+        }
+
+        public string GraphAvrgDev {
+            get => $"{features.AvrgDeviation:f2}";
         }
 
         public double CanvasWidth {

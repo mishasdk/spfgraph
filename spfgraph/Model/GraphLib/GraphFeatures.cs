@@ -5,7 +5,8 @@ namespace spfgraph.Model.GraphLib {
         public int Height { get; set; }
         public int Width { get; set; }
         public double AvrgWidth { get; set; }
-        public int Irregular { get; set; }
+        public double Irregular { get; set; }
+        public double AvrgDeviation { get; set; }
 
         public GraphFeatures() { }
 
