@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
-        StackedGraph dagGraph;
+        public StackedGraph DagGraph { get; set; }
 
         ObservableCollection<Element> elementsToViz;
         public ObservableCollection<Element> ElementsToViz {
@@ -38,8 +38,12 @@ namespace spfgraph.ViewModel {
             get => $"{features.AvrgWidth:f2}";
         }
 
-        public int GraphIrregular {
-            get => features.Irregular;
+        public string GraphIrregular {
+            get => $"{features.Irregular:f2}";
+        }
+
+        public string GraphAvrgDev {
+            get => $"{features.AvrgDeviation:f2}";
         }
 
         public double CanvasWidth {
@@ -57,8 +61,8 @@ namespace spfgraph.ViewModel {
             var builder = new StackedGraphBuilder() {
                 LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
             };
-            dagGraph = builder.ConstructSpf(graph);
-            features = dagGraph.GetGraphFeatures();
+            DagGraph = builder.ConstructSpf(graph);
+            features = DagGraph.GetGraphFeatures();
 
             // Create GraphVizBuilder
             var graphVizBuilder = new GraphVizBuilder() {
@@ -68,48 +72,8 @@ namespace spfgraph.ViewModel {
                 StartColor = startColor,
                 EndColor = endColor
             };
-            ElementsToViz = graphVizBuilder.CreateGraphVizualization(dagGraph);
+            ElementsToViz = graphVizBuilder.CreateGraphVizualization(DagGraph);
         }
-
-        #region Commands
-
-        ICommand exportToJsonCommand;
-        public ICommand ExportToJsonCommand {
-            get => exportToJsonCommand ??
-                (exportToJsonCommand = new RelayCommand(() => {
-                    try {
-                        var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
-                        using (var fs = new FileStream("elementsCollection.json", FileMode.Create)) {
-                            jsonFormatter.WriteObject(fs, ElementsToViz);
-                        }
-                    } catch {
-
-                    }
-
-                }));
-        }
-
-        ICommand saveDagInFile;
-        public ICommand SaveDagInFile {
-            get => saveDagInFile ??
-                (saveDagInFile = new RelayCommand(() => {
-                    try {
-                        var saveDialog = new DefaultDialogService();
-                        if (!saveDialog.SaveFileDialog())
-                            return;
-
-                        var filePath = saveDialog.TargetPath;
-                        DataProvider.SaveDagInFile(filePath, dagGraph);
-                    } catch {
-
-                    }
-                }));
-        }
-
-
-
-
-        #endregion
 
     }
 }

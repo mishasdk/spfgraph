@@ -5,7 +5,6 @@ namespace spfgraph.Model.Dialog {
     public class DefaultDialogService : IDialogService {
 
         public string FilePath { get; set; }
-        public string TargetPath { get; set; }
 
         public bool OpenFileDialog() {
             var fd = new OpenFileDialog();
@@ -27,7 +26,7 @@ namespace spfgraph.Model.Dialog {
         public bool SaveFileDialog() {
             var sd = new SaveFileDialog();
             if (sd.ShowDialog() == true) {
-                TargetPath = sd.FileName;
+                FilePath = sd.FileName;
                 return true;
             } else
                 return false;

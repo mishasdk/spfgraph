@@ -11,8 +11,12 @@
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseControl}"/>
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}"/>
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseControl}"/>
     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource BaseControl}"/>
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseControl}"/>
+
+    <Style TargetType="{x:Type TextBlock}" >
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
+    </Style>
 
 </ResourceDictionary>

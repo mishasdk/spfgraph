@@ -1,4 +1,5 @@
 ﻿using spfgraph.Model.Exceptions;
+using System;
 using System.Collections.Generic;
 
 namespace spfgraph.Model.GraphLib {
@@ -30,12 +31,23 @@ namespace spfgraph.Model.GraphLib {
             var features = new GraphFeatures {
                 Height = GraphLayers.Count
             };
-            int maxCount = 0;
-            for (int i = 0; i < GraphLayers.Count; i++)
-                if (maxCount < GraphLayers[i].Count)
-                    maxCount = GraphLayers[i].Count;
-            features.Width = maxCount;
+            int maxW = 0, minW = 10000;
+            for (int i = 0; i < GraphLayers.Count; i++) {
+                if (maxW < GraphLayers[i].Count)
+                    maxW = GraphLayers[i].Count;
+                if (minW > GraphLayers[i].Count)
+                    minW = GraphLayers[i].Count;
+            }
+            features.Width = maxW;
             features.AvrgWidth = (double)AdjacencyList.Length / GraphLayers.Count;
+            features.Irregular = maxW / ((double)minW);
+
+            double dev = 0;
+            for (int i = 0; i < GraphLayers.Count; i++) {
+                dev += (features.AvrgWidth - GraphLayers[i].Count) * (features.AvrgWidth - GraphLayers[i].Count);
+            }
+            dev = Math.Sqrt(dev / GraphLayers.Count);
+            features.AvrgDeviation = dev;
             return features;
         }
 

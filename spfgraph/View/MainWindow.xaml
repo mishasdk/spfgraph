@@ -19,7 +19,7 @@
     </Window.Resources>
 
     <Border  BorderBrush="{StaticResource DarkGrayColorBrush}"
-             BorderThickness="2">
+             BorderThickness="2 0 2 2">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -27,73 +27,120 @@
                 <RowDefinition Height="22"/>
             </Grid.RowDefinitions>
 
-            <!--Top dock panel-->
-            <DockPanel Style="{StaticResource topBar}">
-                <StackPanel Style="{StaticResource stackPanelForBar}">
-                    <Menu Style="{StaticResource menuForBar}">
-                        <MenuItem Width="55" Style="{StaticResource menuItemForBar}">
-                            <MenuItem.Header>
-                                <TextBlock Width="25" Text="File" HorizontalAlignment="Center"  Margin="7 0 0 0"/>
-                            </MenuItem.Header>
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="Save"/>
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="Open" />
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="New" />
-                        </MenuItem>
-                        <MenuItem Style="{StaticResource menuItemForBar}" Header="Properties">
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="Item 1" />
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="Item 2" />
-                            <MenuItem Style="{StaticResource menuItemForBar}" Header="Item 3" />
-                        </MenuItem>
-                    </Menu>
-                </StackPanel>
-            </DockPanel>
+            <!--Top panel-->
+            <Grid Background="{StaticResource DarkGrayColorBrush}">
+                <Menu Margin="20 0 0 0" Foreground="White">
+
+                    <MenuItem Header="File">
+                        <MenuItem Foreground="Black" Header="Open file"
+                                  Command="{Binding ChoosePathForFileCommand}"/>
+
+                        <MenuItem Foreground="Black" Header="Save File"
+                                  Command="{Binding SaveGraphInTextFileCommand}" />
+
+                        <MenuItem Foreground="Black" Header="Build Graph" 
+                                  Command="{Binding BuildGraphCommand}" />
+
+                        <MenuItem Foreground="Black" Header="Clear Data"
+                                  Command="{Binding ClearDataCommand}" />
+                    </MenuItem>
+
+                    <MenuItem Header="Export">
+                        <MenuItem Foreground="Black" Header="Export to Json" 
+                                  Command="{Binding ExportToJsonCommand}"/>
+
+                        <MenuItem Foreground="BlueViolet" Header="Export to Png" />
+
+                        <MenuItem Foreground="BlueViolet" Header="Export to HTML" />
+
+                        <MenuItem Foreground="Black"  Header="Export to text file"
+                                  Command="{Binding SaveGraphInTextFileCommand}"/>
+                    </MenuItem>
+
+                    <MenuItem Header="Help" Foreground="White">
+                        <MenuItem Foreground="BlueViolet" Header="Get Help" />
+                    </MenuItem>
+                </Menu>
+
+            </Grid>
 
             <!--Main page-->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
                 <!--Left side of the main page-->
-                <Border Background="#ADD7F6" Padding="20 20 20 10">
+                <Border Background="White" Padding="20 20 20 10" >
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.7" BlurRadius="5" ShadowDepth="0" />
+                    </Border.Effect>
+
                     <StackPanel>
-                        <!--<TextBlock Text="Path" Margin="0 0 0 5"/>-->
-                        <!--<TextBlock Grid.Column="0" Background="White" Text="{Binding FilePath, Mode=OneWay}" Margin="0 0 0 10" MaxWidth="300"/>-->
                         <Button Width="130" Height="30" Margin="0 0 0 10"
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding OpenCommand}" Content="Choose Path"/>
+                                Command="{Binding ChoosePathForFileCommand}" Content="Open File">
+                            <Button.ToolTip>
+                                <ToolTip Content="Open text file with graph" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button Width="130" Height="30" Margin="0 0 0 10"
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding BuildGraphCommand}" Content="Build Graph"/>
+                                Command="{Binding BuildGraphCommand}" Content="Build Graph">
+                            <Button.ToolTip>
+                                <ToolTip Content="Visualizes graph from the text file" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding ClearDataCommand}" Content="Delete Graph"/>
+                                Command="{Binding ClearDataCommand}" Content="Clear Data">
+                            <Button.ToolTip>
+                                <ToolTip Content="Clear file path and picture of graph" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding Path=GraphVM.SaveDagInFile}" Content="Save Graph"/>
+                                Command="{Binding SaveGraphInTextFileCommand}" Content="Save Graph">
+                            <Button.ToolTip>
+                                <ToolTip Content="Save spf graph in text file" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button Width="130" Height="30" Margin="0 0 0 10" 
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding Path=GraphVM.ExportToJsonCommand}" Content="Json Export"/>
+                                Command="{Binding ExportToJsonCommand}" Content="Json Export">
+                            <Button.ToolTip>
+                                <ToolTip Content="Export graph as Json" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button Width="130" Height="30" Margin="0 0 0 15" 
                                 Style="{StaticResource CustomButton}"
-                                Command="{Binding Path=OpenHtmlCommand}" Content="Open Demo"/>
+                                Command="{Binding OpenHtmlCommand}" Content="Open Demo">
+                            <Button.ToolTip>
+                                <ToolTip Content="Export graph as Html ans jscript" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Separator Margin="0 0 0 10" BorderBrush="Black"/>
 
                         <!--Graph Features Panel-->
                         <GroupBox Header="Graph Features" Margin="0 0 0 10">
+                            <GroupBox.ToolTip>
+                                <ToolTip Content="Main characteristics of the graph"/>
+                            </GroupBox.ToolTip>
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
@@ -115,41 +162,56 @@
                                 <TextBlock Grid.Row="3" Text="Irregular" />
                                 <TextBlock Grid.Row="3" Grid.Column="1"
                                            Text="{Binding Path=GraphVM.GraphIrregular}" />
+
+                                <TextBlock Grid.Row="4" Text="Avrg Dev" />
+                                <TextBlock Grid.Row="4" Grid.Column="1"
+                                           Text="{Binding Path=GraphVM.GraphAvrgDev}" />
                             </Grid>
                         </GroupBox>
                     </StackPanel>
                 </Border>
 
                 <!--Right side of the main page-->
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
                     <Expander Panel.ZIndex="10"  VerticalAlignment="Top" HorizontalAlignment="Right" 
-                               Margin="0 10 15 0" Header="Layout parameters" FontSize="14">
-                        <StackPanel Background="#fff" UseLayoutRounding="True">
-                            <GroupBox Header="Color Scheme" Margin="5" >
+                               Margin="0 10 15 0" Header="Layout parameters" FontSize="12">
+                        <StackPanel UseLayoutRounding="True" >
+                            <StackPanel.Background>
+                                <SolidColorBrush Opacity="0.7" Color="White" />
+                            </StackPanel.Background>
+
+                            <GroupBox Header="Color Scheme" Margin="5">
+                                <GroupBox.ToolTip>
+                                    <ToolTip Content="Sets how vertices colorized"/>
+                                </GroupBox.ToolTip>
                                 <StackPanel>
                                     <RadioButton Name="rbInDegree" Command="{Binding Path=SetColorSchemeFromRadioButton}"  
                                                  CommandParameter="{Binding ElementName=rbInDegree, Path=Content}" 
                                                  IsChecked="True" Content="In Degree" Margin="5 5 0 0" />
-                                    
+
                                     <RadioButton Name="rbOutDegree" Command="{Binding Path=SetColorSchemeFromRadioButton}"
                                                  CommandParameter="{Binding ElementName=rbOutDegree, Path=Content}"
                                                  Content="Out Degree"  Margin="5 5 0 0" />
-                                    
+
                                     <RadioButton Name="rbSumDegree" Command="{Binding Path=SetColorSchemeFromRadioButton}" 
                                                  CommandParameter="{Binding ElementName=rbSumDegree, Path=Content}"
                                                  Content="Sum Degree"  Margin="5 5 0 0" />
-                                    
+
                                     <RadioButton Name="rbDefault" Command="{Binding Path=SetColorSchemeFromRadioButton}" 
                                                  CommandParameter="{Binding ElementName=rbDefault, Path=Content}"
                                                  Content="Default" Margin="5 5 0 0" />
                                 </StackPanel>
                             </GroupBox>
+
                             <GroupBox Header="Optimize Layout" Margin="5">
+                                <GroupBox.ToolTip>
+                                    <ToolTip Content="Sets layout algorithm"/>
+                                </GroupBox.ToolTip>
                                 <StackPanel>
                                     <RadioButton Name="rbMinimize" Command="{Binding Path=SetOptimizeLayotFromRadioButton}" 
                                                  CommandParameter="{Binding ElementName=rbMinimize, Path=Content}"
                                                  IsChecked="True" Content="Minimize Crosses" Margin="5 5 0 0"/>
-                                    
+
                                     <RadioButton Name="rbDefault_1" Command="{Binding Path=SetOptimizeLayotFromRadioButton}" 
                                                  CommandParameter="{Binding ElementName=rbDefault_1, Path=Content}" 
                                                  Content="Default" Margin="5 5 0 0"/>
@@ -157,6 +219,10 @@
                             </GroupBox>
 
                             <GroupBox Header="Colors" Margin="5">
+                                <GroupBox.ToolTip>
+                                    <ToolTip Content="Colors of vertices"/>
+                                </GroupBox.ToolTip>
+
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -164,31 +230,39 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
+                                        <RowDefinition Height="5"/>
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Start Color" />
+
+                                    <TextBlock Text="Start Color" VerticalAlignment="Center" />
                                     <Button Style="{StaticResource ColorButton}"
-                                            Width="30" Height="30" Grid.Column="1" Margin="0 0 0 5"
+                                            Width="30" Height="30" Grid.Column="1"
                                             Background="{Binding StartColor,
                                             Converter={StaticResource ColorToSolidBrush}}"
                                             Command="{Binding SetStartColorCommand}"/>
-                                    
-                                    <TextBlock Text="End Color" Grid.Row="1"/>
+
+                                    <TextBlock Text="End Color" VerticalAlignment="Center" Grid.Row="2"/>
                                     <Button Style="{StaticResource ColorButton}" 
-                                            Width="30" Height="30" Grid.Column="2" Grid.Row="1"  Margin="0 0 0 5"
+                                            VerticalAlignment="Center"
+                                            Width="30" Height="30" Grid.Column="2" Grid.Row="2" 
                                             Background="{Binding EndColor,
                                             Converter={StaticResource ColorToSolidBrush}}"
                                             Command="{Binding SetEndColorCommand}"/>
-                                    
+
                                 </Grid>
                             </GroupBox>
                             <Button Style="{StaticResource RefButton}" Content="Default Colors" 
-                                    Command="{Binding SetDefaultColor}" />
+                                    Command="{Binding SetDefaultColors}" >
+                                <Button.ToolTip>
+                                    <ToolTip Content="Set colors to default" />
+                                </Button.ToolTip>
+                            </Button>
                         </StackPanel>
                     </Expander>
 
-                    <zoom:ZoomControl Mode="Original"
-                                      Visibility="{Binding Path=GraphVM, Converter={StaticResource NullRefToVisibilityConverter}}">
+                    <zoom:ZoomControl Mode="Original" Margin="5 5 5 5"
+                                      Visibility="{Binding Path=GraphVM,
+                                      Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -204,11 +278,11 @@
                                             <Ellipse Stroke="{Binding Path=NodeColor,
                                                      Converter={StaticResource ColorToSolidBrush}}"
                                                      StrokeThickness="3" Fill="White" />
-                                            
+
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                        Text="{Binding Value}" TextAlignment="Center" />
                                         </Grid>
-                                        
+
                                         <Viewbox.RenderTransform>
                                             <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
                                         </Viewbox.RenderTransform>
@@ -221,7 +295,7 @@
                                           Stroke="{Binding EdgeColor,
                                           Converter={StaticResource ColorToSolidBrush}}"
                                           StrokeThickness="3">
-                                        
+
                                         <Line.RenderTransform>
                                             <TranslateTransform X="20" Y="20"/>
                                         </Line.RenderTransform>
@@ -234,10 +308,14 @@
             </Grid>
 
             <!--Bottom dock panel-->
-            <DockPanel Height="22" Grid.Row="2" Background="{StaticResource CleanBlueBrush}" >
+            <DockPanel Height="22" Grid.Row="2" Background="{StaticResource CleanBlueBrush}">
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="Path" Foreground="White" Margin="20 0 0 0" />
                     <TextBlock Text="{Binding Path=FilePath}" Foreground="White" Margin="5 0 0 0" />
+
+                    <StackPanel.ToolTip>
+                        <ToolTip Content="Path of the current choosen graph" />
+                    </StackPanel.ToolTip>
                 </StackPanel>
             </DockPanel>
         </Grid>
