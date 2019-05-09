@@ -4,6 +4,7 @@
     /// Types of graph layout.
     /// </summary>
     public enum LayoutAlgorithmTypes {
-        TheShortestHeigth
+        TheShortestHeigth,
+        None
     }
 }

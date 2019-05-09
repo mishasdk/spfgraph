@@ -74,8 +74,6 @@ namespace spfgraph.Model.Data {
             return adjacencyList;
         }
 
-        #region Read Adjacency List
-
         static List<int>[] ReadAdjacencyListWith(AdjacencyListReader listReader) {
             var adjacencyList = new List<int>[listReader.AmoutOfVertex];
             var separator = "->";

@@ -11,8 +11,6 @@ namespace spfgraph.Model.Dialog {
 
         #region Implementation the IDialogService
 
-        #endregion
-
         public string FilePath { get; set; }
 
         public bool OpenFileDialog() {
@@ -50,5 +48,7 @@ namespace spfgraph.Model.Dialog {
                     return null;
             }
         }
+
+        #endregion
     }
 }

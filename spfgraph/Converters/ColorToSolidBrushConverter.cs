@@ -11,6 +11,8 @@ namespace spfgraph.Converters {
     /// </summary>
     public class ColorToSolidBrushConverter : IValueConverter {
 
+        #region Public Members
+
         /// <summary>
         /// Value converter.
         /// </summary>
@@ -41,6 +43,8 @@ namespace spfgraph.Converters {
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
         }
+
+        #endregion
 
     }
 }

@@ -3,6 +3,11 @@ using spfgraph.Model.Exceptions;
 using System.Collections.Generic;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    /// Class that implements some algorithms
+    /// for work with graphs.
+    /// </summary>
     public class Algorithms {
 
         #region Check For Cyclic

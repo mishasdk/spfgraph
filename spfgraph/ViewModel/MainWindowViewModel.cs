@@ -7,6 +7,10 @@ using System;
 using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
+
+    /// <summary>
+    /// Class, that encapsulates general logic of application.
+    /// </summary>
     public class MainWindowViewModel : BaseViewModel {
 
         #region Private Fields
@@ -152,13 +156,13 @@ namespace spfgraph.ViewModel {
                     try {
                         if (!dialogService.SaveFileDialog())
                             return;
-                        JsonSerializer.Serialize(dialogService.FilePath, GraphVM.ElementsToViz);
+                        JsonSerializer.SerializeGraph(dialogService.FilePath, GraphVM.ElementsToViz);
                     } catch (Exception ex) {
                         dialogService.AlertDialog(ex.Message);
                     }
                 }, IsGraphVMExist));
         }
-      
+
         // Demo
         public ICommand OpenHtmlCommand {
             get => openHtmlCommand ??
@@ -193,7 +197,7 @@ namespace spfgraph.ViewModel {
                     }
                 }, parameter => parameter != null));
         }
-   
+
         public ICommand SetOptimizeLayotFromRadioButton {
             get => setOptimizeLayoutFromRadioButton ??
                 (setOptimizeLayoutFromRadioButton = new ParametrizedCommand(
@@ -210,7 +214,7 @@ namespace spfgraph.ViewModel {
                     },
                     parameter => { return parameter == null ? false : true; }));
         }
- 
+
         public ICommand SetStartColorCommand {
             get => setStartColorCommand ??
                 (setStartColorCommand = new RelayCommand(() => {
@@ -220,7 +224,7 @@ namespace spfgraph.ViewModel {
                     }
                 }));
         }
-   
+
         public ICommand SetEndColorCommand {
             get => setEndColorCommand ??
                 (setEndColorCommand = new RelayCommand(() => {
@@ -230,7 +234,7 @@ namespace spfgraph.ViewModel {
                     }
                 }));
         }
-    
+
         public ICommand SetDefaultColors {
             get => setDefaultColor ??
                 (setDefaultColor = new RelayCommand(() => {

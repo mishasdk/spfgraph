@@ -5,6 +5,11 @@ using spfgraph.ViewModel.Base;
 using System.Collections.ObjectModel;
 
 namespace spfgraph.ViewModel {
+
+    /// <summary>
+    /// Class, that encapsulates logic of graph
+    /// visualization.
+    /// </summary>
     public class GraphViewModel : BaseViewModel {
         ObservableCollection<Element> elementsToViz;
         GraphFeatures features;

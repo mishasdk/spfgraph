@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace spfgraph.Model.GraphLib {
 
     /// <summary>
-    /// Class that encapsulates all graph's data.
+    /// Class, that encapsulates all graph's data.
     /// </summary>
     public class Graph {
 

@@ -1,4 +1,8 @@
 ﻿namespace spfgraph.Model.Visualization {
+
+    /// <summary>
+    /// Color builder with simple color scheme.
+    /// </summary>
     public class DefaultColorBuilder : IColorBuilder {
         Color defaultColor;
 

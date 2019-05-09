@@ -7,7 +7,7 @@ namespace spfgraph.Model.Exceptions {
     /// </summary>
     public class GraphErrorException : Exception {
 
-        #region Custom Exceptions
+        #region Default Exceptions
 
         public GraphErrorException() { }
         public GraphErrorException(string message) : base(message) { }

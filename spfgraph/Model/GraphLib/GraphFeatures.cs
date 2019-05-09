@@ -3,7 +3,7 @@
 namespace spfgraph.Model.GraphLib {
 
     /// <summary>
-    ///  Enum, that encapsulates all features
+    ///  Class, that encapsulates all features
     ///  of the dag graph.
     /// </summary>
     public class GraphFeatures {
