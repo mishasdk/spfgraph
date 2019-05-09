@@ -3,7 +3,6 @@ using spfgraph.Model.Data;
 using spfgraph.Model.Exceptions;
 using System.Collections.Generic;
 
-
 namespace Testing {
     [TestClass()]
     public class DataProviderTests {

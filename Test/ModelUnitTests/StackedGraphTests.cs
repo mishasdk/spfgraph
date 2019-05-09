@@ -2,7 +2,6 @@
 using spfgraph.Model.GraphLib;
 using System;
 
-
 namespace Testing {
     [TestClass()]
     public class StackedGraphTests : StackedGraph {
