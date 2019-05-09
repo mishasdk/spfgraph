@@ -1,34 +1,51 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="DarkGrayColor">#424242</Color>
-    <SolidColorBrush x:Key="DarkGrayColorBrush" Color="{StaticResource DarkGrayColor}"/>
+    <Color
+        x:Key="DarkGrayColor">#424242</Color>
+    <SolidColorBrush
+        x:Key="DarkGrayBrush"
+        Color="{StaticResource DarkGrayColor}" />
 
-    <Color x:Key="HoverDarkGrayColor">#626262</Color>
-    <SolidColorBrush x:Key="HoverDarkGrayColorBrush" Color="{StaticResource HoverDarkGrayColor}"/>
+    <Color
+        x:Key="WhiteColor">#FFFFFF</Color>
+    <SolidColorBrush
+        x:Key="WhiteBrush"
+        Color="{StaticResource WhiteColor}" />
 
-    <Color x:Key="PressedDarkGrayColor">#828282</Color>
-    <SolidColorBrush x:Key="PressedDarkGrayColorBrush" Color="{StaticResource PressedDarkGrayColor}"/>
+    <Color
+        x:Key="BlackColor">#000000</Color>
+    <SolidColorBrush
+        x:Key="BlackBrush"
+        Color="{StaticResource BlackColor}" />
 
-    <Color x:Key="CleanBlueColor">#0090C1</Color>
-    <SolidColorBrush x:Key="CleanBlueBrush" Color="{StaticResource CleanBlueColor}"/>
+    <Color
+        x:Key="LightBlueColor">#0090C1</Color>
+    <SolidColorBrush
+        x:Key="LightBlueBrush"
+        Color="{StaticResource LightBlueColor}" />
 
-    <Color x:Key="WhiteColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="WhiteColorBrush" Color="{StaticResource WhiteColor}"/>
+    <SolidColorBrush
+        x:Key="BlueVioletBrush"
+        Color="BlueViolet" />
 
-    <Color x:Key="LightGrayColor">#BBBBBB</Color>
-    <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGrayColor}"/>
+    <Color
+        x:Key="HoverDarkGrayColor">#626262</Color>
+    <SolidColorBrush
+        x:Key="HoverDarkGrayBrush"
+        Color="{StaticResource HoverDarkGrayColor}" />
 
-    <Color x:Key="DarkWhiteColor">#666</Color>
-    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhiteColor}"/>
+    <Color
+        x:Key="PressedDarkGrayColor">#727272</Color>
+    <SolidColorBrush
+        x:Key="PressedDarkGrayBrush"
+        Color="{StaticResource PressedDarkGrayColor}" />
 
-    <Color x:Key="HoverLightGrayColor">#444</Color>
-    <SolidColorBrush x:Key="HoverLightColorBrush" Color="{StaticResource HoverLightGrayColor}"/>
-
-    <Color x:Key="HoverRedColor">#F85A3E</Color>
-    <SolidColorBrush x:Key="HoverRedBrush" Color="{StaticResource HoverRedColor}"/>
-
-    <Color x:Key="GrayTextColor">#999</Color>
-    <SolidColorBrush x:Key="GrayTextBrush" Color="{StaticResource GrayTextColor}"/>
+    <Color
+        x:Key="GrayColor">#999</Color>
+    <SolidColorBrush
+        x:Key="GrayBrush"
+        Color="{StaticResource GrayColor}" />
 
 </ResourceDictionary>
