@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using spfgraph.Model.Visualization;
 using System.Windows;
 
 namespace spfgraph.Model.Dialog {
@@ -30,6 +31,16 @@ namespace spfgraph.Model.Dialog {
                 return true;
             } else
                 return false;
+        }
+
+        public Color GetColor() {
+            using (var colorDialog = new System.Windows.Forms.ColorDialog()) {
+                if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    var color = colorDialog.Color;
+                    return new Color(color.R, color.G, color.B);
+                } else
+                    return null;
+            }
         }
     }
 }

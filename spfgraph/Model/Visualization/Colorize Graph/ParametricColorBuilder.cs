@@ -1,4 +1,4 @@
-﻿namespace spfgraph.Model.Vizualization {
+﻿namespace spfgraph.Model.Visualization {
     public class ParametricColorBuilder : DefaultColorBuilder, IColorBuilder {
         protected Color startColor;
         protected Color endColor;

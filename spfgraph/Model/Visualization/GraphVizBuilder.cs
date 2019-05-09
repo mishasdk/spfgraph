@@ -1,10 +1,9 @@
 ﻿using spfgraph.Model.GraphLib;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace spfgraph.Model.Vizualization {
+namespace spfgraph.Model.Visualization {
     public class GraphVizBuilder {
         protected StackedGraph dagGraph;
         protected IColorBuilder colorBuilder;

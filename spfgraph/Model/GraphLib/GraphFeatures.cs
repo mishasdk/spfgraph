@@ -20,9 +20,7 @@ namespace spfgraph.Model.GraphLib {
                 return false;
         }
 
-        public override string ToString() {
-            return $"Height: {Height}, Width: {Width}, AvrgWidth: {AvrgWidth}, Irregular: {Irregular}";
-        }
+        public override string ToString() => $"Height: {Height} \nWidth: {Width} \nAvrgWidth: {AvrgWidth} \nIrregular: {Irregular} \nAvrgDeviation: {AvrgDeviation} ";
 
         public override int GetHashCode() {
             return base.GetHashCode();

@@ -6,9 +6,14 @@ using System.Windows.Media;
 namespace spfgraph.Converters {
     public class ColorToSolidBrushConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var color = (Model.Vizualization.Color)value;   
-            var brush = new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
-            return brush;
+            try {
+                var color = (Model.Visualization.Color)value;
+                var brush = new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
+                return brush;
+
+            } catch {
+                return new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

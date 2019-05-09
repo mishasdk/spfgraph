@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:spfgraph.View"
         xmlns:converters="clr-namespace:spfgraph.Converters"
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-        xmlns:viz="clr-namespace:spfgraph.Model.Vizualization"
+        xmlns:viz="clr-namespace:spfgraph.Model.Visualization"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="spfgraph" Height="540" Width="960"
@@ -90,7 +90,7 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding BuildGraphCommand}" Content="Build Graph">
                             <Button.ToolTip>
-                                <ToolTip Content="Visualizes graph from the text file" />
+                                <ToolTip Content="Visualize graph from the text file" />
                             </Button.ToolTip>
                         </Button>
 
@@ -98,7 +98,7 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding ClearDataCommand}" Content="Clear Data">
                             <Button.ToolTip>
-                                <ToolTip Content="Clear file path and picture of graph" />
+                                <ToolTip Content="Clear file path and picture of the graph" />
                             </Button.ToolTip>
                         </Button>
 
@@ -114,7 +114,7 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding ExportToJsonCommand}" Content="Json Export">
                             <Button.ToolTip>
-                                <ToolTip Content="Export graph as Json" />
+                                <ToolTip Content="Export graph to Json" />
                             </Button.ToolTip>
                         </Button>
 
@@ -122,7 +122,7 @@
                                 Style="{StaticResource CustomButton}"
                                 Command="{Binding OpenHtmlCommand}" Content="Open Demo">
                             <Button.ToolTip>
-                                <ToolTip Content="Export graph as Html ans jscript" />
+                                <ToolTip Content="Export graph to HTML and javascript" />
                             </Button.ToolTip>
                         </Button>
 
@@ -147,7 +147,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" Text="Heigth" />
+                                <TextBlock Grid.Row="0" Text="Height" />
                                 <TextBlock Grid.Row="0" Grid.Column="1"
                                            Text="{Binding Path=GraphVM.GraphHeight}" />
 

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace spfgraph.Model.Vizualization {
+namespace spfgraph.Model.Visualization {
     [DataContract]
     public class Node : Element {
 

@@ -1,13 +1,9 @@
 ﻿using spfgraph.Model.Data;
 using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
-using spfgraph.Model.Vizualization;
+using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Windows;
 using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
@@ -29,14 +25,13 @@ namespace spfgraph.ViewModel {
         ICommand setDefaultColor;
 
         IDialogService dialogService;
-        ColorDialogService colorDialog;
+        ColorSchemeTypes colorScheme;
+        OptimizeVisualizationTypes optimizeLayout;
         string filePath;
         double canvasWidth;
         Color startColor;
         Color endColor;
         GraphViewModel graphVM;
-        ColorSchemeTypes colorScheme;
-        OptimizeVisualizationTypes optimizeLayout;
 
         #endregion
 
@@ -219,7 +214,7 @@ namespace spfgraph.ViewModel {
         public ICommand SetStartColorCommand {
             get => setStartColorCommand ??
                 (setStartColorCommand = new RelayCommand(() => {
-                    var color = colorDialog.GetColor();
+                    var color = dialogService.GetColor();
                     if (color != null) {
                         StartColor = color;
                     }
@@ -229,7 +224,7 @@ namespace spfgraph.ViewModel {
         public ICommand SetEndColorCommand {
             get => setEndColorCommand ??
                 (setEndColorCommand = new RelayCommand(() => {
-                    var color = colorDialog.GetColor();
+                    var color = dialogService.GetColor();
                     if (color != null) {
                         EndColor = color;
                     }
@@ -244,8 +239,6 @@ namespace spfgraph.ViewModel {
                 }));
         }
 
-      
-
         #endregion
 
         #endregion
@@ -254,7 +247,6 @@ namespace spfgraph.ViewModel {
 
         public MainWindowViewModel() {
             dialogService = new DefaultDialogService();
-            colorDialog = new ColorDialogService();
 
             SetDefaultColors.Execute(this);
         }

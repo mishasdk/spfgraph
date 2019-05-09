@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using spfgraph.Model.Data;
-using spfgraph.Model.Vizualization;
+using spfgraph.Model.Visualization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

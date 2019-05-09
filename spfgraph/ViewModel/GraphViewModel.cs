@@ -1,19 +1,15 @@
 ﻿using spfgraph.Model.Data;
-using spfgraph.Model.Dialog;
 using spfgraph.Model.GraphLib;
-using spfgraph.Model.Vizualization;
+using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
-using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
     public class GraphViewModel : BaseViewModel {
-        public StackedGraph DagGraph { get; set; }
-
         ObservableCollection<Element> elementsToViz;
+        GraphFeatures features;
+
+        public StackedGraph DagGraph { get; set; }
         public ObservableCollection<Element> ElementsToViz {
             get => elementsToViz;
             set {
@@ -23,8 +19,6 @@ namespace spfgraph.ViewModel {
         }
 
         #region Graph Features
-
-        GraphFeatures features;
 
         public int GraphHeight {
             get => features.Height;

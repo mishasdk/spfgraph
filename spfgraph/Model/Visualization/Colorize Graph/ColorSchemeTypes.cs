@@ -1,4 +1,4 @@
-﻿namespace spfgraph.Model.Vizualization {
+﻿namespace spfgraph.Model.Visualization {
     public enum ColorSchemeTypes {
         InDegree,
         OutDegree,

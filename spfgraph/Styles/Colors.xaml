@@ -31,5 +31,4 @@
     <Color x:Key="GrayTextColor">#999</Color>
     <SolidColorBrush x:Key="GrayTextBrush" Color="{StaticResource GrayTextColor}"/>
 
-
 </ResourceDictionary>

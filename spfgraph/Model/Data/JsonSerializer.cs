@@ -1,12 +1,8 @@
-﻿using spfgraph.Model.Vizualization;
+﻿using spfgraph.Model.Visualization;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace spfgraph.Model.Data {
     public static class JsonSerializer {

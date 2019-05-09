@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using spfgraph.Model.Visualization;
+using System.Windows;
 
 namespace spfgraph.Model.Dialog {
     public interface IDialogService {
@@ -7,5 +8,6 @@ namespace spfgraph.Model.Dialog {
         MessageBoxResult AlertDialog(string message);
         void ShowMessage(string message);
         bool SaveFileDialog();
+        Color GetColor();
     }
 }
