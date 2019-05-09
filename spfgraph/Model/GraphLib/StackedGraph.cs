@@ -3,14 +3,23 @@ using System;
 using System.Collections.Generic;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    /// Class, that encapsulates all dag graph's
+    /// data.
+    /// </summary>
     public class StackedGraph : Graph {
-        GraphFeatures graphFeatures;
 
+        #region Public Properties
+
+        /// <summary>
+        /// List of layers with vertices, that 
+        /// characterizes spf graph.
+        /// </summary>
         public List<List<int>> GraphLayers { get; set; }
-        public GraphFeatures GraphFeatures {
-            get => graphFeatures ?? (graphFeatures = GetGraphFeatures());
-        }
 
+        #endregion
+        
         #region Constructors
 
         protected StackedGraph() { }

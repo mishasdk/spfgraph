@@ -1,14 +1,22 @@
 ﻿using System;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    ///  Enum, that encapsulates all features
+    ///  of the dag graph.
+    /// </summary>
     public class GraphFeatures {
+
+        #region Public Properties 
+
         public int Height { get; set; }
         public int Width { get; set; }
         public double AvrgWidth { get; set; }
         public double Irregular { get; set; }
         public double AvrgDeviation { get; set; }
 
-        public GraphFeatures() { }
+        #endregion
 
         #region Overrided Methods
 

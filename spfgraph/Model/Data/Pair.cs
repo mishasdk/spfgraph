@@ -1,4 +1,9 @@
 ﻿namespace spfgraph.Model.Data {
+
+    /// <summary>
+    /// Implementation of pair class.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Pair<T> {
         public T First { get; set; }
         public T Second { get; set; }
@@ -7,6 +12,5 @@
             First = item1;
             Second = item2;
         }
-
     }
 }

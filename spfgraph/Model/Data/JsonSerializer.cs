@@ -5,8 +5,17 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 
 namespace spfgraph.Model.Data {
+    
+    /// <summary>
+    /// Class implement Jsoin serialization
+    /// </summary>
     public static class JsonSerializer {
 
+        /// <summary>
+        /// Json serialization of <cref="collection"> in to the json file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="collection"></param>
         public static void Serialize(string filePath, ObservableCollection<Element> collection) {
             var jsonFormatter = new DataContractJsonSerializer(typeof(ObservableCollection<Element>), new Type[] { typeof(Element), typeof(Node), typeof(Edge), typeof(Color) });
             using (var fs = new FileStream(filePath, FileMode.Create)) {

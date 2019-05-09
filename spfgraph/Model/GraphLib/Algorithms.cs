@@ -6,11 +6,12 @@ namespace spfgraph.Model.GraphLib {
     public class Algorithms {
 
         #region Check For Cyclic
+
         /// <summary>
-        /// Check graph for presence of cycles
+        /// Check graph for presence of cycles.
         /// </summary>
-        /// <param name="graph">Graph for check</param>
-        /// <returns></returns>
+        /// <param name="graph">Graph for check.</param>
+        /// <returns>True, if cycles presence, otherwise false.</returns>
         public static bool IsGraphСyclic(Graph graph) {
             var g = graph.AdjacencyList;
             var color = new int[g.Length];
@@ -26,6 +27,13 @@ namespace spfgraph.Model.GraphLib {
             return result;
         }
 
+        /// <summary>
+        /// DFS for check cyclic.
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="color"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
         protected static bool CheckForCyclicDFS(int[][] g, int[] color, int v) {
             color[v] = 1;
             var result = false;
@@ -47,6 +55,12 @@ namespace spfgraph.Model.GraphLib {
 
         #region The Shortest Path Layout
 
+        /// <summary>
+        /// Layouts verices on the graph layers 
+        /// to minimize graph's height.
+        /// </summary>
+        /// <param name="adjacencyList"></param>
+        /// <returns></returns>
         public static List<List<int>> TheShortestPathLayout(int[][] adjacencyList) {
             var firstLayoutList = StraightPass(adjacencyList);
             var secondLayoutList = ReversePass(adjacencyList);

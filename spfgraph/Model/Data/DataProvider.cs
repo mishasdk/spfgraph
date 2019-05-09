@@ -6,8 +6,18 @@ using System.IO;
 using System.Text;
 
 namespace spfgraph.Model.Data {
+    /// <summary>
+    /// Provides to work with files.
+    /// </summary>
     public static class DataProvider {
 
+        #region Public Members
+
+        /// <summary>
+        /// Saves dag graph in to text file.
+        /// </summary>
+        /// <param name="fileName">File path.</param>
+        /// <param name="graph">StackedGraph object.</param>
         public static void SaveDagInFile(string fileName, StackedGraph graph) {
             var g = graph.AdjacencyList;
             using (var fs = new FileStream(fileName, FileMode.Create)) {
@@ -39,12 +49,21 @@ namespace spfgraph.Model.Data {
             }
         }
 
+        /// <summary>
+        /// Read graph from text file.
+        /// </summary>
+        /// <param name="fileName">File path.</param>
+        /// <returns>Graph object.</returns>
         public static Graph ReadGraphFromFile(string fileName) {
             var list = CreateAdjacencyListFromFile(fileName);
             return new Graph(list);
         }
 
-        public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
+        #endregion
+
+        #region Private Members
+
+        static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
             using (var listReader = new AdjacencyListReader(filePath)) {
                 SetAmoutOfVertex(listReader);

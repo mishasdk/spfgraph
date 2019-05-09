@@ -3,7 +3,15 @@ using spfgraph.Model.Visualization;
 using System.Windows;
 
 namespace spfgraph.Model.Dialog {
+
+    /// <summary>
+    /// Message dialog.
+    /// </summary>
     public class DefaultDialogService : IDialogService {
+
+        #region Implementation the IDialogService
+
+        #endregion
 
         public string FilePath { get; set; }
 

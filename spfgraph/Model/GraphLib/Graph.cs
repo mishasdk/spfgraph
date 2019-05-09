@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    /// Class that encapsulates all graph's data.
+    /// </summary>
     public class Graph {
-        protected int[][] adjacencyList;
-        public int[][] AdjacencyList {
-            get => adjacencyList;
-        }
+
+        #region Public Properties
+
+        public int[][] AdjacencyList { get; private set; }
+
+        #endregion
 
         #region Constructors
 
-        public Graph(List<int>[] list) { adjacencyList = Proceed(list); }
-        public Graph(Graph gr) : this(gr.adjacencyList) { }
-        public Graph(int[][] list) { adjacencyList = Copy(list); }
+        public Graph(List<int>[] list) { AdjacencyList = Proceed(list); }
+        public Graph(Graph gr) : this(gr.AdjacencyList) { }
+        public Graph(int[][] list) { AdjacencyList = Copy(list); }
         protected Graph() { }
 
         #endregion
@@ -43,8 +49,8 @@ namespace spfgraph.Model.GraphLib {
 
         public override string ToString() {
             var mes = "";
-            for (int i = 0; i < adjacencyList.Length; i++) {
-                var line = adjacencyList[i];
+            for (int i = 0; i < AdjacencyList.Length; i++) {
+                var line = AdjacencyList[i];
                 mes += $"{i} -> ";
                 for (int j = 0; j < line.Length; j++) {
                     mes += $"{line[j]} ";

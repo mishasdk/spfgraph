@@ -1,6 +1,10 @@
 ﻿using System;
 
 namespace spfgraph.Model.Exceptions {
+
+    /// <summary>
+    /// Custom exception for algorithms errors.
+    /// </summary>
     public class AlgorithmException : Exception {
         public AlgorithmException() { }
         public AlgorithmException(string message) : base(message) { }
