@@ -42,7 +42,6 @@ namespace Testing {
             return true;
         }
 
-
         public static bool CheckListsForIdentity(List<int>[] expected, List<int>[] actual) {
             try {
                 if (expected.Length != actual.Length)

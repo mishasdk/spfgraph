@@ -1,8 +1,15 @@
 ﻿using Microsoft.Win32;
+using spfgraph.Model.Visualization;
 using System.Windows;
 
 namespace spfgraph.Model.Dialog {
+
+    /// <summary>
+    /// Message dialog.
+    /// </summary>
     public class DefaultDialogService : IDialogService {
+
+        #region Implementation the IDialogService
 
         public string FilePath { get; set; }
 
@@ -31,5 +38,17 @@ namespace spfgraph.Model.Dialog {
             } else
                 return false;
         }
+
+        public Color GetColor() {
+            using (var colorDialog = new System.Windows.Forms.ColorDialog()) {
+                if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    var color = colorDialog.Color;
+                    return new Color(color.R, color.G, color.B);
+                } else
+                    return null;
+            }
+        }
+
+        #endregion
     }
 }

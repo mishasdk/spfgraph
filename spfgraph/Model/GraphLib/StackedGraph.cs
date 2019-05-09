@@ -3,21 +3,30 @@ using System;
 using System.Collections.Generic;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    /// Class, that encapsulates all dag graph's
+    /// data.
+    /// </summary>
     public class StackedGraph : Graph {
-        GraphFeatures graphFeatures;
 
+        #region Public Properties
+
+        /// <summary>
+        /// List of layers with vertices, that 
+        /// characterizes spf graph.
+        /// </summary>
         public List<List<int>> GraphLayers { get; set; }
-        public GraphFeatures GraphFeatures {
-            get => graphFeatures ?? (graphFeatures = GetGraphFeatures());
-        }
 
+        #endregion
+        
         #region Constructors
 
         protected StackedGraph() { }
         public StackedGraph(Graph graph) : base(graph) {
             if (Algorithms.IsGraphСyclic(graph))
                 throw new GraphErrorException("Can't create stacked graph, it's can't be cyclic.");
-        }   
+        }
 
         #endregion
 

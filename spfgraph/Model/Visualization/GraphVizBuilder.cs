@@ -1,19 +1,22 @@
 ﻿using spfgraph.Model.GraphLib;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace spfgraph.Model.Vizualization {
+namespace spfgraph.Model.Visualization {
+
+    /// <summary>
+    /// Class, that constructing from stacked graph
+    /// it's visual form.
+    /// </summary>
     public class GraphVizBuilder {
+
+        #region Fields
+
         protected StackedGraph dagGraph;
         protected IColorBuilder colorBuilder;
 
-        public Color EndColor { get; set; }
-        public Color StartColor { get; set; }
-
-        public OptimizeVisualizationTypes OptimizeLayout { get; set; }
-        public ColorSchemeTypes ColorScheme { get; set; }
+        #endregion
 
         #region Location Paramenters
 
@@ -24,14 +27,31 @@ namespace spfgraph.Model.Vizualization {
 
         #endregion
 
-        public GraphVizBuilder() { }
+        #region Public Properties
 
+        public OptimizeVisualizationTypes OptimizeLayout { get; set; }
+        public ColorSchemeTypes ColorScheme { get; set; }
+        public Color EndColor { get; set; }
+        public Color StartColor { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Creates collection of elements to show,
+        /// from stacked graph.
+        /// </summary>
+        /// <param name="dagGraph">Graph to show.</param>
+        /// <returns>Collection of edges and vertices.</returns>
         public ObservableCollection<Element> CreateGraphVizualization(StackedGraph dagGraph) {
             this.dagGraph = dagGraph;
             UseOptimizeLayoutAlgorithm();
             SetColorScheme();
             return CreateElementsToShow();
         }
+
+        #endregion
 
         #region Optimize Layout
 
@@ -64,10 +84,10 @@ namespace spfgraph.Model.Vizualization {
                     }
                 }
                 dagGraph.GraphLayers[i].Sort((a, b) => {
-                    double first = 0.0;
+                    var first = 0.0;
                     if (curLayerCounter.ContainsKey(a))
                         first = (double)curLayerCounter[a] / curLayerEnterCounter[a];
-                    double second = 0.0;
+                    var second = 0.0;
                     if (curLayerCounter.ContainsKey(b))
                         second = (double)curLayerCounter[b] / curLayerEnterCounter[b];
                     if (first == second) return 0;
@@ -81,6 +101,9 @@ namespace spfgraph.Model.Vizualization {
 
         #region Color Scheme Constructing
 
+        /// <summary>
+        /// Choose color scheme.
+        /// </summary>
         protected void SetColorScheme() {
             switch (ColorScheme) {
                 case (ColorSchemeTypes.InDegree):
@@ -93,15 +116,15 @@ namespace spfgraph.Model.Vizualization {
                     SumDegreeColorScheme();
                     break;
                 case (ColorSchemeTypes.None):
-                    NoneDegreeColorScheme();
+                    DefaultColor();
                     break;
             }
         }
 
-        private void NoneDegreeColorScheme() {
-            colorBuilder = new DefaultColorBuilder();
-        }
-
+        /// <summary>
+        /// Vertices with the same indegree value will be
+        /// colorized in the same colors.
+        /// </summary>
         protected void InDegreeColorScheme() {
             var inDegree = InDegreeArrayCount();
 
@@ -112,6 +135,10 @@ namespace spfgraph.Model.Vizualization {
             colorBuilder = new ParametricColorBuilder(StartColor, EndColor, inDegree, maxInDegree);
         }
 
+        /// <summary>
+        /// Vertices with the same outdegree value will be
+        /// colorized in the same colors.
+        /// </summary>
         protected void OutDegreeColorScheme() {
             var outDegree = OutDegreeArrayCount();
             var maxOutDegree = 0;
@@ -122,6 +149,10 @@ namespace spfgraph.Model.Vizualization {
             colorBuilder = new ParametricColorBuilder(StartColor, EndColor, outDegree, maxOutDegree);
         }
 
+        /// <summary>
+        /// Vertices with the same indegree + outdegree value will be
+        /// colorized in the same colors.
+        /// </summary>
         protected void SumDegreeColorScheme() {
             var sumDegree = SumDegreeArrayCount();
             int max = -1, min = int.MaxValue;
@@ -167,8 +198,19 @@ namespace spfgraph.Model.Vizualization {
             return sumDegree;
         }
 
+        private void DefaultColor() {
+            colorBuilder = new DefaultColorBuilder();
+        }
+
+
         #endregion
 
+        #region Create Elements
+
+        /// <summary>
+        /// Creates elements to show, from stacked graph.
+        /// </summary>
+        /// <returns></returns>
         protected ObservableCollection<Element> CreateElementsToShow() {
             var nodes = new List<Node>();
             var edges = new List<Edge>();
@@ -214,11 +256,17 @@ namespace spfgraph.Model.Vizualization {
             return elementsCollection;
         }
 
+        /// <summary>
+        /// Mthod, that colorizes <cref="nodes"> using colorBuilder object.
+        /// </summary>
+        /// <param name="nodes">Collection of nodes to colorize.</param>
         private void ColorizeNodes(List<Node> nodes) {
             foreach (var node in nodes)
                 colorBuilder.SetNodeColor(node);
 
         }
+
+        #endregion
 
     }
 }

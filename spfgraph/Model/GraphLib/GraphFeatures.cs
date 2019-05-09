@@ -1,14 +1,22 @@
 ﻿using System;
 
 namespace spfgraph.Model.GraphLib {
+
+    /// <summary>
+    ///  Class, that encapsulates all features
+    ///  of the dag graph.
+    /// </summary>
     public class GraphFeatures {
+
+        #region Public Properties 
+
         public int Height { get; set; }
         public int Width { get; set; }
         public double AvrgWidth { get; set; }
         public double Irregular { get; set; }
         public double AvrgDeviation { get; set; }
 
-        public GraphFeatures() { }
+        #endregion
 
         #region Overrided Methods
 
@@ -20,9 +28,7 @@ namespace spfgraph.Model.GraphLib {
                 return false;
         }
 
-        public override string ToString() {
-            return $"Height: {Height}, Width: {Width}, AvrgWidth: {AvrgWidth}, Irregular: {Irregular}";
-        }
+        public override string ToString() => $"Height: {Height} \nWidth: {Width} \nAvrgWidth: {AvrgWidth} \nIrregular: {Irregular} \nAvrgDeviation: {AvrgDeviation} ";
 
         public override int GetHashCode() {
             return base.GetHashCode();

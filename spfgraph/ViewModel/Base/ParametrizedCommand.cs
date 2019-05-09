@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace spfgraph.ViewModel.Base
-{
+namespace spfgraph.ViewModel.Base {
+
+    /// <summary>
+    /// Command with parameters.
+    /// </summary>
     public class ParametrizedCommand : ICommand {
+
+        #region Protected Fields
+
         Action<object> executeMethod;
         Func<object, bool> canExecuteMethod;
+
+        #endregion
+
+        #region Contructor
 
         public ParametrizedCommand(Action<object> executeMethod, Func<object, bool> canExecuteMethod) {
             this.executeMethod = executeMethod;
             this.canExecuteMethod = canExecuteMethod;
         }
+
+        #endregion
+
+        #region ICommand Implementation
 
         public event EventHandler CanExecuteChanged {
             add { CommandManager.RequerySuggested += value; }
@@ -27,6 +41,8 @@ namespace spfgraph.ViewModel.Base
         public void Execute(object parameter) {
             executeMethod(parameter);
         }
+
+        #endregion
 
     }
 }

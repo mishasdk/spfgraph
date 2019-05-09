@@ -1,16 +1,16 @@
 ﻿using spfgraph.Model.Data;
 using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
-using spfgraph.Model.Vizualization;
+using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Windows;
 using System.Windows.Input;
 
 namespace spfgraph.ViewModel {
+
+    /// <summary>
+    /// Class, that encapsulates general logic of application.
+    /// </summary>
     public class MainWindowViewModel : BaseViewModel {
 
         #region Private Fields
@@ -29,14 +29,13 @@ namespace spfgraph.ViewModel {
         ICommand setDefaultColor;
 
         IDialogService dialogService;
-        ColorDialogService colorDialog;
+        ColorSchemeTypes colorScheme;
+        OptimizeVisualizationTypes optimizeLayout;
         string filePath;
         double canvasWidth;
         Color startColor;
         Color endColor;
         GraphViewModel graphVM;
-        ColorSchemeTypes colorScheme;
-        OptimizeVisualizationTypes optimizeLayout;
 
         #endregion
 
@@ -157,13 +156,13 @@ namespace spfgraph.ViewModel {
                     try {
                         if (!dialogService.SaveFileDialog())
                             return;
-                        JsonSerializer.Serialize(dialogService.FilePath, GraphVM.ElementsToViz);
+                        JsonSerializer.SerializeGraph(dialogService.FilePath, GraphVM.ElementsToViz);
                     } catch (Exception ex) {
                         dialogService.AlertDialog(ex.Message);
                     }
                 }, IsGraphVMExist));
         }
-      
+
         // Demo
         public ICommand OpenHtmlCommand {
             get => openHtmlCommand ??
@@ -198,7 +197,7 @@ namespace spfgraph.ViewModel {
                     }
                 }, parameter => parameter != null));
         }
-   
+
         public ICommand SetOptimizeLayotFromRadioButton {
             get => setOptimizeLayoutFromRadioButton ??
                 (setOptimizeLayoutFromRadioButton = new ParametrizedCommand(
@@ -215,27 +214,27 @@ namespace spfgraph.ViewModel {
                     },
                     parameter => { return parameter == null ? false : true; }));
         }
- 
+
         public ICommand SetStartColorCommand {
             get => setStartColorCommand ??
                 (setStartColorCommand = new RelayCommand(() => {
-                    var color = colorDialog.GetColor();
+                    var color = dialogService.GetColor();
                     if (color != null) {
                         StartColor = color;
                     }
                 }));
         }
-   
+
         public ICommand SetEndColorCommand {
             get => setEndColorCommand ??
                 (setEndColorCommand = new RelayCommand(() => {
-                    var color = colorDialog.GetColor();
+                    var color = dialogService.GetColor();
                     if (color != null) {
                         EndColor = color;
                     }
                 }));
         }
-    
+
         public ICommand SetDefaultColors {
             get => setDefaultColor ??
                 (setDefaultColor = new RelayCommand(() => {
@@ -243,8 +242,6 @@ namespace spfgraph.ViewModel {
                     EndColor = new Color(218, 112, 214);
                 }));
         }
-
-      
 
         #endregion
 
@@ -254,7 +251,6 @@ namespace spfgraph.ViewModel {
 
         public MainWindowViewModel() {
             dialogService = new DefaultDialogService();
-            colorDialog = new ColorDialogService();
 
             SetDefaultColors.Execute(this);
         }
