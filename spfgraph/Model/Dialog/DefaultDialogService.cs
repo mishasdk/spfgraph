@@ -1,6 +1,5 @@
-﻿using Microsoft.Win32;
-using spfgraph.Model.Visualization;
-using System.Windows;
+﻿using spfgraph.Model.Visualization;
+using System.Windows.Forms;
 
 namespace spfgraph.Model.Dialog {
 
@@ -9,39 +8,48 @@ namespace spfgraph.Model.Dialog {
     /// </summary>
     public class DefaultDialogService : IDialogService {
 
+        public static string TextFilter = "text files (*.txt) | *.txt";
+        public static string PngFilter = "png files (*.png) | *.png";
+        public static string JsonFilter = "json files (*.json) | *.json";
+
         #region Implementation the IDialogService
 
         public string FilePath { get; set; }
+        public string Filter { get; set; }
 
         public bool OpenFileDialog() {
-            var fd = new OpenFileDialog();
-            if (fd.ShowDialog() == true) {
-                FilePath = fd.FileName;
-                return true;
-            } else
-                return false;
+            using (var fd = new OpenFileDialog()) {
+                fd.Filter = Filter;
+                if (fd.ShowDialog() == DialogResult.OK) {
+                    FilePath = fd.FileName;
+                    return true;
+                } else
+                    return false;
+            }
         }
 
-        public MessageBoxResult AlertDialog(string message) {
-            return MessageBox.Show(message, "Alert", MessageBoxButton.OKCancel);
+        public DialogResult AlertDialog(string message) {
+            return MessageBox.Show(message, "Alert", MessageBoxButtons.OKCancel);
         }
 
         public void ShowMessage(string message) {
-            MessageBox.Show(message, "Message", MessageBoxButton.OK);
+            MessageBox.Show(message, "Message", MessageBoxButtons.OK);
         }
 
         public bool SaveFileDialog() {
-            var sd = new SaveFileDialog();
-            if (sd.ShowDialog() == true) {
-                FilePath = sd.FileName;
-                return true;
-            } else
-                return false;
+            using (var sd = new SaveFileDialog()) {
+                sd.Filter = Filter;
+                if (sd.ShowDialog() == DialogResult.OK) {
+                    FilePath = sd.FileName;
+                    return true;
+                } else
+                    return false;
+            }
         }
 
         public Color GetColor() {
-            using (var colorDialog = new System.Windows.Forms.ColorDialog()) {
-                if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+            using (var colorDialog = new ColorDialog()) {
+                if (colorDialog.ShowDialog() == DialogResult.OK) {
                     var color = colorDialog.Color;
                     return new Color(color.R, color.G, color.B);
                 } else

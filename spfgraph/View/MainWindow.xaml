@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:spfgraph.View"
     xmlns:converters="clr-namespace:spfgraph.Converters"
     xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
     xmlns:viz="clr-namespace:spfgraph.Model.Visualization"
@@ -95,7 +94,9 @@
                         Foreground="{StaticResource WhiteBrush}">
                         <MenuItem
                             Foreground="{StaticResource BlueVioletBrush}"
-                            Header="Get Help" />
+                            Header="Get Help"
+                            Command="{Binding GetHelpCommand}"
+                            />
                     </MenuItem>
                 </Menu>
             </Grid>
@@ -193,7 +194,7 @@
                             Margin="0 0 0 15"
                             Style="{StaticResource CustomButton}"
                             Command="{Binding OpenHtmlCommand}"
-                            Content="Open Demo">
+                            Content="HTML">
                             <Button.ToolTip>
                                 <ToolTip
                                     Content="Export graph to HTML and javascript" />
@@ -203,17 +204,6 @@
                         <Separator
                             Margin="0 0 0 10"
                             BorderBrush="{StaticResource BlackBrush}" />
-
-                        <Button
-                            Width="130"
-                            Height="30"
-                            Margin="0 0 0 15"
-                            Style="{StaticResource CustomButton}"
-                            Command="{Binding CanvasInfo}"
-                            CommandParameter="{Binding ElementName=MainCanvas}"
-                            Content="Canvas Info">
-                            
-                        </Button>
 
                         <!--Graph Features Panel-->
                         <GroupBox

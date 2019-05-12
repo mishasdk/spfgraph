@@ -110,6 +110,7 @@ namespace spfgraph.ViewModel {
             get => choosePathForFileCommand ??
                 (choosePathForFileCommand = new RelayCommand(() => {
                     try {
+                        dialogService.Filter = DefaultDialogService.TextFilter;
                         if (dialogService.OpenFileDialog()) {
                             FilePath = dialogService.FilePath;
                         }
@@ -145,6 +146,7 @@ namespace spfgraph.ViewModel {
             get => saveGraphInTextFileCommand ??
                 (saveGraphInTextFileCommand = new ActionCommand(() => {
                     try {
+                        dialogService.Filter = DefaultDialogService.TextFilter;
                         if (!dialogService.SaveFileDialog())
                             return;
                         var filePath = dialogService.FilePath;
@@ -159,6 +161,7 @@ namespace spfgraph.ViewModel {
             get => exportToJsonCommand ??
                 (exportToJsonCommand = new ActionCommand(() => {
                     try {
+                        dialogService.Filter = DefaultDialogService.JsonFilter;
                         if (!dialogService.SaveFileDialog())
                             return;
                         JsonSerializer.SerializeGraph(dialogService.FilePath, GraphVM.ElementsToViz);
@@ -172,6 +175,7 @@ namespace spfgraph.ViewModel {
             get => exportToPngCommand ??
                 (exportToPngCommand = new ParametricActionCommand(
                     (parameter) => {
+                        dialogService.Filter = DefaultDialogService.PngFilter;
                         if (!dialogService.SaveFileDialog())
                             return;
 

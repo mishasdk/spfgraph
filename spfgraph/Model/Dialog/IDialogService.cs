@@ -1,5 +1,5 @@
 ﻿using spfgraph.Model.Visualization;
-using System.Windows;
+using System.Windows.Forms;
 
 namespace spfgraph.Model.Dialog {
 
@@ -14,6 +14,11 @@ namespace spfgraph.Model.Dialog {
         string FilePath { get; set; }
 
         /// <summary>
+        /// Filter
+        /// </summary>
+        string Filter { get; set; }
+
+        /// <summary>
         /// Open file dialog, that init <cref="FilePath">.
         /// </summary>
         /// <returns></returns>
@@ -24,7 +29,7 @@ namespace spfgraph.Model.Dialog {
         /// </summary>
         /// <param name="message">Message to show.</param>
         /// <returns>MessageBoxResult object.</returns>
-        MessageBoxResult AlertDialog(string message);
+        DialogResult AlertDialog(string message);
 
         /// <summary>
         /// Shows message to user.
