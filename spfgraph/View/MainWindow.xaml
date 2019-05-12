@@ -89,15 +89,6 @@
                             Command="{Binding SaveGraphInTextFileCommand}" />
                     </MenuItem>
 
-                    <MenuItem
-                        Header="Help"
-                        Foreground="{StaticResource WhiteBrush}">
-                        <MenuItem
-                            Foreground="{StaticResource BlueVioletBrush}"
-                            Header="Get Help"
-                            Command="{Binding GetHelpCommand}"
-                            />
-                    </MenuItem>
                 </Menu>
             </Grid>
 
