@@ -189,7 +189,17 @@ namespace spfgraph.ViewModel {
             get => openHtmlCommand ??
                 (openHtmlCommand = new ActionCommand(() => {
                     try {
-                        System.Diagnostics.Process.Start("demo.html");
+                        JsonSerializer.SerializeGraph("html\\elementsCollection.json", GraphVM.ElementsToViz);
+                        using (var sr = new StreamReader("html\\elementsCollection.json")) {
+                            using (var fs = new FileStream("html\\elementsCollection.js", FileMode.Create)) {
+                                using (var sw = new StreamWriter(fs)) {
+                                    var str1 = "data = ";
+                                    var str2 = sr.ReadLine();
+                                    sw.WriteLine(str1 + str2);
+                                }
+                            }
+                        }
+                        System.Diagnostics.Process.Start("html\\htmlGraph.html");
                     } catch {
                     }
 
