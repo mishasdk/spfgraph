@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace spfgraph.Model.Data {
     /// <summary>
@@ -12,6 +15,30 @@ namespace spfgraph.Model.Data {
     public static class DataProvider {
 
         #region Public Members
+
+        /// <summary>
+        /// Saves graph to png.
+        /// </summary>
+        /// <param name="filePath">File path for save.</param>
+        /// <param name="parameter">Elements to save.</param>
+        public static void SaveGraphAsPng(string filePath, object parameter) {
+            // Save canvas to png
+            var canvas = (ItemsControl)parameter;
+            var rect = new Rect(canvas.RenderSize);
+            var rtb = new RenderTargetBitmap((int)rect.Right,
+              (int)rect.Bottom, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+            rtb.Render(canvas);
+            //endcode as PNG
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            //save to memory stream
+            var ms = new MemoryStream();
+
+            pngEncoder.Save(ms);
+            ms.Close();
+            File.WriteAllBytes(filePath, ms.ToArray());
+        }
 
         /// <summary>
         /// Saves dag graph in to text file.

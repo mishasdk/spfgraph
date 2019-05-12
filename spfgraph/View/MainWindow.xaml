@@ -74,8 +74,11 @@
                             Command="{Binding ExportToJsonCommand}" />
 
                         <MenuItem
-                            Foreground="{StaticResource BlueVioletBrush}"
-                            Header="Export to Png" />
+                            Foreground="{StaticResource BlackBrush}"
+                            Header="Export to Png"
+                            Command="{Binding ExportToPngCommand}"
+                            CommandParameter="{Binding ElementName=MainPanel, Mode=OneWay}"
+                            />
 
                         <MenuItem
                             Foreground="{StaticResource BlueVioletBrush}"
@@ -200,6 +203,17 @@
                         <Separator
                             Margin="0 0 0 10"
                             BorderBrush="{StaticResource BlackBrush}" />
+
+                        <Button
+                            Width="130"
+                            Height="30"
+                            Margin="0 0 0 15"
+                            Style="{StaticResource CustomButton}"
+                            Command="{Binding CanvasInfo}"
+                            CommandParameter="{Binding ElementName=MainCanvas}"
+                            Content="Canvas Info">
+                            
+                        </Button>
 
                         <!--Graph Features Panel-->
                         <GroupBox
@@ -422,6 +436,7 @@
                         Visibility="{Binding Path=GraphVM,
                         Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl
+                            x:Name="MainPanel"
                             ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

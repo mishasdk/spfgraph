@@ -4,7 +4,11 @@ using spfgraph.Model.Exceptions;
 using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace spfgraph.ViewModel {
 
@@ -20,6 +24,7 @@ namespace spfgraph.ViewModel {
         ICommand clearDataCommand;
         ICommand saveGraphInTextFileCommand;
         ICommand exportToJsonCommand;
+        ICommand exportToPngCommand;
         ICommand openHtmlCommand;
 
         ICommand setOptimizeLayoutFromRadioButton;
@@ -126,14 +131,14 @@ namespace spfgraph.ViewModel {
                     } catch (Exception ex) {
                         dialogService.ShowMessage(ex.Message);
                     }
-                }, IsFilePathExist));
+                }, IsFilePathExists));
         }
 
         public ICommand ClearDataCommand {
             get => clearDataCommand ??
                 (clearDataCommand = new ActionCommand(() => {
                     ClearData();
-                }, IsFilePathExist));
+                }, IsFilePathExists));
         }
 
         public ICommand SaveGraphInTextFileCommand {
@@ -147,7 +152,7 @@ namespace spfgraph.ViewModel {
                     } catch (Exception ex) {
                         dialogService.AlertDialog(ex.Message);
                     }
-                }, IsGraphVMExist));
+                }, IsGraphVMExists));
         }
 
         public ICommand ExportToJsonCommand {
@@ -160,7 +165,19 @@ namespace spfgraph.ViewModel {
                     } catch (Exception ex) {
                         dialogService.AlertDialog(ex.Message);
                     }
-                }, IsGraphVMExist));
+                }, IsGraphVMExists));
+        }
+
+        public ICommand ExportToPngCommand {
+            get => exportToPngCommand ??
+                (exportToPngCommand = new ParametricActionCommand(
+                    (parameter) => {
+                        if (!dialogService.SaveFileDialog())
+                            return;
+
+                        DataProvider.SaveGraphAsPng(dialogService.FilePath, parameter);
+                    },
+                    IsGraphVMExists));
         }
 
         // Demo
@@ -172,7 +189,7 @@ namespace spfgraph.ViewModel {
                     } catch {
                     }
 
-                }, IsGraphVMExist));
+                }, IsGraphVMExists));
         }
 
         #region Layout Parameters Commands
@@ -264,9 +281,9 @@ namespace spfgraph.ViewModel {
             FilePath = null;
         }
 
-        bool IsFilePathExist() => FilePath != null;
+        bool IsFilePathExists() => FilePath != null;
 
-        private bool IsGraphVMExist() => GraphVM != null;
+        private bool IsGraphVMExists() => GraphVM != null;
 
         #endregion
 
