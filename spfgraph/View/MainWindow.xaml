@@ -80,7 +80,8 @@
                             />
 
                         <MenuItem
-                            Foreground="{StaticResource BlueVioletBrush}"
+                            Foreground="{StaticResource BlackBrush}"
+                            Command="{Binding OpenHtmlCommand}"
                             Header="Export to HTML" />
 
                         <MenuItem

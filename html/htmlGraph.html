@@ -345,7 +345,7 @@
                 const bounds = measureGraphWithScale(data, scale)              
                 const centerX = (bounds.minX + bounds.maxX) / 2
                 const centerY = (bounds.minY + bounds.maxY) / 2
-                const toX = window.innerWidth / 2 + centerX
+                const toX = window.innerWidth / 2 - centerX
                 const toY = window.innerHeight / 2 - centerY
                 moveTo(toX, toY, scale, 500)
             }
