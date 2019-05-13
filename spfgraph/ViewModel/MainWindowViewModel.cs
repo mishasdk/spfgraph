@@ -226,6 +226,7 @@ namespace spfgraph.ViewModel {
                             ColorScheme = ColorSchemeTypes.None;
                             break;
                     }
+                    RebuildGraph();
                 }, parameter => parameter != null));
         }
 
@@ -242,6 +243,7 @@ namespace spfgraph.ViewModel {
                                 OptimizeLayout = OptimizeVisualizationTypes.None;
                                 break;
                         }
+                        RebuildGraph();
                     },
                     parameter => { return parameter == null ? false : true; }));
         }
@@ -252,6 +254,7 @@ namespace spfgraph.ViewModel {
                     var color = dialogService.GetColor();
                     if (color != null) {
                         StartColor = color;
+                        RebuildGraph();
                     }
                 }));
         }
@@ -262,6 +265,7 @@ namespace spfgraph.ViewModel {
                     var color = dialogService.GetColor();
                     if (color != null) {
                         EndColor = color;
+                        RebuildGraph();
                     }
                 }));
         }
@@ -271,6 +275,7 @@ namespace spfgraph.ViewModel {
                 (setDefaultColor = new RelayCommand(() => {
                     StartColor = new Color(25, 25, 30);
                     EndColor = new Color(218, 112, 214);
+                    RebuildGraph();
                 }));
         }
 
@@ -297,8 +302,14 @@ namespace spfgraph.ViewModel {
 
         bool IsFilePathExists() => FilePath != null;
 
-        private bool IsGraphVMExists() => GraphVM != null;
+        bool IsGraphVMExists() => GraphVM != null;
 
+        void RebuildGraph() {
+            if (GraphVM == null)
+                return;
+            buildGraphCommand.Execute(this);
+        }
+        
         #endregion
 
     }

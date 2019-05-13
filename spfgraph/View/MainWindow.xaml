@@ -24,6 +24,43 @@
             x:Key="ColorToSolidBrush" />
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding 
+            Key="O"
+            Modifiers="Ctrl"
+            Command="{Binding ChoosePathForFileCommand}"/>
+
+        <KeyBinding 
+            Key="B"
+            Modifiers="Ctrl"
+            Command="{Binding BuildGraphCommand}"/>
+
+        <KeyBinding 
+            Key="S"
+            Modifiers="Ctrl"
+            Command="{Binding SaveGraphInTextFileCommand}"/>
+
+        <KeyBinding 
+            Key="C"
+            Modifiers="Ctrl"
+            Command="{Binding ClearDataCommand}"/>
+
+        <KeyBinding 
+            Key="J"
+            Modifiers="Ctrl"
+            Command="{Binding ExportToJsonCommand}"/>
+
+        <KeyBinding 
+            Key="H"
+            Modifiers="Ctrl"
+            Command="{Binding OpenHtmlCommand}"/>
+
+        <KeyBinding 
+            Key="P"
+            Modifiers="Ctrl"
+            Command="{Binding ExportToPngCommand}"/>
+    </Window.InputBindings>
+
     <Border
         BorderBrush="{StaticResource DarkGrayBrush}"
         BorderThickness="2 0 2 2">
@@ -47,49 +84,55 @@
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Open file"
-                            Command="{Binding ChoosePathForFileCommand}" />
+                            Command="{Binding ChoosePathForFileCommand}"
+                            InputGestureText="Ctr + O"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Save File"
-                            Command="{Binding SaveGraphInTextFileCommand}" />
+                            Command="{Binding SaveGraphInTextFileCommand}"
+                            InputGestureText="Ctr + S"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Build Graph"
-                            Command="{Binding BuildGraphCommand}" />
+                            Command="{Binding BuildGraphCommand}"
+                            InputGestureText="Ctr + B"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Clear Data"
-                            Command="{Binding ClearDataCommand}" />
+                            Command="{Binding ClearDataCommand}"
+                            InputGestureText="Ctr + C"/>
                     </MenuItem>
 
                     <MenuItem
                         Header="Export">
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Export to Json"
-                            Command="{Binding ExportToJsonCommand}" />
+                            Header="Export to json"
+                            Command="{Binding ExportToJsonCommand}" 
+                            InputGestureText="Ctr + J"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Export to Png"
+                            Header="Export to png"
                             Command="{Binding ExportToPngCommand}"
                             CommandParameter="{Binding ElementName=MainPanel, Mode=OneWay}"
-                            />
-
-                        <MenuItem
-                            Foreground="{StaticResource BlackBrush}"
-                            Command="{Binding OpenHtmlCommand}"
-                            Header="Export to HTML" />
+                            InputGestureText="Ctr + P"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Export to text file"
-                            Command="{Binding SaveGraphInTextFileCommand}" />
-                    </MenuItem>
+                            Command="{Binding SaveGraphInTextFileCommand}"
+                            InputGestureText="Ctr + S"/>
 
+                        <MenuItem
+                            Foreground="{StaticResource BlackBrush}"
+                            Command="{Binding OpenHtmlCommand}"
+                            Header="Export to html" 
+                            InputGestureText="Ctr + H"/>
+                    </MenuItem>
                 </Menu>
             </Grid>
 
@@ -172,6 +215,19 @@
                             Height="30"
                             Margin="0 0 0 10"
                             Style="{StaticResource CustomButton}"
+                            Command="{Binding ExportToPngCommand}"
+                            Content="Png Export">
+                            <Button.ToolTip>
+                                <ToolTip
+                                    Content="Export graph to Png" />
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button
+                            Width="130"
+                            Height="30"
+                            Margin="0 0 0 10"
+                            Style="{StaticResource CustomButton}"
                             Command="{Binding ExportToJsonCommand}"
                             Content="Json Export">
                             <Button.ToolTip>
@@ -186,10 +242,10 @@
                             Margin="0 0 0 15"
                             Style="{StaticResource CustomButton}"
                             Command="{Binding OpenHtmlCommand}"
-                            Content="HTML">
+                            Content="Open HTML">
                             <Button.ToolTip>
                                 <ToolTip
-                                    Content="Export graph to HTML and javascript" />
+                                    Content="Open graph in browser" />
                             </Button.ToolTip>
                         </Button>
 
