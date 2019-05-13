@@ -58,6 +58,7 @@
         <KeyBinding 
             Key="P"
             Modifiers="Ctrl"
+            CommandParameter="{Binding ElementName=MainPanel, Mode=OneWay}"
             Command="{Binding ExportToPngCommand}"/>
     </Window.InputBindings>
 
@@ -89,19 +90,19 @@
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Save File"
+                            Header="Save file"
                             Command="{Binding SaveGraphInTextFileCommand}"
                             InputGestureText="Ctr + S"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Build Graph"
+                            Header="Build graph"
                             Command="{Binding BuildGraphCommand}"
                             InputGestureText="Ctr + B"/>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Clear Data"
+                            Header="Clear data"
                             Command="{Binding ClearDataCommand}"
                             InputGestureText="Ctr + C"/>
                     </MenuItem>
@@ -216,6 +217,7 @@
                             Margin="0 0 0 10"
                             Style="{StaticResource CustomButton}"
                             Command="{Binding ExportToPngCommand}"
+                            CommandParameter="{Binding ElementName=MainPanel, Mode=OneWay}"
                             Content="Png Export">
                             <Button.ToolTip>
                                 <ToolTip
@@ -469,12 +471,14 @@
 
                     <!--Canvas-->
                     <zoom:ZoomControl
+                        Focusable="False"
                         Mode="Original"
                         Margin="5 5 5 5"
                         Visibility="{Binding Path=GraphVM,
                         Converter={StaticResource NullRefToVisibilityConverter}}">
                         <ItemsControl
                             x:Name="MainPanel"
+                            Focusable="False"
                             ItemsSource="{Binding Path=GraphVM.ElementsToViz}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

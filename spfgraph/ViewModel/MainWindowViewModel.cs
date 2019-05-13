@@ -4,11 +4,8 @@ using spfgraph.Model.Exceptions;
 using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace spfgraph.ViewModel {
 
@@ -36,6 +33,7 @@ namespace spfgraph.ViewModel {
         IDialogService dialogService;
         ColorSchemeTypes colorScheme;
         OptimizeVisualizationTypes optimizeLayout;
+
         string filePath;
         double canvasWidth;
         Color startColor;
@@ -113,6 +111,7 @@ namespace spfgraph.ViewModel {
                         dialogService.Filter = DefaultDialogService.TextFilter;
                         if (dialogService.OpenFileDialog()) {
                             FilePath = dialogService.FilePath;
+                            GraphVM = null;
                         }
                     } catch (Exception ex) {
                         dialogService.ShowMessage(ex.Message);
@@ -138,7 +137,13 @@ namespace spfgraph.ViewModel {
         public ICommand ClearDataCommand {
             get => clearDataCommand ??
                 (clearDataCommand = new ActionCommand(() => {
-                    ClearData();
+                    try {
+                        var dialogResult = dialogService.AlertDialog("Are you shure? \n" + "All current data will be disappeared.");
+                        if (dialogResult == DialogResult.OK)
+                            ClearData();
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage("Clear data error.\n" + ex.Message);
+                    }
                 }, IsFilePathExists));
         }
 
@@ -175,11 +180,16 @@ namespace spfgraph.ViewModel {
             get => exportToPngCommand ??
                 (exportToPngCommand = new ParametricActionCommand(
                     (parameter) => {
-                        dialogService.Filter = DefaultDialogService.PngFilter;
-                        if (!dialogService.SaveFileDialog())
-                            return;
-
-                        DataProvider.SaveGraphAsPng(dialogService.FilePath, parameter);
+                        try {
+                            dialogService.Filter = DefaultDialogService.PngFilter;
+                            if (!dialogService.SaveFileDialog())
+                                return;
+                            DataProvider.SaveGraphAsPng(dialogService.FilePath, parameter);
+                        } catch (UnauthorizedAccessException ex) {
+                            dialogService.ShowMessage("Export to png error.\n" + "Нou do not have enough access rights.\n" + ex.Message);
+                        } catch (Exception ex) {
+                            dialogService.ShowMessage("Export to png error.\n" + ex.Message);
+                        }
                     },
                     IsGraphVMExists));
         }
@@ -188,20 +198,10 @@ namespace spfgraph.ViewModel {
             get => openHtmlCommand ??
                 (openHtmlCommand = new ActionCommand(() => {
                     try {
-                        JsonSerializer.SerializeGraph("Resources\\elementsCollection.json", GraphVM.ElementsToViz);
-                        using (var sr = new StreamReader("Resources\\elementsCollection.json")) {
-                            using (var fs = new FileStream("Resources\\elementsCollection.js", FileMode.Create)) {
-                                using (var sw = new StreamWriter(fs)) {
-                                    var str1 = "data = ";
-                                    var str2 = sr.ReadLine();
-                                    sw.WriteLine(str1 + str2);
-                                }
-                            }
-                        }
-                        System.Diagnostics.Process.Start("Resources\\htmlGraph.html");
-                    } catch {
+                        DataProvider.OpenHtmlGraph(GraphVM.ElementsToViz);
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage("Open graph in browser error.\n" + ex.Message);
                     }
-
                 }, IsGraphVMExists));
         }
 
@@ -250,10 +250,14 @@ namespace spfgraph.ViewModel {
         public ICommand SetStartColorCommand {
             get => setStartColorCommand ??
                 (setStartColorCommand = new RelayCommand(() => {
-                    var color = dialogService.GetColor();
-                    if (color != null) {
-                        StartColor = color;
-                        RebuildGraph();
+                    try {
+                        var color = dialogService.GetColor();
+                        if (color != null) {
+                            StartColor = color;
+                            RebuildGraph();
+                        }
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage("Set start color error.\n" + ex.Message);
                     }
                 }));
         }
@@ -261,10 +265,14 @@ namespace spfgraph.ViewModel {
         public ICommand SetEndColorCommand {
             get => setEndColorCommand ??
                 (setEndColorCommand = new RelayCommand(() => {
-                    var color = dialogService.GetColor();
-                    if (color != null) {
-                        EndColor = color;
-                        RebuildGraph();
+                    try {
+                        var color = dialogService.GetColor();
+                        if (color != null) {
+                            EndColor = color;
+                            RebuildGraph();
+                        }
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage("Set end color error.\n" + ex.Message);
                     }
                 }));
         }
@@ -272,9 +280,13 @@ namespace spfgraph.ViewModel {
         public ICommand SetDefaultColors {
             get => setDefaultColor ??
                 (setDefaultColor = new RelayCommand(() => {
-                    StartColor = new Color(25, 25, 30);
-                    EndColor = new Color(218, 112, 214);
-                    RebuildGraph();
+                    try {
+                        StartColor = new Color(25, 25, 30);
+                        EndColor = new Color(218, 112, 214);
+                        RebuildGraph();
+                    } catch (Exception ex) {
+                        dialogService.ShowMessage("Set default colors error.\n" + ex.Message);
+                    }
                 }));
         }
 
@@ -286,7 +298,6 @@ namespace spfgraph.ViewModel {
 
         public MainWindowViewModel() {
             dialogService = new DefaultDialogService();
-
             SetDefaultColors.Execute(this);
         }
 
@@ -308,7 +319,7 @@ namespace spfgraph.ViewModel {
                 return;
             buildGraphCommand.Execute(this);
         }
-        
+
         #endregion
 
     }

@@ -82,13 +82,13 @@ namespace spfgraph.Properties {
         ///        * {
         ///            padding: 0 0;
         ///            margin: 0 0;
-        ///            font-family: &apos;Segoe UI&apos;, Tahoma, Geneva, Verdana, sans-serif;
+        ///            font-family: &apos;Segoe UI&apos;,Arial, Tahoma, Geneva, Verdana, sans-serif;
         ///        }
         ///        .graph-canvas {
         ///            position: fixed;
         ///            top: 0px;
         ///            left: 0px;
-        ///           [rest of string was truncated]&quot;;.
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string htmlGraph {
             get {

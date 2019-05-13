@@ -1,7 +1,9 @@
 ﻿using spfgraph.Model.Exceptions;
 using spfgraph.Model.GraphLib;
+using spfgraph.Model.Visualization;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -34,7 +36,6 @@ namespace spfgraph.Model.Data {
 
             //save to memory stream
             var ms = new MemoryStream();
-
             pngEncoder.Save(ms);
             ms.Close();
             File.WriteAllBytes(filePath, ms.ToArray());
@@ -64,7 +65,7 @@ namespace spfgraph.Model.Data {
                     foreach (var layer in graph.GraphLayers) {
                         var sb = new StringBuilder("");
                         foreach (var vertex in layer) {
-                            sb.Append(vertex  + " ");
+                            sb.Append(vertex + " ");
                         }
                         writer.WriteLine(sb.ToString());
                     }
@@ -86,20 +87,47 @@ namespace spfgraph.Model.Data {
             return new Graph(list);
         }
 
-        #endregion
+        /// <summary>
+        /// Opens serialized json graph in browser
+        /// using js and html.
+        /// </summary>
+        public static void OpenHtmlGraph(ObservableCollection<Element> collection) {
+            JsonSerializer.SerializeGraph("Resources\\elementsCollection.json", collection);
+            using (var sr = new StreamReader("Resources\\elementsCollection.json")) {
+                using (var fs = new FileStream("Resources\\elementsCollection.js", FileMode.Create)) {
+                    using (var sw = new StreamWriter(fs)) {
+                        var str1 = "data = ";
+                        var str2 = sr.ReadLine();
+                        sw.WriteLine(str1 + str2);
+                    }
+                }
+            }
+            System.Diagnostics.Process.Start("Resources\\htmlGraph.html");
+        }
 
-        #region Private Members
-
-        static List<int>[] CreateAdjacencyListFromFile(string filePath) {
+        /// <summary>
+        /// Creates adjacency list of graph using 
+        /// text file.
+        /// </summary>
+        /// <param name="filePath">File path.</param>
+        /// <returns>Adjacency list.</returns>
+        public static List<int>[] CreateAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList;
             using (var listReader = new AdjacencyListReader(filePath)) {
                 SetAmoutOfVertex(listReader);
+                int maxVertexCount = 300;
+                if (listReader.AmoutOfVertex > maxVertexCount)
+                    throw new DataProviderException("Reading from file error. \n" + $"Amout of vertex is {listReader.AmoutOfVertex},\n" + $"it's should be not more then {maxVertexCount}!");
                 CheckForSharp(listReader);
                 adjacencyList = ReadAdjacencyListWith(listReader);
                 CheckForSharp(listReader);
             }
             return adjacencyList;
         }
+
+        #endregion
+
+        #region Private Members
 
         static List<int>[] ReadAdjacencyListWith(AdjacencyListReader listReader) {
             var adjacencyList = new List<int>[listReader.AmoutOfVertex];
