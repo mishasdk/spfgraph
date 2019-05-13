@@ -59,5 +59,51 @@ namespace spfgraph.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] day {
+            get {
+                object obj = ResourceManager.GetObject("day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;en&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;UTF-8&quot;&gt;
+        ///    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        ///    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+        ///    &lt;title&gt;SPFGraph&lt;/title&gt;
+        ///    &lt;style&gt;
+        ///        * {
+        ///            padding: 0 0;
+        ///            margin: 0 0;
+        ///            font-family: &apos;Segoe UI&apos;, Tahoma, Geneva, Verdana, sans-serif;
+        ///        }
+        ///        .graph-canvas {
+        ///            position: fixed;
+        ///            top: 0px;
+        ///            left: 0px;
+        ///           [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string htmlGraph {
+            get {
+                return ResourceManager.GetString("htmlGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] night {
+            get {
+                object obj = ResourceManager.GetObject("night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

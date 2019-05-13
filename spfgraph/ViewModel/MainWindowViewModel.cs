@@ -184,14 +184,13 @@ namespace spfgraph.ViewModel {
                     IsGraphVMExists));
         }
 
-        // Demo
         public ICommand OpenHtmlCommand {
             get => openHtmlCommand ??
                 (openHtmlCommand = new ActionCommand(() => {
                     try {
-                        JsonSerializer.SerializeGraph("html\\elementsCollection.json", GraphVM.ElementsToViz);
-                        using (var sr = new StreamReader("html\\elementsCollection.json")) {
-                            using (var fs = new FileStream("html\\elementsCollection.js", FileMode.Create)) {
+                        JsonSerializer.SerializeGraph("Resources\\elementsCollection.json", GraphVM.ElementsToViz);
+                        using (var sr = new StreamReader("Resources\\elementsCollection.json")) {
+                            using (var fs = new FileStream("Resources\\elementsCollection.js", FileMode.Create)) {
                                 using (var sw = new StreamWriter(fs)) {
                                     var str1 = "data = ";
                                     var str2 = sr.ReadLine();
@@ -199,7 +198,7 @@ namespace spfgraph.ViewModel {
                                 }
                             }
                         }
-                        System.Diagnostics.Process.Start("html\\htmlGraph.html");
+                        System.Diagnostics.Process.Start("Resources\\htmlGraph.html");
                     } catch {
                     }
 
