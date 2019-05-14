@@ -214,12 +214,15 @@ namespace spfgraph.Model.Visualization {
         protected ObservableCollection<Element> CreateElementsToShow() {
             var nodes = new List<Node>();
             var edges = new List<Edge>();
+            var dottedLines = new List<DottedLine>();
             var indexByName = new SortedDictionary<int, int>();
             var currentHeight = StartHeight;
 
             // Creating nodes of graph
             for (int i = 0; i < dagGraph.GraphLayers.Count; i++) {
                 int shift = dagGraph.GraphLayers[i].Count * WidthStep / 2;
+                var dottedLine = new DottedLine(-30, currentHeight, dagGraph.GetGraphFeatures().Width * 60 + 20, currentHeight, i);
+                dottedLines.Add(dottedLine);
                 for (int j = 0; j < dagGraph.GraphLayers[i].Count; j++) {
                     var currentWidth = StartLeft + WidthStep * j;
                     var value = dagGraph.GraphLayers[i][j];
@@ -248,6 +251,8 @@ namespace spfgraph.Model.Visualization {
 
             // Creating output colection of elementss
             var elementsCollection = new ObservableCollection<Element>();
+            foreach (var i in dottedLines)
+                elementsCollection.Add(i);
             foreach (var i in edges)
                 elementsCollection.Add(i);
             foreach (var node in nodes)

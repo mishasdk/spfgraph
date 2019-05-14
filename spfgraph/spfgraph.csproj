@@ -142,6 +142,7 @@
     <Compile Include="Model\Visualization\Colorize Graph\IColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\ParametricColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\ColorSchemeTypes.cs" />
+    <Compile Include="Model\Visualization\DottedLine.cs" />
     <Compile Include="Model\Visualization\Element.cs" />
     <Compile Include="Model\Visualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Visualization\Edge.cs" />
