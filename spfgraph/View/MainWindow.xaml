@@ -564,6 +564,7 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas
+                                        Background="LightYellow"
                                         Width="{Binding Path=GraphVM.CanvasWidth}"
                                         Height="{Binding Path=GraphVM.CanvasHeight}" />
                                 </ItemsPanelTemplate>

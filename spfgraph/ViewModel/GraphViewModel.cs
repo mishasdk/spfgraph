@@ -11,10 +11,31 @@ namespace spfgraph.ViewModel {
     /// visualization.
     /// </summary>
     public class GraphViewModel : BaseViewModel {
+
+        #region Private Properties
+
         ObservableCollection<Element> elementsToViz;
         GraphFeatures features;
+        string graphAvrgWidth;
+        string graphIrregular;
+        string graphAvrgDev;
+        int graphHeight;
+        int graphWidth;
+        int canvasWidth;
+        int canvasHeight;
 
-        public StackedGraph DagGraph { get; set; }
+        #endregion
+
+        #region Public Properties
+
+        public StackedGraph DagGraph { get; private set; }
+        public OptimizeVisualizationTypes OptimizeLayout { get; set; }
+        public ColorSchemeTypes ColorScheme { get; set; }
+        public LayoutAlgorithmTypes LayoutAlgorithm { get; set; }
+        public Color StartColor { get; set; }
+        public Color EndColor { get; set; }
+        public string FilePath { get; set; }
+
         public ObservableCollection<Element> ElementsToViz {
             get => elementsToViz;
             set {
@@ -23,56 +44,108 @@ namespace spfgraph.ViewModel {
             }
         }
 
-        #region Graph Features
-
         public int GraphHeight {
-            get => features.Height;
+            get => graphHeight;
+            set {
+                graphHeight = value;
+                OnPropertyChanged(nameof(GraphHeight));
+            }
         }
 
         public int GraphWidth {
-            get => features.Width;
+            get => graphWidth;
+            set {
+                graphWidth = value;
+                OnPropertyChanged(nameof(GraphWidth));
+            }
         }
 
         public string GraphAvrgWidth {
-            get => $"{features.AvrgWidth:f2}";
+            get => $"{graphAvrgWidth:f2}";
+            set {
+                graphAvrgWidth = value;
+                OnPropertyChanged(nameof(GraphAvrgWidth));
+            }
         }
 
         public string GraphIrregular {
-            get => $"{features.Irregular:f2}";
+            get => $"{graphIrregular:f2}";
+            set {
+                graphIrregular = value;
+                OnPropertyChanged(nameof(GraphIrregular));
+            }
         }
 
         public string GraphAvrgDev {
-            get => $"{features.AvrgDeviation:f2}";
+            get => $"{graphAvrgDev:f2}";
+            set {
+                graphAvrgDev = value;
+                OnPropertyChanged(nameof(GraphAvrgDev));
+            }
         }
 
-        public double CanvasWidth {
-            get => 60 * GraphWidth - 20;
+        public int CanvasWidth {
+            get => canvasWidth;
+            set {
+                canvasWidth = value;
+                OnPropertyChanged(nameof(CanvasWidth));
+            }
         }
 
-        public double CanvasHeight {
-            get => 60 * GraphHeight + 20;
+        public int CanvasHeight {
+            get => canvasHeight;
+            set {
+                canvasHeight = value;
+                OnPropertyChanged(nameof(CanvasHeight));
+            }
         }
 
         #endregion
 
-        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme, LayoutAlgorithmTypes layoutAlgorithm, Color startColor, Color endColor) {
-            var graph = DataProvider.ReadGraphFromFile(filePath);
-            var builder = new StackedGraphBuilder() {
-                LayoutType = layoutAlgorithm
-            };
-            DagGraph = builder.ConstructSpf(graph);
-            features = DagGraph.Features;
+        #region Public Methods
 
+        public void CreateSPF() {
+            CreateDagGraph();
+            SetGraphViewModelProperties();
+            CreateElementsToViz();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        void CreateDagGraph() {
+            var graph = DataProvider.ReadGraphFromFile(FilePath);
+            var graphBuilder = new StackedGraphBuilder() {
+                LayoutType = LayoutAlgorithm
+            };
+            DagGraph = graphBuilder.ConstructSpf(graph);
+        }
+
+        void SetGraphViewModelProperties() {
+            features = DagGraph.Features;
+            GraphHeight = features.Height;
+            GraphWidth = features.Width;
+            GraphAvrgWidth = features.AvrgWidth.ToString();
+            GraphIrregular = features.Irregular.ToString();
+            GraphAvrgDev = features.AvrgDeviation.ToString();
+            CanvasHeight = 60 * GraphHeight + 20;
+            CanvasWidth = 60 * GraphWidth - 20;
+        }
+
+        void CreateElementsToViz() {
             // Create GraphVizBuilder
             var graphVizBuilder = new GraphVizBuilder() {
-                ColorScheme = colorScheme,
-                OptimizeLayout = optimizeLayout,
+                ColorScheme = ColorScheme,
+                OptimizeLayout = OptimizeLayout,
                 StartLeft = GraphWidth * 60 / 2,
-                StartColor = startColor,
-                EndColor = endColor
+                StartColor = StartColor,
+                EndColor = EndColor
             };
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(DagGraph);
         }
+
+        #endregion
 
     }
 }

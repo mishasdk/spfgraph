@@ -135,7 +135,16 @@ namespace spfgraph.ViewModel {
             get => buildGraphCommand ??
                 (buildGraphCommand = new ActionCommand(() => {
                     try {
-                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, layoutAlgorithm, StartColor, EndColor);
+                        GraphVM = new GraphViewModel() {
+                            StartColor = StartColor,
+                            EndColor = EndColor,
+                            OptimizeLayout = OptimizeLayout,
+                            LayoutAlgorithm = LayoutAlgorithm,
+                            ColorScheme = ColorScheme,
+                            FilePath = FilePath,
+                        };
+
+                        GraphVM.CreateSPF();
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     } catch (DataProviderException ex) {

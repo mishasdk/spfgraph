@@ -262,7 +262,7 @@ namespace spfgraph.Model.Visualization {
         }
 
         /// <summary>
-        /// Mthod, that colorizes <cref="nodes"> using colorBuilder object.
+        /// Method, that colorizes <cref="nodes"> using colorBuilder object.
         /// </summary>
         /// <param name="nodes">Collection of nodes to colorize.</param>
         private void ColorizeNodes(List<Node> nodes) {
