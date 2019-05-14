@@ -12,8 +12,8 @@
     Title="spfgraph"
     Height="540"
     Width="960"
-    MinWidth="400"
-    MinHeight="250">
+    MinWidth="700"
+    MinHeight="540">
 
     <Window.Resources>
         <!--Converters-->
@@ -86,53 +86,97 @@
                             Foreground="{StaticResource BlackBrush}"
                             Header="Open file"
                             Command="{Binding ChoosePathForFileCommand}"
-                            InputGestureText="Ctr + O"/>
+                            InputGestureText="Ctr + O">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Open text file with graph" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
 
-                        <MenuItem
-                            Foreground="{StaticResource BlackBrush}"
-                            Header="Save file"
-                            Command="{Binding SaveGraphInTextFileCommand}"
-                            InputGestureText="Ctr + S"/>
+                        <Separator
+                            Margin="3"
+                            BorderBrush="{StaticResource BlackBrush}" />
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Build graph"
                             Command="{Binding BuildGraphCommand}"
-                            InputGestureText="Ctr + B"/>
+                            InputGestureText="Ctr + B">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Visualize graph from the text file" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Clear data"
                             Command="{Binding ClearDataCommand}"
-                            InputGestureText="Ctr + C"/>
+                            InputGestureText="Ctr + C">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Clear file path and picture of the graph" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem
+                            Foreground="{StaticResource BlackBrush}"
+                            Header="Save file"
+                            Command="{Binding SaveGraphInTextFileCommand}"
+                            InputGestureText="Ctr + S">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Save spf graph in text file" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
                     </MenuItem>
 
                     <MenuItem
                         Header="Export">
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Export to json"
-                            Command="{Binding ExportToJsonCommand}" 
-                            InputGestureText="Ctr + J"/>
+                            Header="Export to text file"
+                            Command="{Binding SaveGraphInTextFileCommand}"
+                            InputGestureText="Ctr + S">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Save spf graph in text file" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Header="Export to png"
                             Command="{Binding ExportToPngCommand}"
                             CommandParameter="{Binding ElementName=MainPanel, Mode=OneWay}"
-                            InputGestureText="Ctr + P"/>
+                            InputGestureText="Ctr + P">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Export graph to Png" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Export to text file"
-                            Command="{Binding SaveGraphInTextFileCommand}"
-                            InputGestureText="Ctr + S"/>
+                            Header="Export to json"
+                            Command="{Binding ExportToJsonCommand}" 
+                            InputGestureText="Ctr + J">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Export graph to Json" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
                             Command="{Binding OpenHtmlCommand}"
-                            Header="Export to html" 
-                            InputGestureText="Ctr + H"/>
+                            Header="Open html" 
+                            InputGestureText="Ctr + H">
+                            <MenuItem.ToolTip>
+                                <ToolTip
+                                    Content="Open graph in browser" />
+                            </MenuItem.ToolTip>
+                        </MenuItem>
                     </MenuItem>
                 </Menu>
             </Grid>
@@ -141,10 +185,8 @@
             <Grid
                 Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition
-                        Width="Auto" />
-                    <ColumnDefinition
-                        Width="1*" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <!--Left side of the main page-->
@@ -160,7 +202,8 @@
 
                     <StackPanel>
                         <Button
-                            Width="130"
+                            MinWidth="100"
+                            MaxWidth="150"
                             Height="30"
                             Margin="0 0 0 10"
                             Style="{StaticResource CustomButton}"
@@ -256,7 +299,9 @@
                             BorderBrush="{StaticResource BlackBrush}" />
 
                         <!--Graph Features Panel-->
-                        <GroupBox
+                        <GroupBox 
+                            BorderThickness="1"
+                            BorderBrush="Gray"
                             Header="Graph Features"
                             Margin="0 0 0 10">
                             <GroupBox.ToolTip>
@@ -267,6 +312,9 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
+                                    <ColumnDefinition 
+                                        MaxWidth="7"
+                                        MinWidth="5"/>
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
@@ -283,7 +331,7 @@
                                     Text="Height" />
                                 <TextBlock
                                     Grid.Row="0"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Text="{Binding Path=GraphVM.GraphHeight}" />
 
                                 <TextBlock
@@ -291,16 +339,15 @@
                                     Text="Width" />
                                 <TextBlock
                                     Grid.Row="1"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Text="{Binding Path=GraphVM.GraphWidth}" />
 
                                 <TextBlock
                                     Grid.Row="2"
-                                    Text="Avrg Width"
-                                    Margin="0 0 5 0" />
+                                    Text="Avrg Width"/>
                                 <TextBlock
                                     Grid.Row="2"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Text="{Binding Path=GraphVM.GraphAvrgWidth}" />
 
                                 <TextBlock
@@ -308,7 +355,7 @@
                                     Text="Irregular" />
                                 <TextBlock
                                     Grid.Row="3"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Text="{Binding Path=GraphVM.GraphIrregular}" />
 
                                 <TextBlock
@@ -316,7 +363,7 @@
                                     Text="Avrg Dev" />
                                 <TextBlock
                                     Grid.Row="4"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Text="{Binding Path=GraphVM.GraphAvrgDev}" />
                             </Grid>
                         </GroupBox>
