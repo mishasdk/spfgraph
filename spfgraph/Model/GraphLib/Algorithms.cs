@@ -45,7 +45,7 @@ namespace spfgraph.Model.GraphLib {
             for (int i = 0; i < g[v].Length; i++) {
                 int to = g[v][i];
                 if (color[to] == 0) {
-                    result = CheckForCyclicDFS(g, color, to); 
+                    result = CheckForCyclicDFS(g, color, to);
                 } else if (color[to] == 1) {
                     result = true;
                 }
@@ -89,7 +89,7 @@ namespace spfgraph.Model.GraphLib {
                 return secondLayoutList;
         }
 
-        protected static List<List<int>> StraightPass(int[][] adjacencyList) {
+        public static List<List<int>> StraightPass(int[][] adjacencyList) {
             var g = adjacencyList;
             var verds = new Pair<int>[g.Length];
             var q = new Queue<int>();
@@ -134,7 +134,7 @@ namespace spfgraph.Model.GraphLib {
             return graphLayers;
         }
 
-        protected static List<List<int>> ReversePass(int[][] adjacencyList) {
+        public static List<List<int>> ReversePass(int[][] adjacencyList) {
             var g = adjacencyList;
             var reversedAdjacencyList = new List<int>[g.Length];
             var reversedList = new int[g.Length][];

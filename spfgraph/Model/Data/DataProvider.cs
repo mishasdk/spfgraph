@@ -70,7 +70,7 @@ namespace spfgraph.Model.Data {
                         writer.WriteLine(sb.ToString());
                     }
                     writer.WriteLine("#");
-                    writer.WriteLine(graph.GetGraphFeatures().ToString());
+                    writer.WriteLine(graph.Features.ToString());
                     writer.WriteLine("#");
 
                 }

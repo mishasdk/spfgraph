@@ -221,7 +221,7 @@ namespace spfgraph.Model.Visualization {
             // Creating nodes of graph
             for (int i = 0; i < dagGraph.GraphLayers.Count; i++) {
                 int shift = dagGraph.GraphLayers[i].Count * WidthStep / 2;
-                var dottedLine = new DottedLine(-30, currentHeight, dagGraph.GetGraphFeatures().Width * 60 + 20, currentHeight, i);
+                var dottedLine = new DottedLine(-30, currentHeight, dagGraph.Features.Width * 60 + 20, currentHeight, i);
                 dottedLines.Add(dottedLine);
                 for (int j = 0; j < dagGraph.GraphLayers[i].Count; j++) {
                     var currentWidth = StartLeft + WidthStep * j;
@@ -270,7 +270,7 @@ namespace spfgraph.Model.Visualization {
                 colorBuilder.SetNodeColor(node);
 
         }
-
+        
         #endregion
 
     }

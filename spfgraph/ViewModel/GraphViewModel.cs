@@ -55,13 +55,13 @@ namespace spfgraph.ViewModel {
 
         #endregion
 
-        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme, Color startColor, Color endColor) {
+        public GraphViewModel(string filePath, OptimizeVisualizationTypes optimizeLayout, ColorSchemeTypes colorScheme, LayoutAlgorithmTypes layoutAlgorithm, Color startColor, Color endColor) {
             var graph = DataProvider.ReadGraphFromFile(filePath);
             var builder = new StackedGraphBuilder() {
-                LayoutType = LayoutAlgorithmTypes.TheShortestHeigth
+                LayoutType = layoutAlgorithm
             };
             DagGraph = builder.ConstructSpf(graph);
-            features = DagGraph.GetGraphFeatures();
+            features = DagGraph.Features;
 
             // Create GraphVizBuilder
             var graphVizBuilder = new GraphVizBuilder() {

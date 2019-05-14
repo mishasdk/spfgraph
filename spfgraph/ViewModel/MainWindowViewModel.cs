@@ -1,6 +1,7 @@
 ﻿using spfgraph.Model.Data;
 using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
 using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
@@ -25,6 +26,7 @@ namespace spfgraph.ViewModel {
         ICommand openHtmlCommand;
 
         ICommand setOptimizeLayoutFromRadioButton;
+        ICommand setLayoutAlgorithmFromRadioButton;
         ICommand setColorSchemeFromRadioButton;
         ICommand setStartColorCommand;
         ICommand setEndColorCommand;
@@ -33,6 +35,7 @@ namespace spfgraph.ViewModel {
         IDialogService dialogService;
         ColorSchemeTypes colorScheme;
         OptimizeVisualizationTypes optimizeLayout;
+        LayoutAlgorithmTypes layoutAlgorithm;
 
         string filePath;
         double canvasWidth;
@@ -43,6 +46,15 @@ namespace spfgraph.ViewModel {
         #endregion
 
         #region Public Propeties
+
+        public LayoutAlgorithmTypes LayoutAlgorithm {
+            get => layoutAlgorithm;
+            set {
+                layoutAlgorithm = value;
+                OnPropertyChanged(nameof(LayoutAlgorithm));
+            }
+        }
+
 
         public OptimizeVisualizationTypes OptimizeLayout {
             get => optimizeLayout;
@@ -123,7 +135,7 @@ namespace spfgraph.ViewModel {
             get => buildGraphCommand ??
                 (buildGraphCommand = new ActionCommand(() => {
                     try {
-                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, StartColor, EndColor);
+                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, layoutAlgorithm, StartColor, EndColor);
                     } catch (GraphErrorException ex) {
                         dialogService.ShowMessage(ex.Message);
                     } catch (DataProviderException ex) {
@@ -223,6 +235,25 @@ namespace spfgraph.ViewModel {
                             break;
                         case "Default":
                             ColorScheme = ColorSchemeTypes.None;
+                            break;
+                    }
+                    RebuildGraph();
+                }, parameter => parameter != null));
+        }
+
+        public ICommand SetLayoutAlgorithmFromRadioButton {
+            get => setLayoutAlgorithmFromRadioButton ??
+                (setLayoutAlgorithmFromRadioButton = new ParametrizedCommand(parameter => {
+                    var str = (string)parameter;
+                    switch (str) {
+                        case "The Shortest":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.TheShortestHeight;
+                            break;
+                        case "Straight Pass":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.StraightPass;
+                            break;
+                        case "Reversed Pass":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.ReversePass;
                             break;
                     }
                     RebuildGraph();

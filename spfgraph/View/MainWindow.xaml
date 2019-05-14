@@ -432,7 +432,7 @@
                                 Margin="5">
                                 <GroupBox.ToolTip>
                                     <ToolTip
-                                        Content="Sets layout algorithm" />
+                                        Content="Sets layout optimization" />
                                 </GroupBox.ToolTip>
 
                                 <StackPanel>
@@ -449,6 +449,39 @@
                                         Command="{Binding Path=SetOptimizeLayotFromRadioButton}"
                                         CommandParameter="{Binding ElementName=rbDefault_1, Path=Content}"
                                         Content="Default"
+                                        Margin="5 5 0 0" />
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <GroupBox
+                                Header="Layout algorithm"
+                                Margin="5">
+                                <GroupBox.ToolTip>
+                                    <ToolTip
+                                        Content="Sets layout algorithm" />
+                                </GroupBox.ToolTip>
+
+                                <StackPanel>
+                                    <RadioButton
+                                        x:Name="rbTheShortest"
+                                        Command="{Binding SetLayoutAlgorithmFromRadioButton}"
+                                        CommandParameter="{Binding ElementName=rbTheShortest, Path=Content}"
+                                        IsChecked="True"
+                                        Content="The Shortest"
+                                        Margin="5 5 0 0" />
+
+                                    <RadioButton
+                                        x:Name="rbStraight"
+                                        Command="{Binding SetLayoutAlgorithmFromRadioButton}"
+                                        CommandParameter="{Binding ElementName=rbStraight, Path=Content}"
+                                        Content="Straight Pass"
+                                        Margin="5 5 0 0" />
+                                    
+                                    <RadioButton
+                                        x:Name="rbReversed"
+                                        Command="{Binding SetLayoutAlgorithmFromRadioButton}"
+                                        CommandParameter="{Binding ElementName=rbReversed, Path=Content}"
+                                        Content="Reversed Pass"
                                         Margin="5 5 0 0" />
                                 </StackPanel>
                             </GroupBox>
