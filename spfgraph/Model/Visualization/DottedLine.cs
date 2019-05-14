@@ -25,7 +25,7 @@
             X2 = x2;
             Y2 = y2;
             Value = value;
-            ShiftY = Y1 + 10;
+            ShiftY = Y1 + 11;
             ShiftX = X1 - 20;
         }
 

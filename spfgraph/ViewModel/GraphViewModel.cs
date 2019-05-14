@@ -35,6 +35,7 @@ namespace spfgraph.ViewModel {
         public Color StartColor { get; set; }
         public Color EndColor { get; set; }
         public string FilePath { get; set; }
+        public BackgroundTypes BackgroundType { get; set; }
 
         public ObservableCollection<Element> ElementsToViz {
             get => elementsToViz;
@@ -126,11 +127,11 @@ namespace spfgraph.ViewModel {
             features = DagGraph.Features;
             GraphHeight = features.Height;
             GraphWidth = features.Width;
-            GraphAvrgWidth = features.AvrgWidth.ToString();
-            GraphIrregular = features.Irregular.ToString();
-            GraphAvrgDev = features.AvrgDeviation.ToString();
+            GraphAvrgWidth = $"{features.AvrgWidth:f2}";
+            GraphIrregular = $"{features.Irregular:f2}";
+            GraphAvrgDev = $"{features.AvrgDeviation:f2}";
             CanvasHeight = 60 * GraphHeight + 20;
-            CanvasWidth = 60 * GraphWidth - 20;
+            CanvasWidth = 60 * GraphWidth + 100;
         }
 
         void CreateElementsToViz() {
@@ -138,9 +139,14 @@ namespace spfgraph.ViewModel {
             var graphVizBuilder = new GraphVizBuilder() {
                 ColorScheme = ColorScheme,
                 OptimizeLayout = OptimizeLayout,
-                StartLeft = GraphWidth * 60 / 2,
+                StartLeft = CanvasWidth / 2,
                 StartColor = StartColor,
-                EndColor = EndColor
+                EndColor = EndColor,
+                CanvasWidth = CanvasWidth,
+                HeightStep = 60,
+                WidthStep = 60,
+                StartHeight = 20,
+                BackgroundType = BackgroundType
             };
             ElementsToViz = graphVizBuilder.CreateGraphVizualization(DagGraph);
         }

@@ -10,10 +10,10 @@
     mc:Ignorable="d"
     WindowStartupLocation="CenterScreen"
     Title="spfgraph"
-    Height="540"
+    Height="620"
     Width="960"
     MinWidth="700"
-    MinHeight="540">
+    MinHeight="620">
 
     <Window.Resources>
         <!--Converters-->
@@ -99,7 +99,7 @@
 
                         <MenuItem
                             Foreground="{StaticResource BlackBrush}"
-                            Header="Build graph"
+                            Header="Build SPF"
                             Command="{Binding BuildGraphCommand}"
                             InputGestureText="Ctr + B">
                             <MenuItem.ToolTip>
@@ -187,7 +187,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
                         Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition 
+                        Width="1*"/>
                 </Grid.ColumnDefinitions>
 
                 <!--Left side of the main page-->
@@ -203,8 +204,7 @@
 
                     <StackPanel>
                         <Button
-                            MinWidth="100"
-                            MaxWidth="150"
+                            Width="130"
                             Height="30"
                             Margin="0 0 0 10"
                             Style="{StaticResource CustomButton}"
@@ -222,7 +222,7 @@
                             Margin="0 0 0 10"
                             Style="{StaticResource CustomButton}"
                             Command="{Binding BuildGraphCommand}"
-                            Content="Build Graph">
+                            Content="Build SPF">
                             <Button.ToolTip>
                                 <ToolTip
                                     Content="Visualize graph from the text file" />
@@ -454,6 +454,32 @@
                             </GroupBox>
                             
                             <GroupBox
+                                Header="Background layer"
+                                Margin="5">
+                                <GroupBox.ToolTip>
+                                    <ToolTip
+                                        Content="Sets background layer"/>
+                                </GroupBox.ToolTip>
+
+                                <StackPanel>
+                                    <RadioButton
+                                        x:Name="rbNumbers"
+                                        Command="{Binding Path=SetBackgroundTypesFromRadioButton}"
+                                        CommandParameter="{Binding ElementName=rbNumbers, Path=Content}"
+                                        IsChecked="True"
+                                        Content="Number of layers"
+                                        Margin="5 5 0 0" />
+
+                                    <RadioButton
+                                        x:Name="rbDefault_2"
+                                        Command="{Binding Path=SetBackgroundTypesFromRadioButton}"
+                                        CommandParameter="{Binding ElementName=rbDefault_2, Path=Content}"
+                                        Content="None"
+                                        Margin="5 5 0 0" />
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <GroupBox
                                 Header="Layout algorithm"
                                 Margin="5">
                                 <GroupBox.ToolTip>
@@ -564,7 +590,6 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas
-                                        Background="LightYellow"
                                         Width="{Binding Path=GraphVM.CanvasWidth}"
                                         Height="{Binding Path=GraphVM.CanvasHeight}" />
                                 </ItemsPanelTemplate>

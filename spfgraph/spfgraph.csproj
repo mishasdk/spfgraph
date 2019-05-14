@@ -137,6 +137,7 @@
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
     <Compile Include="Model\GraphLib\LayoutAlgorithmTypes.cs" />
+    <Compile Include="Model\Visualization\BackgroundTypes.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\DefaultColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\Color.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\IColorBuilder.cs" />

@@ -36,6 +36,7 @@ namespace spfgraph.ViewModel {
         ColorSchemeTypes colorScheme;
         OptimizeVisualizationTypes optimizeLayout;
         LayoutAlgorithmTypes layoutAlgorithm;
+        BackgroundTypes backgroundType;
 
         string filePath;
         double canvasWidth;
@@ -47,6 +48,14 @@ namespace spfgraph.ViewModel {
 
         #region Public Propeties
 
+        public BackgroundTypes BackgroundType {
+            get => backgroundType;
+            set {
+                backgroundType = value;
+                OnPropertyChanged(nameof(BackgroundType));
+            }
+        }
+
         public LayoutAlgorithmTypes LayoutAlgorithm {
             get => layoutAlgorithm;
             set {
@@ -54,7 +63,6 @@ namespace spfgraph.ViewModel {
                 OnPropertyChanged(nameof(LayoutAlgorithm));
             }
         }
-
 
         public OptimizeVisualizationTypes OptimizeLayout {
             get => optimizeLayout;
@@ -142,6 +150,8 @@ namespace spfgraph.ViewModel {
                             LayoutAlgorithm = LayoutAlgorithm,
                             ColorScheme = ColorScheme,
                             FilePath = FilePath,
+                            BackgroundType = BackgroundType,
+
                         };
 
                         GraphVM.CreateSPF();
@@ -227,6 +237,23 @@ namespace spfgraph.ViewModel {
         }
 
         #region Layout Parameters Commands
+
+        ICommand setBackgroundTypesFromRadioButton;
+        public ICommand SetBackgroundTypesFromRadioButton {
+            get => setBackgroundTypesFromRadioButton ??
+                (setBackgroundTypesFromRadioButton = new ParametrizedCommand(parameter => {
+                    var str = (string)parameter;
+                    switch (str) {
+                        case "Number of layers":
+                            BackgroundType = BackgroundTypes.DottedLines;
+                            break;
+                        case "None":
+                            BackgroundType = BackgroundTypes.None;
+                            break;
+                    }
+                    RebuildGraph();
+                }, parameter => parameter != null));
+        }
 
         public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
