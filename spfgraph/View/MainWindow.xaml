@@ -587,7 +587,6 @@
                                 <DataTemplate
                                     DataType="{x:Type viz:DottedLine}">
                                     <Grid>
-
                                         <Line
                                             X1="{Binding X1}"
                                             Y1="{Binding Y1}"
@@ -608,8 +607,8 @@
                                             Text="{Binding Value}">
                                             <TextBlock.RenderTransform>
                                                 <TranslateTransform
-                                                    X="{Binding X1}"
-                                                    Y="{Binding Y1}" />
+                                                    X="{Binding ShiftX}"
+                                                    Y="{Binding ShiftY}" />
                                             </TextBlock.RenderTransform>
                                         </TextBlock>
                                     </Grid>

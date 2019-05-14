@@ -12,6 +12,8 @@
         public int X2 { get; private set; }
         public int Y2 { get; private set; }
         public int Value { get; private set; }
+        public int ShiftY { get; private set; }
+        public int ShiftX { get; private set; }
 
         #endregion
 
@@ -23,6 +25,8 @@
             X2 = x2;
             Y2 = y2;
             Value = value;
+            ShiftY = Y1 + 10;
+            ShiftX = X1 - 20;
         }
 
         #endregion
