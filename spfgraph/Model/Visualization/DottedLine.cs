@@ -35,7 +35,7 @@ namespace spfgraph.Model.Visualization {
             Y2 = y2;
             Value = value;
             ShiftY = Y1 + 11;
-            ShiftX = X1 - 20;
+            ShiftX = X1 - 25;
         }
 
         #endregion

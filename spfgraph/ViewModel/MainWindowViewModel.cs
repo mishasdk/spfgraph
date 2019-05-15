@@ -133,7 +133,7 @@ namespace spfgraph.ViewModel {
                             FilePath = dialogService.FilePath;
                             GraphVM = null;
                         }
-                    } catch (Exception ex) {
+                    } catch (Exception ex) when (ex is ParserException || ex is DataProviderException) {
                         dialogService.ShowMessage(ex.Message);
                     }
                 }));
@@ -154,13 +154,14 @@ namespace spfgraph.ViewModel {
                         };
 
                         GraphVM.CreateSPF();
-                    } catch (GraphErrorException ex) {
-                        dialogService.ShowMessage(ex.Message);
-                    } catch (DataProviderException ex) {
+                    } catch (Exception ex) when (ex is ParserException || ex is DataProviderException) {
+                        GraphVM = null;
                         dialogService.ShowMessage(ex.Message);
                     } catch (Exception ex) {
-                        dialogService.ShowMessage(ex.Message);
+                        GraphVM = null;
+                        dialogService.ShowMessage("Critical error.\n" + ex.Message);
                     }
+
                 }, IsFilePathExists));
         }
 
@@ -281,7 +282,7 @@ namespace spfgraph.ViewModel {
                 (setLayoutAlgorithmFromRadioButton = new ParametrizedCommand(parameter => {
                     var str = (string)parameter;
                     switch (str) {
-                        case "The Shortest":
+                        case "Optimal":
                             LayoutAlgorithm = LayoutAlgorithmTypes.TheShortestHeight;
                             break;
                         case "Straight Pass":

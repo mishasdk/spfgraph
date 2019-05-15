@@ -452,7 +452,7 @@
                                         Margin="5 5 0 0" />
                                 </StackPanel>
                             </GroupBox>
-                            
+
                             <GroupBox
                                 Header="Background layer"
                                 Margin="5">
@@ -478,7 +478,7 @@
                                         Margin="5 5 0 0" />
                                 </StackPanel>
                             </GroupBox>
-                            
+
                             <GroupBox
                                 Header="Layout algorithm"
                                 Margin="5">
@@ -493,7 +493,7 @@
                                         Command="{Binding SetLayoutAlgorithmFromRadioButton}"
                                         CommandParameter="{Binding ElementName=rbTheShortest, Path=Content}"
                                         IsChecked="True"
-                                        Content="The Shortest"
+                                        Content="Optimal"
                                         Margin="5 5 0 0" />
 
                                     <RadioButton
@@ -502,7 +502,7 @@
                                         CommandParameter="{Binding ElementName=rbStraight, Path=Content}"
                                         Content="Straight Pass"
                                         Margin="5 5 0 0" />
-                                    
+
                                     <RadioButton
                                         x:Name="rbReversed"
                                         Command="{Binding SetLayoutAlgorithmFromRadioButton}"
@@ -627,18 +627,71 @@
 
                                 <DataTemplate
                                     DataType="{x:Type viz:Edge}">
+                                    <Grid>
+                                        <Line
+                                            X1="{Binding X1}"
+                                            Y1="{Binding Y1}"
+                                            X2="{Binding X2}"
+                                            Y2="{Binding Y2}"
+                                            Stroke="{Binding EdgeColor,
+                                            Converter={StaticResource ColorToSolidBrush}}"
+                                            StrokeEndLineCap="Round"
+                                            StrokeThickness="3">
+                                            <Line.RenderTransform>
+                                                <TranslateTransform
+                                                X="20"
+                                                Y="20" />
+                                            </Line.RenderTransform>
+                                        </Line>
+
+                                        <Line
+                                            X1="{Binding X2}"
+                                            Y1="{Binding Y2}"
+                                            X2="{Binding X3}"
+                                            Y2="{Binding Y3}"
+                                            Stroke="{Binding EdgeColor,
+                                            Converter={StaticResource ColorToSolidBrush}}"
+                                            StrokeThickness="1.5"
+                                            StrokeEndLineCap="Round"
+                                            >
+                                            <Line.RenderTransform>
+                                                <TranslateTransform
+                                                X="20"
+                                                Y="20" />
+                                            </Line.RenderTransform>
+                                        </Line>
+
+                                        <Line
+                                            X1="{Binding X2}"
+                                            Y1="{Binding Y2}"
+                                            X2="{Binding X4}"
+                                            Y2="{Binding Y4}"
+                                            Stroke="{Binding EdgeColor,
+                                            Converter={StaticResource ColorToSolidBrush}}"
+                                            StrokeEndLineCap="Round"
+                                            StrokeThickness="1.5" >
+
+                                            <Line.RenderTransform>
+                                                <TranslateTransform
+                                                X="20"
+                                                Y="20" />
+                                            </Line.RenderTransform>
+                                        </Line>
+                                    </Grid>
+                                </DataTemplate>
+
+                                <DataTemplate
+                                    DataType="{x:Type viz:Axes}">
                                     <Line
                                         X1="{Binding X1}"
                                         Y1="{Binding Y1}"
                                         X2="{Binding X2}"
                                         Y2="{Binding Y2}"
-                                        Stroke="{Binding EdgeColor,
-                                        Converter={StaticResource ColorToSolidBrush}}"
+                                        Stroke="{StaticResource GrayBrush}"
                                         StrokeThickness="3">
                                         <Line.RenderTransform>
                                             <TranslateTransform
-                                                X="20"
-                                                Y="20" />
+                                                Y ="20" />
                                         </Line.RenderTransform>
                                     </Line>
                                 </DataTemplate>

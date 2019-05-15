@@ -273,6 +273,10 @@ namespace spfgraph.Model.Visualization {
                 var dottedLine = new DottedLine(40 , i * HeightStep + StartHeight , CanvasWidth - 40, i * HeightStep + StartHeight, i);
                 dottedLines.Add(dottedLine);
             }
+            //var p1 = new Point(((DottedLine)dottedLines[0]).X1, ((DottedLine)dottedLines[0]).Y1);
+            //var p2 = new Point(((DottedLine)dottedLines[dottedLines.Count - 1]).X1, ((DottedLine)dottedLines[dottedLines.Count - 1]).Y1);
+            //var arrow = new Axes((int)p1.X, (int)p1.Y - 1, (int)p2.X, (int)p2.Y);
+            //dottedLines.Add(arrow);
             return dottedLines;
         }
 

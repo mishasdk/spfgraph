@@ -131,7 +131,7 @@ namespace spfgraph.ViewModel {
             GraphIrregular = $"{features.Irregular:f2}";
             GraphAvrgDev = $"{features.AvrgDeviation:f2}";
             CanvasHeight = 60 * GraphHeight + 20;
-            CanvasWidth = 60 * GraphWidth + 100;
+            CanvasWidth = 60 * GraphWidth + 150;
         }
 
         void CreateElementsToViz() {
