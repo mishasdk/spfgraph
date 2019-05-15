@@ -10,6 +10,7 @@ namespace spfgraph.Model.Data {
 
         public int AmoutOfVertex { get; set; }
         public int CurrentLineIndex { get; private set; }
+        public bool EndOfFile { get => reader.EndOfStream; }
 
         public AdjacencyListReader(string filePath) {
             reader = new StreamReader(filePath);

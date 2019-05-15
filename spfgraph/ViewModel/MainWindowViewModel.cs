@@ -128,7 +128,7 @@ namespace spfgraph.ViewModel {
             get => choosePathForFileCommand ??
                 (choosePathForFileCommand = new RelayCommand(() => {
                     try {
-                        dialogService.Filter = DefaultDialogService.TextFilter;
+                        dialogService.Filter = DefaultDialogService.TextEdgFilter;
                         if (dialogService.OpenFileDialog()) {
                             FilePath = dialogService.FilePath;
                             GraphVM = null;
@@ -151,7 +151,6 @@ namespace spfgraph.ViewModel {
                             ColorScheme = ColorScheme,
                             FilePath = FilePath,
                             BackgroundType = BackgroundType,
-
                         };
 
                         GraphVM.CreateSPF();
