@@ -132,16 +132,23 @@
     </Compile>
     <Compile Include="Converters\ColorToSolidBrushConverter.cs" />
     <Compile Include="Converters\NullRefToVisibilityConverter.cs" />
+    <Compile Include="Model\Data\EdgParser.cs" />
+    <Compile Include="Model\Data\IParser.cs" />
     <Compile Include="Model\Data\JsonSerializer.cs" />
+    <Compile Include="Model\Data\TxtParser.cs" />
     <Compile Include="Model\Dialog\DefaultDialogService.cs" />
     <Compile Include="Model\Dialog\IDialogService.cs" />
     <Compile Include="Model\Exceptions\AlgorithmExeption.cs" />
+    <Compile Include="Model\Exceptions\ParserException.cs" />
     <Compile Include="Model\GraphLib\LayoutAlgorithmTypes.cs" />
+    <Compile Include="Model\Visualization\BackgroundTypes.cs" />
+    <Compile Include="Model\Visualization\Axes.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\DefaultColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\Color.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\IColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\ParametricColorBuilder.cs" />
     <Compile Include="Model\Visualization\Colorize Graph\ColorSchemeTypes.cs" />
+    <Compile Include="Model\Visualization\DottedLine.cs" />
     <Compile Include="Model\Visualization\Element.cs" />
     <Compile Include="Model\Visualization\GraphVizBuilder.cs" />
     <Compile Include="Model\Visualization\Edge.cs" />

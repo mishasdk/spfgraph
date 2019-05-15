@@ -9,6 +9,7 @@ namespace spfgraph.Model.Dialog {
     public class DefaultDialogService : IDialogService {
 
         public static string TextFilter = "text files (*.txt) | *.txt";
+        public static string TextEdgFilter = "All files (*.*)|*.*|text files (*.txt)|*.txt|edg files (*.edg)|*.edg";
         public static string PngFilter = "png files (*.png) | *.png";
         public static string JsonFilter = "json files (*.json) | *.json";
 

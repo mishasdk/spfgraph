@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="ModelUnitTests\AlgorithmsTests.cs" />
     <Compile Include="ModelUnitTests\DataProviderTests.cs" />
+    <Compile Include="ModelUnitTests\EdgParserTests.cs" />
     <Compile Include="ModelUnitTests\StackedGraphTests.cs" />
     <Compile Include="ModelUnitTests\TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

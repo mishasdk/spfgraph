@@ -93,7 +93,8 @@ namespace Testing {
 
         void ReadListFromFileAssert(string filePath, List<int>[] expected) {
             string path = testSourceFolderPath + filePath;
-            var actual = DataProvider.CreateAdjacencyListFromFile(path);
+
+            var actual = DataProvider.ReadGraphFromFile(path);
             var compareResult = TestHelper.CheckListsForIdentity(expected, actual);
             Assert.IsTrue(compareResult);
         }

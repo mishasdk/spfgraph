@@ -1,6 +1,7 @@
 ﻿using spfgraph.Model.Data;
 using spfgraph.Model.Dialog;
 using spfgraph.Model.Exceptions;
+using spfgraph.Model.GraphLib;
 using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
@@ -25,6 +26,7 @@ namespace spfgraph.ViewModel {
         ICommand openHtmlCommand;
 
         ICommand setOptimizeLayoutFromRadioButton;
+        ICommand setLayoutAlgorithmFromRadioButton;
         ICommand setColorSchemeFromRadioButton;
         ICommand setStartColorCommand;
         ICommand setEndColorCommand;
@@ -33,6 +35,8 @@ namespace spfgraph.ViewModel {
         IDialogService dialogService;
         ColorSchemeTypes colorScheme;
         OptimizeVisualizationTypes optimizeLayout;
+        LayoutAlgorithmTypes layoutAlgorithm;
+        BackgroundTypes backgroundType;
 
         string filePath;
         double canvasWidth;
@@ -43,6 +47,22 @@ namespace spfgraph.ViewModel {
         #endregion
 
         #region Public Propeties
+
+        public BackgroundTypes BackgroundType {
+            get => backgroundType;
+            set {
+                backgroundType = value;
+                OnPropertyChanged(nameof(BackgroundType));
+            }
+        }
+
+        public LayoutAlgorithmTypes LayoutAlgorithm {
+            get => layoutAlgorithm;
+            set {
+                layoutAlgorithm = value;
+                OnPropertyChanged(nameof(LayoutAlgorithm));
+            }
+        }
 
         public OptimizeVisualizationTypes OptimizeLayout {
             get => optimizeLayout;
@@ -108,12 +128,12 @@ namespace spfgraph.ViewModel {
             get => choosePathForFileCommand ??
                 (choosePathForFileCommand = new RelayCommand(() => {
                     try {
-                        dialogService.Filter = DefaultDialogService.TextFilter;
+                        dialogService.Filter = DefaultDialogService.TextEdgFilter;
                         if (dialogService.OpenFileDialog()) {
                             FilePath = dialogService.FilePath;
                             GraphVM = null;
                         }
-                    } catch (Exception ex) {
+                    } catch (Exception ex) when (ex is ParserException || ex is DataProviderException) {
                         dialogService.ShowMessage(ex.Message);
                     }
                 }));
@@ -123,14 +143,25 @@ namespace spfgraph.ViewModel {
             get => buildGraphCommand ??
                 (buildGraphCommand = new ActionCommand(() => {
                     try {
-                        GraphVM = new GraphViewModel(filePath, OptimizeLayout, ColorScheme, StartColor, EndColor);
-                    } catch (GraphErrorException ex) {
-                        dialogService.ShowMessage(ex.Message);
-                    } catch (DataProviderException ex) {
+                        GraphVM = new GraphViewModel() {
+                            StartColor = StartColor,
+                            EndColor = EndColor,
+                            OptimizeLayout = OptimizeLayout,
+                            LayoutAlgorithm = LayoutAlgorithm,
+                            ColorScheme = ColorScheme,
+                            FilePath = FilePath,
+                            BackgroundType = BackgroundType,
+                        };
+
+                        GraphVM.CreateSPF();
+                    } catch (Exception ex) when (ex is ParserException || ex is DataProviderException) {
+                        GraphVM = null;
                         dialogService.ShowMessage(ex.Message);
                     } catch (Exception ex) {
-                        dialogService.ShowMessage(ex.Message);
+                        GraphVM = null;
+                        dialogService.ShowMessage("Critical error.\n" + ex.Message);
                     }
+
                 }, IsFilePathExists));
         }
 
@@ -207,6 +238,23 @@ namespace spfgraph.ViewModel {
 
         #region Layout Parameters Commands
 
+        ICommand setBackgroundTypesFromRadioButton;
+        public ICommand SetBackgroundTypesFromRadioButton {
+            get => setBackgroundTypesFromRadioButton ??
+                (setBackgroundTypesFromRadioButton = new ParametrizedCommand(parameter => {
+                    var str = (string)parameter;
+                    switch (str) {
+                        case "Number of layers":
+                            BackgroundType = BackgroundTypes.DottedLines;
+                            break;
+                        case "None":
+                            BackgroundType = BackgroundTypes.None;
+                            break;
+                    }
+                    RebuildGraph();
+                }, parameter => parameter != null));
+        }
+
         public ICommand SetColorSchemeFromRadioButton {
             get => setColorSchemeFromRadioButton ??
                 (setColorSchemeFromRadioButton = new ParametrizedCommand(parameter => {
@@ -223,6 +271,25 @@ namespace spfgraph.ViewModel {
                             break;
                         case "Default":
                             ColorScheme = ColorSchemeTypes.None;
+                            break;
+                    }
+                    RebuildGraph();
+                }, parameter => parameter != null));
+        }
+
+        public ICommand SetLayoutAlgorithmFromRadioButton {
+            get => setLayoutAlgorithmFromRadioButton ??
+                (setLayoutAlgorithmFromRadioButton = new ParametrizedCommand(parameter => {
+                    var str = (string)parameter;
+                    switch (str) {
+                        case "Optimal":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.TheShortestHeight;
+                            break;
+                        case "Straight Pass":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.StraightPass;
+                            break;
+                        case "Reversed Pass":
+                            LayoutAlgorithm = LayoutAlgorithmTypes.ReversePass;
                             break;
                     }
                     RebuildGraph();

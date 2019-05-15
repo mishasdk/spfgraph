@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace spfgraph.Model.GraphLib {
-    
+
     /// <summary>
     /// Class, that encapsulates all logic
     /// of creation StackGraph object.
@@ -17,14 +17,28 @@ namespace spfgraph.Model.GraphLib {
             dagGraph = new StackedGraph(graph);
 
             switch (LayoutType) {
-                case LayoutAlgorithmTypes.TheShortestHeigth:
+                case LayoutAlgorithmTypes.TheShortestHeight:
                     ConstructTheShortestHeigth();
+                    break;
+                case LayoutAlgorithmTypes.StraightPass:
+                    ConstructStraightPass();
+                    break;
+                case LayoutAlgorithmTypes.ReversePass:
+                    ConstructReversePass();
                     break;
                 default:
                     throw new Exception("Need to choose layout type.");
             }
 
             return dagGraph;
+        }
+
+        private void ConstructReversePass() {
+            dagGraph.GraphLayers = Algorithms.ReversePass(dagGraph.AdjacencyList);
+        }
+
+        private void ConstructStraightPass() {
+            dagGraph.GraphLayers = Algorithms.StraightPass(dagGraph.AdjacencyList);
         }
 
         protected void ConstructTheShortestHeigth() {

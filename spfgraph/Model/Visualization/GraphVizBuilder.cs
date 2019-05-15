@@ -15,24 +15,22 @@ namespace spfgraph.Model.Visualization {
 
         protected StackedGraph dagGraph;
         protected IColorBuilder colorBuilder;
-
-        #endregion
-
-        #region Location Paramenters
-
-        public int StartHeight { get; set; } = 20;
-        public int HeightStep { get; set; } = 60;
-        public int WidthStep { get; set; } = 60;
-        public int StartLeft { get; set; } = 0;
+        ObservableCollection<Element> elementsCollection = new ObservableCollection<Element>();
 
         #endregion
 
         #region Public Properties
 
+        public BackgroundTypes BackgroundType { get; set; }
         public OptimizeVisualizationTypes OptimizeLayout { get; set; }
         public ColorSchemeTypes ColorScheme { get; set; }
         public Color EndColor { get; set; }
         public Color StartColor { get; set; }
+        public int StartHeight { get; set; }
+        public int HeightStep { get; set; }
+        public int WidthStep { get; set; }
+        public int StartLeft { get; set; }
+        public int CanvasWidth { get; set; }
 
         #endregion
 
@@ -48,7 +46,21 @@ namespace spfgraph.Model.Visualization {
             this.dagGraph = dagGraph;
             UseOptimizeLayoutAlgorithm();
             SetColorScheme();
+            SetTypeOfBackground();
             return CreateElementsToShow();
+        }
+
+        private void SetTypeOfBackground() {
+            switch (BackgroundType) {
+                case BackgroundTypes.DottedLines:
+                    var layout = CreateDottedLinesLayout();
+                    foreach (var i in layout)
+                        elementsCollection.Add(i);
+                    break;
+                case BackgroundTypes.None:
+                    // None
+                    break;
+            }
         }
 
         #endregion
@@ -247,7 +259,6 @@ namespace spfgraph.Model.Visualization {
                 }
 
             // Creating output colection of elementss
-            var elementsCollection = new ObservableCollection<Element>();
             foreach (var i in edges)
                 elementsCollection.Add(i);
             foreach (var node in nodes)
@@ -256,8 +267,21 @@ namespace spfgraph.Model.Visualization {
             return elementsCollection;
         }
 
+        List<Element> CreateDottedLinesLayout() {
+            var dottedLines = new List<Element>();
+            for (int i = 0; i < dagGraph.GraphLayers.Count; i++) {
+                var dottedLine = new DottedLine(40 , i * HeightStep + StartHeight , CanvasWidth - 40, i * HeightStep + StartHeight, i);
+                dottedLines.Add(dottedLine);
+            }
+            //var p1 = new Point(((DottedLine)dottedLines[0]).X1, ((DottedLine)dottedLines[0]).Y1);
+            //var p2 = new Point(((DottedLine)dottedLines[dottedLines.Count - 1]).X1, ((DottedLine)dottedLines[dottedLines.Count - 1]).Y1);
+            //var arrow = new Axes((int)p1.X, (int)p1.Y - 1, (int)p2.X, (int)p2.Y);
+            //dottedLines.Add(arrow);
+            return dottedLines;
+        }
+
         /// <summary>
-        /// Mthod, that colorizes <cref="nodes"> using colorBuilder object.
+        /// Method, that colorizes <cref="nodes"> using colorBuilder object.
         /// </summary>
         /// <param name="nodes">Collection of nodes to colorize.</param>
         private void ColorizeNodes(List<Node> nodes) {
@@ -265,7 +289,7 @@ namespace spfgraph.Model.Visualization {
                 colorBuilder.SetNodeColor(node);
 
         }
-
+        
         #endregion
 
     }

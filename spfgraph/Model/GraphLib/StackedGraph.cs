@@ -9,6 +9,11 @@ namespace spfgraph.Model.GraphLib {
     /// data.
     /// </summary>
     public class StackedGraph : Graph {
+        #region Private Fields
+
+        GraphFeatures features;
+
+        #endregion
 
         #region Public Properties
 
@@ -17,6 +22,10 @@ namespace spfgraph.Model.GraphLib {
         /// characterizes spf graph.
         /// </summary>
         public List<List<int>> GraphLayers { get; set; }
+        public GraphFeatures Features {
+            get => features ??
+                (features = GetGraphFeatures());
+        }
 
         #endregion
         
@@ -36,7 +45,7 @@ namespace spfgraph.Model.GraphLib {
         /// Gets a specification of StackedGraph
         /// </summary>
         /// <returns></returns>
-        public GraphFeatures GetGraphFeatures() {
+        GraphFeatures GetGraphFeatures() {
             var features = new GraphFeatures {
                 Height = GraphLayers.Count
             };
