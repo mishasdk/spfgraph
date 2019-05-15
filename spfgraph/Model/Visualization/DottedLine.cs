@@ -1,18 +1,27 @@
-﻿namespace spfgraph.Model.Visualization {
+﻿using System.Runtime.Serialization;
+
+namespace spfgraph.Model.Visualization {
     /// <summary>
     /// Class, that encapsulates dotted line's
     /// data.
     /// </summary>
+    [DataContract]
     public class DottedLine : Element {
 
         #region Public Properties
-
+        [DataMember]
         public int X1 { get; private set; }
+        [DataMember]
         public int Y1 { get; private set; }
+        [DataMember]
         public int X2 { get; private set; }
+        [DataMember]
         public int Y2 { get; private set; }
+        [DataMember]
         public int Value { get; private set; }
+        [DataMember]
         public int ShiftY { get; private set; }
+        [DataMember]
         public int ShiftX { get; private set; }
 
         #endregion
