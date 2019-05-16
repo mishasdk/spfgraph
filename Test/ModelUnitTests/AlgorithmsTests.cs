@@ -212,7 +212,7 @@ namespace Testing {
                 new int[] {1, 2},
                 new int[] {4}
             };
-            var layout = TheShortestPathLayout(list);
+            var layout = OptimapLayoutByWidth(list);
             TestHelper.ShowGraph(layout);
         }
 

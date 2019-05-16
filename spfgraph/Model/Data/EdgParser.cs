@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace spfgraph.Model.Data {
+    /// <summary>
+    /// Parser for edg format
+    /// </summary>
     public class EdgParser : IParser {
 
         public int[][] ReadAdjacencyListFromFile(string filePath) {

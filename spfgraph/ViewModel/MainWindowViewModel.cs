@@ -154,6 +154,9 @@ namespace spfgraph.ViewModel {
                         };
 
                         GraphVM.CreateSPF();
+                    } catch (OutOfMemoryException) {
+                        GraphVM = null;
+                        dialogService.ShowMessage("Out of memory. Can’t create graph.");
                     } catch (Exception ex) when (ex is ParserException || ex is DataProviderException) {
                         GraphVM = null;
                         dialogService.ShowMessage(ex.Message);
