@@ -8,17 +8,18 @@ namespace spfgraph.Model.Data {
 
         public int[][] ReadAdjacencyListFromFile(string filePath) {
             List<int>[] adjacencyList = null;
-            try {
-                using (var reader = new AdjacencyListReader(filePath)) {
+
+            using (var reader = new AdjacencyListReader(filePath)) {
+                try {
                     reader.AmoutOfVertex = GetAmountOfVertices(filePath);
                     adjacencyList = CreateAdjacencyList(reader);
+                } catch {
+                    throw new ParserException("Parsing .edg file error.\n" + $"Error in line {reader.CurrentLineIndex + 1}");
                 }
-            } catch (Exception ex) {
-                throw new ParserException("Parsing .edg file error.\n" + ex.Message);
             }
-
             return Proceed(adjacencyList);
         }
+
 
         static int GetAmountOfVertices(string filePath) {
             using (var reader = new StreamReader(filePath)) {
