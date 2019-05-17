@@ -5,6 +5,7 @@ using spfgraph.Model.GraphLib;
 using spfgraph.Model.Visualization;
 using spfgraph.ViewModel.Base;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -123,6 +124,7 @@ namespace spfgraph.ViewModel {
         #endregion
 
         #region Commands
+        
 
         public ICommand ChoosePathForFileCommand {
             get => choosePathForFileCommand ??
@@ -152,8 +154,7 @@ namespace spfgraph.ViewModel {
                             FilePath = FilePath,
                             BackgroundType = BackgroundType,
                         };
-
-                        GraphVM.CreateSPF();
+                            GraphVM.CreateSPF();
                     } catch (OutOfMemoryException) {
                         GraphVM = null;
                         dialogService.ShowMessage("Out of memory. Can’t create graph.");
