@@ -105,6 +105,9 @@ namespace spfgraph.ViewModel {
 
         #region Public Methods
 
+        /// <summary>
+        /// Creates spf forms of the graph.
+        /// </summary>
         public void CreateSPF() {
             CreateDagGraph();
             SetGraphViewModelProperties();
@@ -115,6 +118,9 @@ namespace spfgraph.ViewModel {
 
         #region Private Methods
 
+        /// <summary>
+        /// Creates dag graph from graph.
+        /// </summary>
         void CreateDagGraph() {
             var graph = DataProvider.ReadGraphFromFile(FilePath);
             var graphBuilder = new StackedGraphBuilder() {
@@ -123,6 +129,9 @@ namespace spfgraph.ViewModel {
             DagGraph = graphBuilder.ConstructSpf(graph);
         }
 
+        /// <summary>
+        /// Set some properties of the GraphViewModel.
+        /// </summary>
         void SetGraphViewModelProperties() {
             features = DagGraph.Features;
             GraphHeight = features.Height;
@@ -134,6 +143,9 @@ namespace spfgraph.ViewModel {
             CanvasWidth = 60 * GraphWidth + 150;
         }
 
+        /// <summary>
+        /// Creates elements to visualize graph.
+        /// </summary>
         void CreateElementsToViz() {
             // Create GraphVizBuilder
             var graphVizBuilder = new GraphVizBuilder() {
