@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace spfgraph.ViewModel.Base {
+
+    /// <summary>
+    /// Class that implements ICommand interface.
+    /// </summary>
     public class ParametricActionCommand : ICommand {
 
         #region Private Properties

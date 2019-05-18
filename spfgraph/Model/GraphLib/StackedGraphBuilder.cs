@@ -42,7 +42,7 @@ namespace spfgraph.Model.GraphLib {
         }
 
         protected void ConstructTheShortestHeigth() {
-            dagGraph.GraphLayers = Algorithms.TheShortestPathLayout(dagGraph.AdjacencyList);
+            dagGraph.GraphLayers = Algorithms.OptimalLayoutByWidth(dagGraph.AdjacencyList);
         }
 
         #endregion

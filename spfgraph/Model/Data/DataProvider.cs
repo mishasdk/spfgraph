@@ -1,8 +1,6 @@
 ﻿using spfgraph.Model.Exceptions;
 using spfgraph.Model.GraphLib;
 using spfgraph.Model.Visualization;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
@@ -118,7 +116,7 @@ namespace spfgraph.Model.Data {
                 case "edg":
                     return new EdgParser();
                 default:
-                    throw new DataProviderException("Read from file error.\n" + "Not correct format of file.");
+                    throw new DataProviderException("Read from file error.\n" + "This file format is not supported.");
             }
         }
 

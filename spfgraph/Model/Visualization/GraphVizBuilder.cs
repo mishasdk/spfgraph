@@ -83,9 +83,9 @@ namespace spfgraph.Model.Visualization {
             for (int i = 1; i != dagGraph.GraphLayers.Count; ++i) {
                 var curLayerCounter = new SortedDictionary<int, int>();
                 var curLayerEnterCounter = new SortedDictionary<int, int>();
-                for (var index = 0; index != dagGraph.GraphLayers[i - 1].Count; ++index) {
+                for (var index = 0; index < dagGraph.GraphLayers[i - 1].Count; index++) {
                     var value = dagGraph.GraphLayers[i - 1][index];
-                    for (int j = 0; j != dagGraph.AdjacencyList[value].Length; ++j) {
+                    for (int j = 0; j < dagGraph.AdjacencyList[value].Length; j++) {
                         int to = dagGraph.AdjacencyList[value][j];
                         if (!curLayerCounter.ContainsKey(to)) {
                             curLayerCounter[to] = 0;
@@ -273,10 +273,6 @@ namespace spfgraph.Model.Visualization {
                 var dottedLine = new DottedLine(40 , i * HeightStep + StartHeight , CanvasWidth - 40, i * HeightStep + StartHeight, i);
                 dottedLines.Add(dottedLine);
             }
-            //var p1 = new Point(((DottedLine)dottedLines[0]).X1, ((DottedLine)dottedLines[0]).Y1);
-            //var p2 = new Point(((DottedLine)dottedLines[dottedLines.Count - 1]).X1, ((DottedLine)dottedLines[dottedLines.Count - 1]).Y1);
-            //var arrow = new Axes((int)p1.X, (int)p1.Y - 1, (int)p2.X, (int)p2.Y);
-            //dottedLines.Add(arrow);
             return dottedLines;
         }
 
@@ -287,7 +283,6 @@ namespace spfgraph.Model.Visualization {
         private void ColorizeNodes(List<Node> nodes) {
             foreach (var node in nodes)
                 colorBuilder.SetNodeColor(node);
-
         }
         
         #endregion

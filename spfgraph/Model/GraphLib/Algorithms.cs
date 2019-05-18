@@ -66,7 +66,7 @@ namespace spfgraph.Model.GraphLib {
         /// </summary>
         /// <param name="adjacencyList"></param>
         /// <returns></returns>
-        public static List<List<int>> TheShortestPathLayout(int[][] adjacencyList) {
+        public static List<List<int>> OptimalLayoutByWidth(int[][] adjacencyList) {
             var firstLayoutList = StraightPass(adjacencyList);
             var secondLayoutList = ReversePass(adjacencyList);
 
