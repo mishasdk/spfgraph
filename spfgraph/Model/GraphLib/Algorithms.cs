@@ -156,6 +156,25 @@ namespace spfgraph.Model.GraphLib {
 
             var graphLayers = StraightPass(reversedList);
             graphLayers.Reverse();
+
+            var inDegree = new int[g.Length];
+            for (int i = 0; i < reversedAdjacencyList.Length; i++)
+                inDegree[i] = reversedAdjacencyList[i].Count;
+
+            var set = new HashSet<int>();
+            for (int i = 0; i < inDegree.Length; i++) {
+                if (inDegree[i] == 0)
+                    set.Add(i);
+            }
+
+            foreach (var layer in graphLayers)
+                foreach (var v in set)
+                    layer.Remove(v);
+
+            foreach (var v in set) {
+                graphLayers[0].Add(v);
+            }
+
             return graphLayers;
         }
 
