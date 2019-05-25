@@ -2,8 +2,7 @@
 
 Program to Identify Parallelism in the Algorithms by Constructing a Parallel-stacked Form (SPF) Information Graph Algorithm
 
----
-### Introduce
+## Introduce
 
 Parallelization of data processing is one of the main ways to improve the performance of computing systems. To identify areas of the algorithm that can be executed independently of each other, use the method of constructing a stacked-parallel form according to its information graph.
 
@@ -11,7 +10,7 @@ In the information graph of the algorithm (IGA) the vertices are the operators c
 
 The stacked-parallel form of a graph (SPF) - is such a form of an IGA, in which operators standing on the same tiers are carried out in parallel.
 
-### Input format description: 
+## Input format description: 
 This program uses custom format for storage graph as a file. Example: 
 
 *input.txt*
